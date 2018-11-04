@@ -36,6 +36,8 @@ h1 {
 
 h2 {
   font-size: 3.5rem;
+  display: inline-block;
+  border-bottom: 2px solid rgba(128, 0, 0, 0.7);
 }
 
 h3 {
@@ -84,9 +86,12 @@ p.lead {
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
+  color: rgba(43, 43, 43, 0.8);
   font-weight: 800;
   letter-spacing: 0.05rem;
   text-transform: uppercase;
+
+  border-right: 1px solid rgba(128, 0, 0, 0.8);
 }
 
 #sideNav .navbar-toggler:focus {
@@ -176,17 +181,17 @@ section.resume-section .resume-item .resume-date {
 }
 
 .bg-primary {
-  background-color: #BD5D38 !important;
+  background-color: rgba(128, 0, 0, 0.8) !important;
 }
 
 .text-primary {
-  color: #BD5D38 !important;
+  color: rgba(128, 0, 0, 0.8) !important;
 }
 
 a {
-  color: #BD5D38;
+  color: rgba(128, 0, 0, 0.8);
 }
 
 a:hover, a:focus, a:active {
-  color: #824027;
+  color: rgba(218, 0, 0, 0.8);
 }
