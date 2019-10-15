@@ -132,7 +132,7 @@ p.lead {
   #sideNav .navbar-brand .img-profile {
     max-width: 10rem;
     max-height: 10rem;
-    border-radius: 5%;
+    border-radius: 100%;
 
     /* border around profile picture */
     /* border: 0.5rem solid rgba(128, 0, 0, 0.2); */
