@@ -1,0 +1,52 @@
+body {
+  padding-top: 54px;
+
+  /* solid left border of page */
+  border-left: 10px solid rgba(128, 0, 0, 0.8);
+}
+
+.bg-primary {
+  background-color: rgba(128, 0, 0, 0.8) !important;
+}
+
+.text-primary {
+  color: rgba(128, 0, 0, 0.8) !important;
+}
+
+#profile-pic {
+  max-height: 25%;
+  max-width: 25%;
+  border-radius: 100%;
+}
+
+
+/*  Flexbox rules */
+.flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.center {
+  align-content: center;
+  justify-content: center;
+}
+
+.center * {
+  margin: auto;
+  text-align: center;
+}
+
+.self-left {
+  justify-self: left;
+}
+
+.self-right {
+  justify-self: right;
+}
