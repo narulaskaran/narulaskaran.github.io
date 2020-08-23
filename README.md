@@ -1,2 +1,4 @@
 Welcome to my site!
-It's a perpetual work in progress but here's what I've got so far. 
+I'm always adding to it.
+
+Go to the [live version](http://narula.xyz/).
