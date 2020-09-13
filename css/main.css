@@ -1,8 +1,5 @@
 body {
   padding-top: 54px;
-
-  /* solid left border of page */
-  border-left: 10px solid rgba(128, 0, 0, 0.8);
 }
 
 .bg-primary {

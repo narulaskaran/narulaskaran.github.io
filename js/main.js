@@ -9,6 +9,7 @@
    * Code to run when the window loads. Assigns event listeners.
    */
   function init() {
+    console.log('main JS loaded');
     // Hide all sections other than the main one
 
     // Event listeners
