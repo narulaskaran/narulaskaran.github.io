@@ -17,6 +17,9 @@
     navListeners();
 
     // Returning home
+    document.querySelectorAll('.return-home').forEach(button => {
+      button.addEventListener('click', hide);
+    });
 
     // Project information
     document.querySelectorAll('.project-entry').forEach(project => {
@@ -36,13 +39,6 @@
    * Remove project overlay when mouse leaves
    */
   function projectBlockReset() {
-
-  }
-
-  /**
-   * Return to home view from other section view
-   */
-  function switchHome() {
 
   }
 
@@ -70,6 +66,8 @@
     sections.forEach(section => {
       if (section.id !== 'main') {
         section.classList.add('hidden');
+      } else {
+        section.classList.remove('hidden');
       }
     });
   }
