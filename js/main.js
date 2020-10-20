@@ -20,26 +20,6 @@
     document.querySelectorAll('.return-home').forEach(button => {
       button.addEventListener('click', hide);
     });
-
-    // Project information
-    document.querySelectorAll('.project-entry').forEach(project => {
-      project.addEventListener('mouseenter', projectBlockHover);
-      project.addEventListener('mouseleave', projectBlockReset);
-    });
-  }
-
-  /**
-   * Show project info on hover
-   */
-  function projectBlockHover() {
-
-  }
-
-  /**
-   * Remove project overlay when mouse leaves
-   */
-  function projectBlockReset() {
-
   }
 
   /**
