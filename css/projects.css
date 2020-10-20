@@ -1,12 +1,4 @@
-#projects {
-  background-color: black;
-}
-
-#projects .subheading {
-  color: white;
-}
-
-#projects > div {
+#projects > div > div {
   margin-bottom: 10px;
 }
 
@@ -15,18 +7,58 @@
   margin-top: 100px;
   border-radius: 1.5%;
   background-color: white;
-  width: 700px;
-  justify-content: flex-end;
-  border: 2px solid grey;
-  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Project block */
 .project-entry {
   display: block;
-  width: 150px;
-  height: 150px;
-  border-radius: 10%;
-  border: 5px solid white;
-  background-color: red;
+  width: 250px;
+  height: 250px;
+  margin: 50px;
+  border-radius: 10px;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  transition: filter 0.1s ease;
+  filter: blur(1.3px) grayscale(0.6);
+}
+
+.project-entry:hover {
+  transition: filter 0.2s ease;
+  filter: none;
+}
+
+/* Project text tooltip */
+/* Referencing https://www.w3schools.com/css/css_tooltip.asp */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+
+  transition: visibility 0.1s ease;
+}
+
+.project-entry:hover .tooltiptext {
+  transition: visibility 0.2s ease;
+  visibility: visible;
 }

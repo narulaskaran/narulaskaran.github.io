@@ -29,13 +29,5 @@ nav {
   color: rgba(43, 43, 43, 0.8);
   font-weight: 800;
   letter-spacing: 0.05rem;
-  text-transform: uppercase;
-
-  /* navabr right border against menu links */
-  border-right: 1px solid rgba(128, 0, 0, 0.8);
-}
-
-/* border around navbar item when hovered on */
-nav a:hover {
-  border-left: 5px solid rgba(128, 0, 0, 0.8);
+  text-transform: lowercase;
 }

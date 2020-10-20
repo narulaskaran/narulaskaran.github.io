@@ -5,6 +5,10 @@ body {
   overflow: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 /*  Coloring  */
 .bg-primary {
   background-color: rgba(128, 0, 0, 0.8) !important;
@@ -65,4 +69,12 @@ body {
 
 .self-right {
   justify-self: right;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.scroll {
+  overflow: auto;
 }
