@@ -1,5 +1,6 @@
 "use strict";
-(function() {
+
+(function () {
   /**
    * Listen for the window to load
    */
@@ -9,7 +10,7 @@
    * Code to run when the window loads. Assigns event listeners.
    */
   function init() {
-    console.log('main JS loaded');
+    console.log("main JS loaded");
     // Hide all sections other than the main one
     hide();
 
@@ -17,8 +18,8 @@
     navListeners();
 
     // Returning home
-    document.querySelectorAll('.return-home').forEach(button => {
-      button.addEventListener('click', hide);
+    document.querySelectorAll(".return-home").forEach((button) => {
+      button.addEventListener("click", hide);
     });
   }
 
@@ -28,26 +29,26 @@
    */
   function switchContext() {
     // hide main view
-    document.querySelector('#main').classList.add('hidden');
+    document.querySelector("#main").classList.add("hidden");
 
     // show selected view
-    document.querySelector('#' + this.textContent).classList.remove('hidden');
+    document.querySelector("#" + this.textContent).classList.remove("hidden");
   }
 
   function navListeners() {
-    let navs = document.querySelectorAll('nav > a');
-    navs.forEach(nav => {
-      nav.addEventListener('click', switchContext);
+    let navs = document.querySelectorAll("nav > a");
+    navs.forEach((nav) => {
+      nav.addEventListener("click", switchContext);
     });
   }
 
   function hide() {
     let sections = document.querySelectorAll("body > section");
-    sections.forEach(section => {
-      if (section.id !== 'main') {
-        section.classList.add('hidden');
+    sections.forEach((section) => {
+      if (section.id !== "main") {
+        section.classList.add("hidden");
       } else {
-        section.classList.remove('hidden');
+        section.classList.remove("hidden");
       }
     });
   }

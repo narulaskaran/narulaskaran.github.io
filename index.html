@@ -29,27 +29,84 @@
 
   <body class="flex col" id="page-top">
     <section class="full" id="main">
-      <div class="flex col center full">
-        <div class="flex row center" style="height: 100%">
-          <img
-            id="profile-pic"
-            src="img/personal-img/profile/profile-full.jpg"
-            alt="profile picture"
-          />
-          <div>
-            <h1>
-              Karan
-              <span class="text-primary">Narula</span>
-            </h1>
-            <div class="subheading">
-              Based in New York ·
-              <a href="mailto:ksnarula@cs.washington.edu">Email</a> for
-              inquiries
+      <div class="flex col center full scroll">
+        <div class="flex col center full scroll">
+          <div
+            class="flex row center wrap"
+            style="min-width: 60vw; height: 100%"
+          >
+            <img
+              id="profile-pic"
+              src="img/personal-img/profile/profile-full.jpg"
+              alt="profile picture"
+            />
+            <div>
+              <h1>
+                Karan
+                <span class="text-primary">Narula</span>
+              </h1>
+              <div class="subheading">
+                Based in New York ·
+                <a href="mailto:ksnarula@cs.washington.edu">Email</a> for
+                inquiries
+              </div>
             </div>
-            <nav>
-              <a href="#projects">projects</a>
-            </nav>
           </div>
+
+          <section class="flex row center wrap">
+            <a href="https://github.com/narulaskaran/seam-carving">
+              <article
+                class="project-entry tooltip"
+                style="background-image: url('./img/project-img/wall.gif')"
+              >
+                <span class="tooltiptext">Image Seam Carving</span>
+              </article>
+            </a>
+            <a href="https://github.com/narulaskaran/aqi-monitor">
+              <article
+                class="project-entry tooltip"
+                style="background-image: url('./img/project-img/aqi.png')"
+              >
+                <span class="tooltiptext">AQI Monitor</span>
+              </article>
+            </a>
+            <a href="https://github.com/smox98/secyoure">
+              <article
+                class="project-entry tooltip"
+                style="background-image: url('./img/project-img/lock.png')"
+              >
+                <span class="tooltiptext">Secyoure</span>
+              </article>
+            </a>
+            <a href="https://github.com/narulaskaran/podcast-recommendations">
+              <article
+                class="project-entry tooltip"
+                style="background-image: url('./img/project-img/podcast.jpg')"
+              >
+                <span class="tooltiptext">Podcast Recs</span>
+              </article>
+            </a>
+            <a href="https://github.com/narulaskaran/news-digest">
+              <article
+                class="project-entry tooltip"
+                style="
+                  background-image: url('./img/project-img/twitter-outline.png');
+                "
+              >
+                <span class="tooltiptext">Daily News Digest</span>
+              </article>
+            </a>
+            <a href="https://github.com/narulaskaran/politrack">
+              <article
+                class="project-entry tooltip"
+                style="
+                  background-image: url('./img/project-img/white-house.jpg');
+                "
+              >
+                <span class="tooltiptext">Politrack</span>
+              </article>
+            </a>
+          </section>
         </div>
         <div class="flex row self-right social-icons">
           <a href="https://www.linkedin.com/in/narulaskaran/">
@@ -67,64 +124,6 @@
             </svg>
           </a>
         </div>
-      </div>
-    </section>
-
-    <section class="full hidden" id="projects">
-      <div class="flex col center full">
-        <a href="#" class="return-home">back</a>
-        <section class="flex row center full wrap scroll">
-          <a href="https://github.com/narulaskaran/seam-carving">
-            <article
-              class="project-entry tooltip"
-              style="background-image: url('./img/project-img/wall.gif')"
-            >
-              <span class="tooltiptext">Image Seam Carving</span>
-            </article>
-          </a>
-          <a href="https://github.com/narulaskaran/aqi-monitor">
-            <article
-              class="project-entry tooltip"
-              style="background-image: url('./img/project-img/aqi.png')"
-            >
-              <span class="tooltiptext">AQI Monitor</span>
-            </article>
-          </a>
-          <a href="https://github.com/smox98/secyoure">
-            <article
-              class="project-entry tooltip"
-              style="background-image: url('./img/project-img/lock.png')"
-            >
-              <span class="tooltiptext">Secyoure</span>
-            </article>
-          </a>
-          <a href="https://github.com/narulaskaran/podcast-recommendations">
-            <article
-              class="project-entry tooltip"
-              style="background-image: url('./img/project-img/podcast.jpg')"
-            >
-              <span class="tooltiptext">Podcast Recommendation</span>
-            </article>
-          </a>
-          <a href="https://github.com/narulaskaran/news-digest">
-            <article
-              class="project-entry tooltip"
-              style="
-                background-image: url('./img/project-img/twitter-outline.png');
-              "
-            >
-              <span class="tooltiptext">Daily News Digest</span>
-            </article>
-          </a>
-          <a href="https://github.com/narulaskaran/politrack">
-            <article
-              class="project-entry tooltip"
-              style="background-image: url('./img/project-img/white-house.jpg')"
-            >
-              <span class="tooltiptext">Politrack</span>
-            </article>
-          </a>
-        </section>
       </div>
     </section>
 
