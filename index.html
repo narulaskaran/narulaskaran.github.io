@@ -129,7 +129,53 @@
 
     <!-- Custom scripts -->
     <script src="./js/main.js"></script>
-    <script src="./js/animate.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"
+      integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Project Entry icons move up on hover -->
+    <script>
+      var projects = document.querySelectorAll(".project-entry");
+      projects.forEach((project) => {
+        project.addEventListener("mouseover", () => {
+          anime({
+            targets: project,
+            translateY: -5,
+          });
+        });
+
+        project.addEventListener("mouseout", () => {
+          anime({
+            targets: project,
+            translateY: 0,
+          });
+        });
+      });
+    </script>
+
+    <!-- Profile Picture animation on hover -->
+    <script>
+      var pic = document.getElementById("profile-pic");
+
+      pic.addEventListener("mouseover", () => {
+        anime({
+          targets: pic,
+          translateY: -5,
+          borderRadius: 50,
+        });
+      });
+
+      pic.addEventListener("mouseout", () => {
+        anime({
+          targets: pic,
+          translateY: 0,
+          borderRadius: 10,
+        });
+      });
+    </script>
 
     <!-- Google Analytics for site traffic -->
     <script
