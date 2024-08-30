@@ -14,18 +14,18 @@
 /* Project block */
 .project-entry {
   display: block;
-  min-width: 150px;
-  min-height: 150px;
-  max-width: 300px;
-  max-height: 300px;
-  margin: 50px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 33%;
+  max-height: 33%;
+  margin: 10px;
   border-radius: 10px;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
-  transition: filter 0.1s ease;
+  transition: filter 0.2s ease;
   filter: blur(1.3px) grayscale(0.6);
 }
 
@@ -43,15 +43,15 @@
 
 .tooltiptext {
   visibility: hidden;
-  width: 200px;
-  bottom: 100%;
-  left: 50%;
+  min-width: 100px;
+  bottom: 0%;
+  left: 100%;
   margin-left: -100px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.75);
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 0px 0;
 
   /* Position the tooltip */
   position: absolute;
