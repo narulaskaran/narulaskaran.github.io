@@ -64,7 +64,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-.text-primary {
-  color: rgba(128, 0, 0, 0.8) !important;
-}
