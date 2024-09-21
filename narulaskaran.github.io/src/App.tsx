@@ -54,10 +54,10 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <header className="text-center mb-12">
-          <Avatar className="w-32 h-32 mx-auto mb-4">
+          <Avatar className="w-32 h-32 mx-auto rounded-lg transition-all duration-400 transform hover:-translate-y-1 hover:rounded-3xl">
             <AvatarImage
               src={profileData.profilePhotoUrl}
               alt={`${profileData.firstName} ${profileData.lastName}`}
@@ -74,7 +74,7 @@ const App: React.FC = () => {
           <div className="flex justify-center space-x-6">
             <a
               href="https://www.linkedin.com/in/narulaskaran/"
-              className="text-black hover:text-[rgba(128,0,0,0.9)] transition-colors duration-300"
+              className="text-black hover:text-[rgba(128,0,0,0.9)] transition-colors duration-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ const App: React.FC = () => {
             </a>
             <a
               href="https://github.com/narulaskaran/"
-              className="text-black hover:text-[rgba(128,0,0,0.9)] transition-colors duration-300"
+              className="text-black hover:text-[rgba(128,0,0,0.9)] transition-colors duration-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,11 +100,11 @@ const App: React.FC = () => {
         </header>
 
         <section>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 grid-cols-3 duration-500 md:grid-cols-4 lg:grid-cols-5 ">
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className="overflow-hidden cursor-pointer opacity-85 transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)]"
+                className="overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl"
                 onClick={() => window.open(project.url, "_blank")}
               >
                 <div className="relative aspect-square">
@@ -113,7 +113,7 @@ const App: React.FC = () => {
                     alt={project.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-white opacity-0 hover:opacity-90 transition-opacity duration-300 flex flex-col justify-center items-center text-[rgba(128,0,0)] p-4">
+                  <div className="absolute inset-0 bg-white opacity-0 hover:opacity-75 transition-opacity duration-300 flex flex-col justify-center items-center text-[rgba(128,0,0)] p-4">
                     <h3 className="text-lg font-semibold mb-2 text-center">
                       {project.name}
                     </h3>
