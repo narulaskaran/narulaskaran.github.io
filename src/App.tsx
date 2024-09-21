@@ -10,7 +10,7 @@ const App: React.FC = () => {
     email: "ksnarula@cs.washington.edu",
     githubUsername: "narulaskaran",
     linkedInUsername: "narulaskaran",
-    profilePhotoUrl: "narulaskaran.github.io/src/assets/profile.jpg",
+    profilePhotoUrl: "public/assets/profile.jpg",
   };
 
   const projects = [
@@ -18,38 +18,37 @@ const App: React.FC = () => {
       name: "Twitter News Digest",
       description: "Description of Project 3",
       url: "https://github.com/narulaskaran/news-digest",
-      imageUrl:
-        "narulaskaran.github.io/src/assets/project-img/twitter-outline.png",
+      imageUrl: "public/assets/project-img/twitter-outline.png",
     },
     {
       name: "Seam Carving",
       description: "Description of Project 1",
       url: "https://github.com/narulaskaran/seam-carving",
-      imageUrl: "narulaskaran.github.io/src/assets/project-img/wall.gif",
+      imageUrl: "public/assets/project-img/wall.gif",
     },
     {
       name: "AQI Monitor",
       description: "Description of Project 2",
       url: "https://github.com/narulaskaran/seam-aqi-monitor",
-      imageUrl: "narulaskaran.github.io/src/assets/project-img/aqi.png",
+      imageUrl: "public/assets/project-img/aqi.png",
     },
     {
       name: "Secyoure",
       description: "Description of Project 3",
       url: "https://github.com/smox98/secyoure",
-      imageUrl: "narulaskaran.github.io/src/assets/project-img/lock.png",
+      imageUrl: "public/assets/project-img/lock.png",
     },
     {
       name: "Podcast Recommendations",
       description: "Description of Project 3",
       url: "https://github.com/narulaskaran/podcast-recommendations",
-      imageUrl: "narulaskaran.github.io/src/assets/project-img/podcast.jpg",
+      imageUrl: "public/assets/project-img/podcast.jpg",
     },
     {
       name: "Politrack",
       description: "Description of Project 3",
       url: "https://github.com/narulaskaran/politrack",
-      imageUrl: "narulaskaran.github.io/src/assets/project-img/white-house.jpg",
+      imageUrl: "public/assets/project-img/white-house.jpg",
     },
   ];
 
