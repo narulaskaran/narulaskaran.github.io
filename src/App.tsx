@@ -113,7 +113,7 @@ const App: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-white opacity-0 hover:opacity-75 transition-opacity duration-300 flex flex-col justify-center items-center text-[rgba(128,0,0)] p-4">
-                    <h3 className="text-lg font-semibold mb-2 text-center">
+                    <h3 className="text-sm font-semibold mb-2 text-center">
                       {project.name}
                     </h3>
                     {/* <p className="text-xs text-center">{project.description}</p> */}
