@@ -24,7 +24,7 @@ const App: React.FC = () => {
       name: "Seam Carving",
       description: "Description of Project 1",
       url: "https://github.com/narulaskaran/seam-carving",
-      imageUrl: "assets/project-img/wall.gif",
+      imageUrl: "assets/project-img/elephant.gif",
     },
     {
       name: "AQI Monitor",
