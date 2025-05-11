@@ -15,38 +15,52 @@ const App: React.FC = () => {
 
   const projects = [
     {
+      name: "Receipt Splitter",
+      description:
+        "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
+      url: "https://split.narula.xyz/",
+      github: "https://github.com/narulaskaran/receipt-splitter",
+      imageUrl: "assets/project-img/receipt-splitter.png",
+    },
+    {
+      name: "AQI Monitor",
+      description:
+        "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
+      url: "https://aqi.narula.xyz/",
+      imageUrl: "assets/project-img/aqi.png",
+    },
+    {
       name: "Twitter News Digest",
-      description: "Description of Project 3",
+      description:
+        "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
       url: "https://github.com/narulaskaran/news-digest",
       imageUrl: "assets/project-img/twitter-outline.png",
     },
     {
       name: "Seam Carving",
-      description: "Description of Project 1",
+      description:
+        "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
       url: "https://github.com/narulaskaran/seam-carving",
       imageUrl: "assets/project-img/elephant.gif",
     },
     {
-      name: "AQI Monitor",
-      description: "Description of Project 2",
-      url: "https://github.com/narulaskaran/aqi-monitor",
-      imageUrl: "assets/project-img/aqi.png",
-    },
-    {
       name: "Secyoure",
-      description: "Description of Project 3",
+      description:
+        "A security-focused project. (No public description found; please update with more details if available.)",
       url: "https://github.com/smox98/secyoure",
       imageUrl: "assets/project-img/lock.png",
     },
     {
       name: "Podcast Recommendations",
-      description: "Description of Project 3",
+      description:
+        "A project for recommending podcasts. (No public description found; please update with more details if available.)",
       url: "https://github.com/narulaskaran/podcast-recommendations",
       imageUrl: "assets/project-img/podcast.jpg",
     },
     {
       name: "Politrack",
-      description: "Description of Project 3",
+      description:
+        "A project for tracking political data or policies. (No public description found; please update with more details if available.)",
       url: "https://github.com/narulaskaran/politrack",
       imageUrl: "assets/project-img/white-house.jpg",
     },
