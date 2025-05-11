@@ -56,6 +56,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **Tailwind CSS**: Custom colors, radii, and chart colors are defined in `tailwind.config.js` and used via CSS variables in `src/index.css`.
 - **Deployment**: Uses `gh-pages` for deployment to GitHub Pages, with a custom domain set in `CNAME`.
 - **shadcn/ui**: Components are managed/configured via `components.json`.
+- **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
 
 ---
 
@@ -69,6 +70,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - `tailwind.config.js` & `src/index.css`: Tailwind theme and global styles.
 - `vite.config.ts`: Vite config, including alias setup.
 - `components.json`: shadcn/ui config and aliases.
+- Dark mode toggle: A button in the top right corner lets users switch between dark and light mode. The theme is persisted and respects system settings by default.
 
 ---
 
