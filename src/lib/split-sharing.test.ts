@@ -392,6 +392,27 @@ describe('validateSplitData', () => {
     expect(validateSplitData(dataWithRounding)).toBe(true);
   });
 
+  it('should handle floating-point precision issues with 2-cent differences', () => {
+    // This test case covers the bug that was reported: 
+    // URL: https://split.narula.xyz/split?names=I%2CK%2Cp%2Cs&amounts=15.25%2C21.75%2C15.25%2C15.25&total=67.52&note=Love+Mama&phone=4259749530&date=2025-09-05
+    const splitData: SharedSplitData = {
+      names: ['I', 'K', 'p', 's'],
+      amounts: [15.25, 21.75, 15.25, 15.25], // Sum: 67.5
+      total: 67.52, // 2-cent difference due to tax/tip distribution
+      note: 'Love Mama',
+      phone: '4259749530',
+      date: '2025-09-05'
+    };
+
+    // This should now pass with the increased tolerance
+    expect(validateSplitData(splitData)).toBe(true);
+    
+    // Verify the math: 15.25 + 21.75 + 15.25 + 15.25 = 67.5, difference with 67.52 is 0.02
+    const calculatedSum = splitData.amounts.reduce((sum, amount) => sum + amount, 0);
+    const difference = Math.abs(calculatedSum - splitData.total);
+    expect(difference).toBeCloseTo(0.02, 2);
+  });
+
   it('should reject large differences in total', () => {
     const dataWithLargeDifference: SharedSplitData = {
       ...validSplitData,
