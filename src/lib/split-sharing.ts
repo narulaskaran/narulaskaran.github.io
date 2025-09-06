@@ -301,7 +301,10 @@ export function validateSplitDataDetailed(splitData: SharedSplitData): SplitVali
       const roundedExpectedTotal = Math.round(splitData.total * 100) / 100;
       const difference = Math.abs(roundedCalculatedTotal - roundedExpectedTotal);
       
-      if (difference > VALIDATION_LIMITS.AMOUNT_TOLERANCE) {
+      // Also round the difference to avoid floating-point precision issues in the comparison itself
+      const roundedDifference = Math.round(difference * 100) / 100;
+      
+      if (roundedDifference > VALIDATION_LIMITS.AMOUNT_TOLERANCE) {
         errors.push(SplitDataError.AMOUNTS_TOTAL_MISMATCH);
         errorMessages.push(`Individual amounts (${roundedCalculatedTotal.toFixed(2)}) do not add up to total (${roundedExpectedTotal.toFixed(2)})`);
       }

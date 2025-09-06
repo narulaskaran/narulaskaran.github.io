@@ -413,6 +413,171 @@ describe('validateSplitData', () => {
     expect(difference).toBeCloseTo(0.02, 2);
   });
 
+  // COMPREHENSIVE EDGE CASE TESTS TO PREVENT REGRESSIONS
+  describe('Edge Cases and Regression Prevention', () => {
+    it('should handle exact 2-cent tolerance boundary', () => {
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob'],
+        amounts: [10.00, 20.00], // Sum: 30.00
+        total: 30.02, // Exactly 2 cents difference
+        note: 'Boundary Test',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+
+    it('should reject amounts exceeding 2-cent tolerance', () => {
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob'],
+        amounts: [10.00, 20.00], // Sum: 30.00
+        total: 30.03, // 3 cents difference - should fail
+        note: 'Over Tolerance Test',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(false);
+    });
+
+    it('should handle complex floating-point arithmetic edge cases', () => {
+      // Test cases that commonly cause floating-point precision issues
+      const testCases = [
+        {
+          name: 'Repeating decimals',
+          amounts: [33.33, 33.33, 33.34], // Sum: 100.00
+          total: 100.00,
+          shouldPass: true
+        },
+        {
+          name: 'Small amounts with precision issues',
+          amounts: [0.01, 0.02, 0.03], // Sum: 0.06
+          total: 0.06,
+          shouldPass: true
+        },
+        {
+          name: 'Large amounts with small differences',
+          amounts: [999.99, 1000.01], // Sum: 2000.00
+          total: 2000.02,
+          shouldPass: true
+        },
+        {
+          name: 'Many small amounts',
+          amounts: Array(10).fill(1.01), // Sum: 10.10
+          total: 10.12,
+          shouldPass: true
+        }
+      ];
+
+      testCases.forEach(testCase => {
+        const splitData: SharedSplitData = {
+          names: testCase.amounts.map((_, i) => `Person${i + 1}`),
+          amounts: testCase.amounts,
+          total: testCase.total,
+          note: testCase.name,
+          phone: '5551234567'
+        };
+        
+        expect(validateSplitData(splitData)).toBe(testCase.shouldPass);
+      });
+    });
+
+    it('should handle URL deserialization edge cases', () => {
+      const edgeCaseUrls = [
+        // Original bug case
+        'names=I%2CK%2Cp%2Cs&amounts=15.25%2C21.75%2C15.25%2C15.25&total=67.52&note=Love+Mama&phone=4259749530&date=2025-09-05',
+        // Case with spaces in names
+        'names=Alice%20Smith%2CBob%20Jones&amounts=25.50%2C24.50&total=50.02&note=Dinner&phone=5551234567',
+        // Case with special characters
+        'names=José%2CMariá&amounts=15.75%2C14.25&total=30.00&note=Café%20Bill&phone=5551234567',
+        // Case with many people  
+        'names=A%2CB%2CC%2CD%2CE&amounts=10.20%2C10.20%2C10.20%2C10.20%2C10.20&total=51.00&note=Group%20Lunch&phone=5551234567'
+      ];
+
+      edgeCaseUrls.forEach(urlParams => {
+        const searchParams = new URLSearchParams(urlParams);
+        const splitData = deserializeSplitData(searchParams);
+        
+        expect(splitData).not.toBeNull();
+        expect(validateSplitData(splitData!)).toBe(true);
+      });
+    });
+
+    it('should maintain backward compatibility with 1-cent differences', () => {
+      // Ensure we didn't break cases that should still work with 1-cent differences
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob'],
+        amounts: [25.00, 25.00], // Sum: 50.00
+        total: 50.01, // 1 cent difference
+        note: 'Backward Compatibility',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+
+    it('should handle zero amounts correctly', () => {
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob', 'Charlie'],
+        amounts: [0.00, 25.50, 24.50], // One person pays nothing
+        total: 50.00, // Adjusted to match sum exactly
+        note: 'Zero Amount Test',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+
+    it('should handle very small amounts', () => {
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob'],
+        amounts: [0.01, 0.01], // Very small amounts
+        total: 0.02,
+        note: 'Tiny Amounts',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+
+    it('should reject clearly invalid totals even with increased tolerance', () => {
+      const splitData: SharedSplitData = {
+        names: ['Alice', 'Bob'],
+        amounts: [25.00, 25.00], // Sum: 50.00
+        total: 55.00, // $5 difference - clearly invalid
+        note: 'Invalid Total',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(false);
+    });
+
+    it('should handle tax and tip distribution scenarios', () => {
+      // Common real-world scenario: base amounts + distributed tax/tip
+      const splitData: SharedSplitData = {
+        names: ['Person1', 'Person2', 'Person3', 'Person4'],
+        amounts: [12.75, 18.25, 12.75, 12.75], // Base amounts with distributed tax/tip
+        total: 56.50, // Adjusted to be within 2-cent tolerance (sum is 56.5)
+        note: 'Restaurant Bill with Tax & Tip',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+
+    it('should handle special characters in URL parameters', () => {
+      // Test that special characters in names don't break validation
+      const splitData: SharedSplitData = {
+        names: ['José', 'François', 'Smith Jr.'],
+        amounts: [15.00, 21.00, 16.00],
+        total: 52.00,
+        note: 'Special Characters Test',
+        phone: '5551234567'
+      };
+      
+      expect(validateSplitData(splitData)).toBe(true);
+    });
+  });
+
   it('should reject large differences in total', () => {
     const dataWithLargeDifference: SharedSplitData = {
       ...validSplitData,
