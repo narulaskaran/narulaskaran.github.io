@@ -63,13 +63,6 @@ const App: React.FC = () => {
       imageUrl: "assets/project-img/aqi.png",
     },
     {
-      name: "Twitter News Digest",
-      description:
-        "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
-      url: "https://github.com/narulaskaran/news-digest",
-      imageUrl: "assets/project-img/twitter-outline.png",
-    },
-    {
       name: "Seam Carving",
       description:
         "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
@@ -77,25 +70,11 @@ const App: React.FC = () => {
       imageUrl: "assets/project-img/elephant.gif",
     },
     {
-      name: "Secyoure",
+      name: "Twitter News Digest",
       description:
-        "A security-focused project. (No public description found; please update with more details if available.)",
-      url: "https://github.com/smox98/secyoure",
-      imageUrl: "assets/project-img/lock.png",
-    },
-    {
-      name: "Podcast Recommendations",
-      description:
-        "A project for recommending podcasts. (No public description found; please update with more details if available.)",
-      url: "https://github.com/narulaskaran/podcast-recommendations",
-      imageUrl: "assets/project-img/podcast.jpg",
-    },
-    {
-      name: "Politrack",
-      description:
-        "A project for tracking political data or policies. (No public description found; please update with more details if available.)",
-      url: "https://github.com/narulaskaran/politrack",
-      imageUrl: "assets/project-img/white-house.jpg",
+        "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
+      url: "https://github.com/narulaskaran/news-digest",
+      imageUrl: "assets/project-img/twitter-outline.png",
     },
   ];
 
