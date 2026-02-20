@@ -53,28 +53,32 @@ const App: React.FC = () => {
         "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
       url: "https://split.narula.xyz/",
       github: "https://github.com/narulaskaran/receipt-splitter",
-      imageUrl: "assets/project-img/receipt-splitter.png",
+      imageUrl: "assets/project-img/receipt-splitter.svg",
+      bgClass: "bg-blue-50 dark:bg-zinc-800",
     },
     {
       name: "AQI Monitor",
       description:
         "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
       url: "https://aqi.narula.xyz/",
-      imageUrl: "assets/project-img/aqi.png",
+      imageUrl: "assets/project-img/aqi.svg",
+      bgClass: "bg-emerald-50 dark:bg-zinc-800",
     },
     {
       name: "Seam Carving",
       description:
         "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
       url: "https://github.com/narulaskaran/seam-carving",
-      imageUrl: "assets/project-img/elephant.gif",
+      imageUrl: "assets/project-img/seam-carving.svg",
+      bgClass: "bg-amber-50 dark:bg-zinc-800",
     },
     {
       name: "Twitter News Digest",
       description:
         "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
       url: "https://github.com/narulaskaran/news-digest",
-      imageUrl: "assets/project-img/twitter-outline.png",
+      imageUrl: "assets/project-img/twitter-outline.svg",
+      bgClass: "bg-teal-50 dark:bg-zinc-800",
     },
   ];
 
@@ -183,7 +187,7 @@ const App: React.FC = () => {
                   className="overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl bg-card text-card-foreground border border-border shadow-md"
                   onClick={() => window.open(project.url, "_blank")}
                 >
-                  <div className="relative aspect-square">
+                  <div className={`relative aspect-square ${project.bgClass || ""}`}>
                     <img
                       src={project.imageUrl}
                       alt={project.name}
