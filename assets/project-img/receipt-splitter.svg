@@ -1,0 +1,11 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Receipt body -->
+  <path d="M144 96h224v320l-28-20-28 20-28-20-28 20-28-20-28 20-28-20-28 20V96z" fill="#3B82F6" opacity="0.15" stroke="#3B82F6" stroke-width="8" />
+  <!-- Text lines -->
+  <rect x="184" y="160" width="144" height="16" rx="8" fill="#3B82F6" />
+  <rect x="184" y="200" width="120" height="16" rx="8" fill="#3B82F6" />
+  <rect x="184" y="240" width="144" height="16" rx="8" fill="#3B82F6" />
+  <!-- Dollar coin -->
+  <circle cx="340" cy="320" r="56" fill="#3B82F6" opacity="0.15" stroke="#3B82F6" stroke-width="8" />
+  <text x="340" y="342" text-anchor="middle" font-size="60" font-weight="bold" font-family="Arial, sans-serif" fill="#3B82F6">$</text>
+</svg>
