@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - fix/eslint9-dependency-baseline
 
 permissions:
   contents: read
