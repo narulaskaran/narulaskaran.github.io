@@ -4,13 +4,14 @@ on:
   pull_request:
     branches:
       - master
-      - fix/eslint9-dependency-baseline
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   test:
+    name: test
     runs-on: ubuntu-latest
 
     steps:

@@ -30,6 +30,12 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 │   └── index.html        # Built HTML
 ├── img/                  # Additional SVG icons (not directly referenced in code)
 │   └── svg-icons/        # Many social/media SVGs
+├── .github/              # GitHub Actions and Dependabot config
+│   ├── dependabot.yml    # Weekly npm updates, grouped ESLint/Vite bumps
+│   └── workflows/
+│       ├── ci.yml        # PR checks: npm ci, build, lint (job name: test)
+│       ├── dependabot-auto-merge.yml  # Auto-merge Dependabot patch/minor PRs
+│       └── deploy.yml    # Deploy to GitHub Pages on push to master
 ├── package.json          # Project metadata, scripts, dependencies
 ├── tailwind.config.js    # Tailwind CSS configuration (custom colors, radii)
 ├── postcss.config.js     # PostCSS config (for Tailwind)
@@ -54,7 +60,8 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **Component Structure**: UI components are in `src/components/ui/`, typography in `src/components/typography/`.
 - **Assets**: Images for profile and projects are in `public/assets/` and referenced by relative path in code.
 - **Tailwind CSS**: Custom colors, radii, and chart colors are defined in `tailwind.config.js` and used via CSS variables in `src/index.css`.
-- **Deployment**: Uses `gh-pages` for deployment to GitHub Pages, with a custom domain set in `CNAME`.
+- **Deployment**: Uses `gh-pages` for deployment to GitHub Pages, with a custom domain set in `CNAME`. Auto-deploys from `.github/workflows/deploy.yml` on push to `master`.
+- **CI**: Pull requests targeting `master` run `.github/workflows/ci.yml` (`npm ci`, `npm run build`, `npm run lint`). The job is named `test` and is the required status check for merging. Dependabot patch/minor PRs can auto-merge once that check is green.
 - **shadcn/ui**: Components are managed/configured via `components.json`.
 - **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
 
