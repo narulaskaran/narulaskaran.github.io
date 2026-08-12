@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+    groups:
+      eslint-toolchain:
+        patterns:
+          - eslint
+          - eslint-*
+          - "@eslint/*"
+          - typescript-eslint
+          - "@typescript-eslint/*"
+
+      vite-toolchain:
+        patterns:
+          - vite
+          - "@vitejs/*"
+          - rollup
+          - esbuild
+
+    ignore:
+      - dependency-name: eslint
+        update-types:
+          - version-update:semver-major
