@@ -23,6 +23,10 @@ updates:
           - esbuild
 
     ignore:
+      # @eslint/js majors track eslint majors; keep them in lockstep.
       - dependency-name: eslint
+        update-types:
+          - version-update:semver-major
+      - dependency-name: "@eslint/js"
         update-types:
           - version-update:semver-major
