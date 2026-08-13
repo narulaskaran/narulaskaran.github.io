@@ -61,7 +61,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **Assets**: Images for profile and projects are in `public/assets/` and referenced by relative path in code.
 - **Tailwind CSS**: Custom colors, radii, and chart colors are defined in `tailwind.config.js` and used via CSS variables in `src/index.css`.
 - **Deployment**: Uses `gh-pages` for deployment to GitHub Pages, with a custom domain set in `CNAME`. Auto-deploys from `.github/workflows/deploy.yml` on push to `master`.
-- **CI**: Pull requests targeting `master` run `.github/workflows/ci.yml` (`npm ci`, `npm run build`, `npm run lint`). The job is named `test` and is the required status check for merging. Dependabot patch/minor PRs can auto-merge once that check is green.
+- **CI**: Pull requests targeting `master` run `.github/workflows/ci.yml` (`npm ci`, `npm run build`, `npm run lint`). The job is named `test` and is the required status check for merging. Dependabot patch/minor PRs can auto-merge once that check is green. Major updates for `eslint` and `@eslint/js` are ignored so those packages stay on v9 together.
 - **shadcn/ui**: Components are managed/configured via `components.json`.
 - **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
 
