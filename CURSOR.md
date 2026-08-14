@@ -37,8 +37,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 │       ├── dependabot-auto-merge.yml  # Auto-merge Dependabot patch/minor PRs
 │       └── deploy.yml    # Deploy to GitHub Pages on push to master
 ├── package.json          # Project metadata, scripts, dependencies
-├── tailwind.config.js    # Tailwind CSS configuration (custom colors, radii)
-├── postcss.config.js     # PostCSS config (for Tailwind)
+├── postcss.config.js     # PostCSS config (`@tailwindcss/postcss`)
 ├── vite.config.ts        # Vite config (React plugin, alias @ to ./src)
 ├── tsconfig.json         # TypeScript config (base, with path aliases)
 ├── tsconfig.app.json     # App-specific TypeScript config
@@ -59,7 +58,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **Path Aliases**: `@/` maps to `./src/` (see `vite.config.ts`, `tsconfig.json`).
 - **Component Structure**: UI components are in `src/components/ui/`, typography in `src/components/typography/`.
 - **Assets**: Images for profile and projects are in `public/assets/` and referenced by relative path in code.
-- **Tailwind CSS**: Custom colors, radii, and chart colors are defined in `tailwind.config.js` and used via CSS variables in `src/index.css`.
+- **Tailwind CSS**: v4 CSS-first config in `src/index.css` (`@import "tailwindcss"`, `@theme`, class-based `dark` variant). PostCSS uses `@tailwindcss/postcss`.
 - **Deployment**: Uses `gh-pages` for deployment to GitHub Pages, with a custom domain set in `CNAME`. Auto-deploys from `.github/workflows/deploy.yml` on push to `master`.
 - **CI**: Pull requests targeting `master` run `.github/workflows/ci.yml` (`npm ci`, `npm run build`, `npm run lint`). The job is named `test` and is the required status check for merging. Dependabot patch/minor PRs can auto-merge once that check is green. Major updates for `eslint` and `@eslint/js` are ignored so those packages stay on v9 together.
 - **TypeScript**: `tsc` runs TypeScript 7 via the `@typescript/native` alias (`npm:typescript`). The `typescript` package is aliased to `@typescript/typescript6` so `typescript-eslint` can keep using the TypeScript 6 compiler API (TypeScript 7.0 does not ship one). `tsconfig` path aliases do not use `baseUrl` (removed in TypeScript 7).
@@ -75,7 +74,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - `src/components/ui/avatar.tsx`: Avatar component (profile image).
 - `src/components/typography/typography.tsx`: Typography components (H1, H2, P, etc.).
 - `src/lib/utils.ts`: Utility for merging class names (`cn`).
-- `tailwind.config.js` & `src/index.css`: Tailwind theme and global styles.
+- `src/index.css`: Tailwind v4 theme tokens and global styles.
 - `vite.config.ts`: Vite config, including alias setup.
 - `components.json`: shadcn/ui config and aliases.
 - Dark mode toggle: A button in the top right corner lets users switch between dark and light mode. The theme is persisted and respects system settings by default.
