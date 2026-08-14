@@ -9,7 +9,7 @@
 
 ## Tech Stack
 
-- React 18, TypeScript, Vite, Tailwind CSS 3
+- React 18, TypeScript, Vite, Tailwind CSS 4
 - shadcn/ui components (Radix UI primitives)
 - Utility: `cn()` from `src/lib/utils.ts`
 
@@ -17,7 +17,7 @@
 
 - `src/App.tsx` — single-page app with all profile data and projects defined inline
 - `src/components/ui/` — shadcn/ui components (avatar, button, card, tooltip)
-- `src/index.css` — Tailwind directives + HSL CSS variables for theming
+- `src/index.css` — Tailwind v4 `@import`/`@theme` + HSL CSS variables for theming
 - `public/` — static assets (images, profile photo)
 
 ## Conventions
