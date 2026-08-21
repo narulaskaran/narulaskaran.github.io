@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   const projects = [
     {
-      name: "The Big Send",
+      name: "Party Planner",
       description:
         "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
       url: "https://party.narula.xyz/",
