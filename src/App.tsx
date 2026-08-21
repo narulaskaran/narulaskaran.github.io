@@ -189,11 +189,11 @@ const App: React.FC = () => {
           </header>
 
           <section>
-            <div className="grid max-w-[30rem] mx-auto grid-cols-2 sm:grid-cols-6 justify-items-center gap-4">
+            <div className="grid max-w-[13rem] mx-auto grid-cols-2 sm:max-w-[30rem] sm:grid-cols-6 justify-items-center gap-4">
               {projects.map((project, index) => (
                 <Card
                   key={index}
-                  className={`w-32 sm:w-36 sm:col-span-2 overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl bg-card text-card-foreground border border-border shadow-md ${
+                  className={`w-24 sm:w-36 sm:col-span-2 overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl bg-card text-card-foreground border border-border shadow-md ${
                     index === 3 ? "sm:col-start-2" : ""
                   } ${index === projects.length - 1 ? "col-span-2 justify-self-center" : ""}`}
                   onClick={() => window.open(project.url, "_blank")}
