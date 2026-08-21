@@ -1,22 +1,12 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Party popper -->
-  <path d="M118 374L211 220L286 289L191 443L118 374Z"
-        stroke="#8B5CF6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
-  <!-- Fold / highlight on the popper -->
-  <path d="M160 371L222 309"
-        stroke="#8B5CF6" stroke-width="12" stroke-linecap="round" />
-
-  <!-- Burst -->
-  <path d="M225 200L276 104"
-        stroke="#8B5CF6" stroke-width="16" stroke-linecap="round" />
-  <path d="M242 215C276 186 315 172 359 177"
-        stroke="#8B5CF6" stroke-width="16" stroke-linecap="round" />
-  <path d="M252 238C297 229 337 236 375 257"
-        stroke="#8B5CF6" stroke-width="16" stroke-linecap="round" />
-
-  <!-- Confetti -->
-  <circle cx="247" cy="119" r="12" fill="#8B5CF6" opacity="0.7" />
-  <circle cx="359" cy="144" r="13" fill="#8B5CF6" opacity="0.75" />
-  <rect x="309" y="99" width="27" height="27" rx="3" transform="rotate(38 309 99)" fill="#8B5CF6" opacity="0.85" />
-  <rect x="365" y="277" width="31" height="16" rx="6" transform="rotate(35 365 277)" fill="#8B5CF6" opacity="0.75" />
+  <title>The Big Send</title>
+  <g stroke="#6D4ACF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M116 332L294 402L238 150L116 332Z" fill="#6D4ACF" fill-opacity="0.15"/>
+    <path d="M116 332L294 402L238 150L116 332Z"/>
+    <path d="M170 354L262 204"/>
+    <path d="M302 142L310 94"/>
+    <path d="M348 192L394 168"/>
+    <path d="M320 246L366 264"/>
+  </g>
+  <circle cx="362" cy="106" r="13" fill="#6D4ACF"/>
 </svg>
