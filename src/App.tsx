@@ -48,6 +48,15 @@ const App: React.FC = () => {
 
   const projects = [
     {
+      name: "The Big Send",
+      description:
+        "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
+      url: "https://party.narula.xyz/",
+      github: "https://github.com/narulaskaran/bachelor-party",
+      imageUrl: "assets/project-img/party.svg",
+      bgClass: "bg-violet-50 dark:bg-zinc-800",
+    },
+    {
       name: "Receipt Splitter",
       description:
         "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
