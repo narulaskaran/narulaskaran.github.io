@@ -87,7 +87,7 @@ const App: React.FC = () => {
         "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
       url: "https://github.com/narulaskaran/news-digest",
       imageUrl: "assets/project-img/twitter-outline.svg",
-      bgClass: "bg-teal-50 dark:bg-zinc-800",
+      bgClass: "bg-rose-50 dark:bg-zinc-800",
     },
   ];
 
@@ -189,7 +189,7 @@ const App: React.FC = () => {
           </header>
 
           <section>
-            <div className="grid grid-cols-2 sm:grid-cols-6 justify-items-center gap-4">
+            <div className="grid max-w-[30rem] mx-auto grid-cols-2 sm:grid-cols-6 justify-items-center gap-4">
               {projects.map((project, index) => (
                 <Card
                   key={index}
