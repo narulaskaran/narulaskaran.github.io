@@ -48,6 +48,15 @@ const App: React.FC = () => {
 
   const projects = [
     {
+      name: "Party Planner",
+      description:
+        "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
+      url: "https://party.narula.xyz/",
+      github: "https://github.com/narulaskaran/bachelor-party",
+      imageUrl: "assets/project-img/party.svg",
+      bgClass: "bg-violet-50 dark:bg-zinc-800",
+    },
+    {
       name: "Receipt Splitter",
       description:
         "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
@@ -78,7 +87,7 @@ const App: React.FC = () => {
         "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
       url: "https://github.com/narulaskaran/news-digest",
       imageUrl: "assets/project-img/twitter-outline.svg",
-      bgClass: "bg-teal-50 dark:bg-zinc-800",
+      bgClass: "bg-rose-50 dark:bg-zinc-800",
     },
   ];
 
@@ -180,11 +189,13 @@ const App: React.FC = () => {
           </header>
 
           <section>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="grid max-w-[13rem] mx-auto grid-cols-2 sm:max-w-[30rem] sm:grid-cols-6 justify-items-center gap-4">
               {projects.map((project, index) => (
                 <Card
                   key={index}
-                  className="w-32 sm:w-36 shrink-0 overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl bg-card text-card-foreground border border-border shadow-md"
+                  className={`w-24 sm:w-36 sm:col-span-2 overflow-hidden cursor-pointer opacity-85 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(128,0,0,0.1)] hover:-translate-y-1 hover:rounded-3xl bg-card text-card-foreground border border-border shadow-md ${
+                    index === 3 ? "sm:col-start-2" : ""
+                  } ${index === projects.length - 1 ? "col-span-2 justify-self-center" : ""}`}
                   onClick={() => window.open(project.url, "_blank")}
                 >
                   <div className={`relative aspect-square ${project.bgClass || ""}`}>
