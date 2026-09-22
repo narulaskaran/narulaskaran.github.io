@@ -149,8 +149,8 @@ export function BugMode({
   const byMark = new Map(projects.map((project) => [project.mark, project]));
 
   return (
-    <div className="min-h-screen bg-stone-200 p-3 text-black sm:p-4 dark:bg-neutral-900 dark:text-white">
-      <div className="flex min-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden rounded-[28px] bg-white sm:min-h-[calc(100dvh-2rem)] dark:bg-black">
+    <div className="flex min-h-dvh flex-col bg-stone-200 px-3 pt-3 text-black sm:px-4 sm:pt-4 dark:bg-neutral-900 dark:text-white">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[28px] bg-white dark:bg-black">
         <header className="shrink-0 px-5 pr-24 pt-8 sm:px-10 sm:pr-28 sm:pt-12">
           <h1 className="font-fraunces text-[clamp(2.7rem,7vw,6.4rem)] leading-[0.86] font-bold tracking-[-0.045em] italic [font-optical-sizing:auto]">
             <span className="block sm:inline">KARAN </span>
@@ -187,7 +187,7 @@ export function BugMode({
           </nav>
         </header>
 
-        <div className="mt-auto flex h-[clamp(220px,52vh,600px)] items-end gap-2 px-0 sm:gap-3">
+        <div className="mt-auto flex min-h-[220px] w-full flex-1 items-end gap-2 sm:gap-3">
           {columns.map((spec, index) => (
             <PosterColumn
               key={spec.id}
