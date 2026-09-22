@@ -1,4 +1,6 @@
 import React from "react";
+import { Bug } from "lucide-react";
+import { BugMode } from "@/components/BugMode";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BrutalHover } from "@/components/brutal-hover";
 import { brutalHoverProps } from "@/lib/brutal";
@@ -74,6 +76,7 @@ const projects = [
   {
     name: "Party Planner",
     washTitle: "Party",
+    mark: "party" as const,
     description:
       "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
     url: "https://party.narula.xyz/",
@@ -85,6 +88,7 @@ const projects = [
   {
     name: "Receipt Splitter",
     washTitle: "Split",
+    mark: "receipt" as const,
     description:
       "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
     url: "https://split.narula.xyz/",
@@ -96,6 +100,7 @@ const projects = [
   {
     name: "AQI Monitor",
     washTitle: "Air",
+    mark: "aqi" as const,
     description:
       "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
@@ -106,6 +111,7 @@ const projects = [
   {
     name: "Seam Carving",
     washTitle: "Seam",
+    mark: "seam" as const,
     description:
       "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
@@ -116,6 +122,7 @@ const projects = [
   {
     name: "Twitter News Digest",
     washTitle: "News",
+    mark: "twitter" as const,
     description:
       "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
@@ -184,6 +191,16 @@ const App: React.FC = () => {
       : false
   );
 
+  const [bugMode, setBugMode] = React.useState(
+    () => localStorage.getItem("bugMode") === "on"
+  );
+
+  const toggleBugMode = () => {
+    const next = !bugMode;
+    setBugMode(next);
+    localStorage.setItem("bugMode", next ? "on" : "off");
+  };
+
   React.useEffect(() => {
     const handler = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem("theme")) {
@@ -204,75 +221,90 @@ const App: React.FC = () => {
   };
 
   return (
-    <BrutalHover>
-      <div className="fixed top-4 right-4 z-[104]">
-        <button
-          type="button"
-          className="brutal-icon"
-          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-          onClick={toggleTheme}
-          {...brutalHoverProps({
-            title: isDark ? "Light" : "Dark",
-            color: isDark ? "#ffe14a" : "#111111",
-            invert: isDark,
-          })}
-        >
-          {isDark ? <SunIcon /> : <MoonIcon />}
-        </button>
-      </div>
-      <div className="site-shell">
-        <header className="site-header">
-          <div className="hero-intro">
-            <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
-              <AvatarImage
-                src={profileData.profilePhotoUrl}
-                alt={`${profileData.firstName} ${profileData.lastName}`}
-              />
-              <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
-            </Avatar>
-            <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
-              {profileData.firstName}{" "}
-              <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
-                {profileData.lastName}
-              </span>
-            </h1>
-            <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
-              {profileData.title}
-            </p>
-          </div>
-          <SocialLinks isDark={isDark} className="elsewhere elsewhere--inline mt-6" />
-        </header>
-
-        <nav className="project-nav" aria-label="Projects">
-          {projects.map((project) => (
-            <a
-              key={project.name}
-              href={project.url}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label={project.name}
+    <>
+      <button
+        type="button"
+        className={`bug-toggle fixed top-4 z-[105] inline-flex h-10 w-10 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 ${bugMode ? "right-4 bg-amber-500/15 text-amber-300" : "right-16 text-foreground hover:bg-muted"}`}
+        aria-pressed={bugMode}
+        aria-label={bugMode ? "Turn off bug mode" : "Turn on bug mode"}
+        onClick={toggleBugMode}
+      >
+        <Bug className="h-5 w-5" />
+      </button>
+      {bugMode ? (
+        <BugMode role={profileData.title} socials={socials} projects={projects} />
+      ) : (
+        <BrutalHover>
+          <div className="fixed top-4 right-4 z-[104]">
+            <button
+              type="button"
+              className="brutal-icon"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              onClick={toggleTheme}
               {...brutalHoverProps({
-                title: project.washTitle,
-                color: project.color,
-                invert: project.motion === "ripple",
+                title: isDark ? "Light" : "Dark",
+                color: isDark ? "#ffe14a" : "#111111",
+                invert: isDark,
               })}
-              className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
             >
-              <span
-                className={`project-glyph is-${project.motion}`}
-                style={
-                  {
-                    "--icon-url": `url("${project.imageUrl}")`,
-                  } as React.CSSProperties
-                }
-              />
-            </a>
-          ))}
-        </nav>
+              {isDark ? <SunIcon /> : <MoonIcon />}
+            </button>
+          </div>
+          <div className="site-shell">
+            <header className="site-header">
+              <div className="hero-intro">
+                <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
+                  <AvatarImage
+                    src={profileData.profilePhotoUrl}
+                    alt={`${profileData.firstName} ${profileData.lastName}`}
+                  />
+                  <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
+                </Avatar>
+                <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
+                  {profileData.firstName}{" "}
+                  <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
+                    {profileData.lastName}
+                  </span>
+                </h1>
+                <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
+                  {profileData.title}
+                </p>
+              </div>
+              <SocialLinks isDark={isDark} className="elsewhere elsewhere--inline mt-6" />
+            </header>
 
-        <SocialLinks isDark={isDark} className="elsewhere elsewhere--dock" />
-      </div>
-    </BrutalHover>
+            <nav className="project-nav" aria-label="Projects">
+              {projects.map((project) => (
+                <a
+                  key={project.name}
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={project.name}
+                  {...brutalHoverProps({
+                    title: project.washTitle,
+                    color: project.color,
+                    invert: project.motion === "ripple",
+                  })}
+                  className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
+                >
+                  <span
+                    className={`project-glyph is-${project.motion}`}
+                    style={
+                      {
+                        "--icon-url": `url("${project.imageUrl}")`,
+                      } as React.CSSProperties
+                    }
+                  />
+                </a>
+              ))}
+            </nav>
+
+            <SocialLinks isDark={isDark} className="elsewhere elsewhere--dock" />
+          </div>
+        </BrutalHover>
+      )}
+    </>
   );
 };
 
