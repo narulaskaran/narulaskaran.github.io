@@ -628,3 +628,378 @@
 .bug-wheeee {
   animation: bug-wheeee 2000ms ease-out both;
 }
+
+.hammer-mode {
+  --hm-bg: #dadada;
+  --hm-ink: #1a1a1a;
+  --hm-muted: #5a5a5a;
+  --hm-swing: 480ms;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: var(--hm-bg);
+  color: var(--hm-ink);
+  color-scheme: light;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+.hammer-mode .hint {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  z-index: 30;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border: 2px solid #1a1a1a;
+  border-radius: 999px;
+  background: #fff;
+  padding: 8px 18px;
+  font-size: 12px;
+  color: var(--hm-muted);
+  transition: opacity 0.35s;
+}
+
+.hammer-mode .hint.hide {
+  opacity: 0;
+}
+
+.hammer-mode .stage {
+  position: relative;
+  width: min(1280px, 100%);
+  height: min(720px, 100vh);
+  margin: auto;
+  flex: 1;
+}
+
+.hammer-mode .hammer {
+  position: absolute;
+  left: 29.6%;
+  top: 2.9%;
+  z-index: 6;
+  width: min(808px, 63.1vw);
+  aspect-ratio: 808 / 456;
+  transform-origin: 12% 55%;
+  transform: rotate(0deg);
+  transition: transform var(--hm-swing) cubic-bezier(0.34, 1.45, 0.64, 1);
+  will-change: transform;
+}
+
+.hammer-mode .hammer.swinging {
+  transition: transform var(--hm-swing) cubic-bezier(0.55, 0.05, 0.4, 1.25);
+}
+
+.hammer-mode .hammer-body {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hammer-mode .hammer-content {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hammer-mode .social-hits {
+  position: absolute;
+  left: 11.7%;
+  top: 50.15%;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 19.5%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  padding-bottom: 18%;
+  gap: 6%;
+  pointer-events: auto;
+}
+
+.hammer-mode .social-hits a {
+  flex: 0 0 22%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.hammer-mode .badge-project {
+  position: absolute;
+  left: 11.7%;
+  top: 50.15%;
+  z-index: 4;
+  display: flex;
+  width: 19.5%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0.88);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  padding: 10%;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hammer-mode .hammer.show-project .badge-project {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hammer-mode .hammer.show-project .social-hits {
+  pointer-events: none;
+}
+
+.hammer-mode .proj-icon {
+  width: 42%;
+  height: 42%;
+  margin-bottom: 4%;
+}
+
+.hammer-mode .proj-icon img,
+.hammer-mode .nail-pop-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hammer-mode .proj-title {
+  max-width: 11ch;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(0.55rem, 1.05vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1a1a1a;
+}
+
+.hammer-mode .proj-sub {
+  margin-top: 2px;
+  font-size: clamp(0.38rem, 0.6vw, 0.5rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hm-muted);
+}
+
+.hammer-mode .impact-flash {
+  position: absolute;
+  left: 2%;
+  top: 70%;
+  width: 16%;
+  height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #ffe566 40%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hammer-mode .hammer.impact .impact-flash {
+  animation: hammer-pop-flash 280ms ease-out;
+}
+
+.hammer-mode .hammer.swing-party {
+  transform: rotate(-18deg) translate(-6%, 12%);
+}
+
+.hammer-mode .hammer.swing-receipt {
+  transform: rotate(-8deg) translate(-2%, 14%);
+}
+
+.hammer-mode .hammer.swing-aqi {
+  transform: rotate(2deg) translate(2%, 15%);
+}
+
+.hammer-mode .hammer.swing-seam {
+  transform: rotate(12deg) translate(7%, 14%);
+}
+
+.hammer-mode .hammer.swing-twitter {
+  transform: rotate(22deg) translate(12%, 12%);
+}
+
+.hammer-mode .nails {
+  position: absolute;
+  inset: 71.5% 0 auto;
+  z-index: 8;
+  height: 170px;
+  pointer-events: none;
+}
+
+.hammer-mode .social-hits a:focus-visible {
+  opacity: 0.35;
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+.hammer-mode .nail {
+  --c: #888;
+  position: absolute;
+  top: 0;
+  width: 110px;
+  height: 130px;
+  transform: translateX(-50%);
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hammer-mode .nail:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 4px;
+}
+
+.hammer-mode .nail:hover,
+.hammer-mode .nail.is-hover {
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.hammer-mode .nail.is-hit {
+  animation: hammer-nail-bonk 400ms cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+
+.hammer-mode .nail-svg {
+  display: block;
+  overflow: visible;
+  width: 110px;
+  height: 130px;
+}
+
+.hammer-mode .nail-svg .head,
+.hammer-mode .nail-svg .stem {
+  fill: var(--c);
+}
+
+.hammer-mode .nail-pop {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 6px);
+  z-index: 9;
+  display: flex;
+  min-width: 72px;
+  min-height: 28px;
+  transform: translateX(-50%) translateY(6px) scale(0.92);
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  padding: 8px 14px 8px 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: none;
+  transition:
+    opacity 0.2s,
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hammer-mode .nail:hover .nail-pop,
+.hammer-mode .nail.is-hover .nail-pop {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+}
+
+.hammer-mode .nail-pop-icon {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.hammer-mode .nail-pop-text {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+@media (max-width: 720px) {
+  .hammer-mode .hint {
+    top: 4.25rem;
+  }
+
+  .hammer-mode .stage {
+    height: auto;
+    min-height: 100vh;
+    padding: 48px 0 28px;
+  }
+
+  .hammer-mode .hammer {
+    left: 4%;
+    top: 8%;
+    width: min(92vw, 520px);
+  }
+
+  .hammer-mode .nails {
+    top: 58%;
+    height: 140px;
+  }
+
+  .hammer-mode .nail,
+  .hammer-mode .nail-svg {
+    width: 78px;
+    height: 100px;
+  }
+
+  .hammer-mode .nail-pop-text {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hammer-mode .hammer,
+  .hammer-mode .nail,
+  .hammer-mode .badge-project,
+  .hammer-mode .nail-pop,
+  .hammer-mode .hint {
+    transition-duration: 0.01ms !important;
+  }
+
+  .hammer-mode .hammer.impact .impact-flash,
+  .hammer-mode .nail.is-hit {
+    animation: none;
+  }
+}
+
+@keyframes hammer-pop-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@keyframes hammer-nail-bonk {
+  0% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+  40% {
+    transform: translateX(-50%) translateY(8px) scaleY(0.92);
+  }
+  100% {
+    transform: translateX(-50%) translateY(4px);
+  }
+}

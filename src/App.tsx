@@ -1,9 +1,11 @@
 import React from "react";
 import { Bug } from "lucide-react";
 import { BugMode } from "@/components/BugMode";
+import { HammerMode } from "@/components/HammerMode";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BrutalHover } from "@/components/brutal-hover";
 import { brutalHoverProps } from "@/lib/brutal";
+import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
   <svg
@@ -35,6 +37,19 @@ const MoonIcon = () => (
       strokeWidth="2"
       d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
     />
+  </svg>
+);
+
+const NailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <ellipse cx="12" cy="8.2" rx="6.8" ry="5.1" />
+    <path d="M9.4 12.2 12 21.2 14.6 12.2Z" />
   </svg>
 );
 
@@ -195,11 +210,9 @@ const App: React.FC = () => {
     () => localStorage.getItem("bugMode") === "on"
   );
 
-  const toggleBugMode = () => {
-    const next = !bugMode;
-    setBugMode(next);
-    localStorage.setItem("bugMode", next ? "on" : "off");
-  };
+  const [nailMode, setNailMode] = React.useState(
+    () => localStorage.getItem("nailMode") === "on"
+  );
 
   React.useEffect(() => {
     const handler = (e: MediaQueryListEvent) => {
@@ -220,18 +233,61 @@ const App: React.FC = () => {
     localStorage.setItem("theme", newDark ? "dark" : "light");
   };
 
+  const setPosterMode = (mode: "off" | "bug" | "nail") => {
+    const nextBug = mode === "bug";
+    const nextNail = mode === "nail";
+    setBugMode(nextBug);
+    setNailMode(nextNail);
+    localStorage.setItem("bugMode", nextBug ? "on" : "off");
+    localStorage.setItem("nailMode", nextNail ? "on" : "off");
+  };
+
+  const toggleBugMode = () => setPosterMode(bugMode ? "off" : "bug");
+  const toggleNailMode = () => setPosterMode(nailMode ? "off" : "nail");
+
   return (
     <>
-      <button
-        type="button"
-        className={`bug-toggle fixed top-4 z-[105] inline-flex h-10 w-10 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 ${bugMode ? "right-4 bg-amber-500/15 text-amber-300" : "right-16 text-foreground hover:bg-muted"}`}
-        aria-pressed={bugMode}
-        aria-label={bugMode ? "Turn off bug mode" : "Turn on bug mode"}
-        onClick={toggleBugMode}
+      <div
+        className={cn(
+          "fixed top-4 z-[105] flex items-center gap-1",
+          bugMode || nailMode ? "right-4" : "right-16",
+          nailMode && "text-neutral-800",
+          bugMode && "text-white",
+          !nailMode && !bugMode && "text-foreground"
+        )}
       >
-        <Bug className="h-5 w-5" />
-      </button>
-      {bugMode ? (
+        <button
+          type="button"
+          className={cn(
+            "bug-toggle inline-flex h-10 w-10 items-center justify-center rounded-md text-current focus-visible:outline-2 focus-visible:outline-offset-2",
+            !bugMode && !nailMode && "hover:bg-muted",
+            nailMode && "hover:bg-black/10 hover:text-neutral-900",
+            bugMode && "bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 hover:text-amber-200"
+          )}
+          aria-pressed={bugMode}
+          aria-label={bugMode ? "Turn off bug mode" : "Turn on bug mode"}
+          onClick={toggleBugMode}
+        >
+          <Bug className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          className={cn(
+            "inline-flex h-10 w-10 items-center justify-center rounded-md text-current focus-visible:outline-2 focus-visible:outline-offset-2",
+            !bugMode && !nailMode && "hover:bg-muted",
+            nailMode && "bg-orange-500/20 text-orange-800 hover:bg-orange-500/25 hover:text-orange-900",
+            bugMode && "hover:bg-white/10 hover:text-white"
+          )}
+          aria-pressed={nailMode}
+          aria-label={nailMode ? "Turn off nail mode" : "Turn on nail mode"}
+          onClick={toggleNailMode}
+        >
+          <NailIcon />
+        </button>
+      </div>
+      {nailMode ? (
+        <HammerMode socials={socials} projects={projects} />
+      ) : bugMode ? (
         <BugMode role={profileData.title} socials={socials} projects={projects} />
       ) : (
         <BrutalHover>
