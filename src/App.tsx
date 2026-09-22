@@ -96,7 +96,7 @@ const projects = [
       "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
     url: "https://party.narula.xyz/",
     github: "https://github.com/narulaskaran/bachelor-party",
-    imageUrl: "assets/project-img/party.svg",
+    imageUrl: "/assets/project-img/party.svg",
     color: "#9524ff",
     motion: "pulse",
   },
@@ -108,7 +108,7 @@ const projects = [
       "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
     url: "https://split.narula.xyz/",
     github: "https://github.com/narulaskaran/receipt-splitter",
-    imageUrl: "assets/project-img/receipt-splitter.svg",
+    imageUrl: "/assets/project-img/receipt-splitter.svg",
     color: "#2478ff",
     motion: "rise",
   },
@@ -119,7 +119,7 @@ const projects = [
     description:
       "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
-    imageUrl: "assets/project-img/aqi.svg",
+    imageUrl: "/assets/project-img/aqi.svg",
     color: "#24ff70",
     motion: "ripple",
   },
@@ -130,7 +130,7 @@ const projects = [
     description:
       "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
-    imageUrl: "assets/project-img/seam-carving.svg",
+    imageUrl: "/assets/project-img/seam-carving.svg",
     color: "#ff5724",
     motion: "spin",
   },
@@ -141,7 +141,7 @@ const projects = [
     description:
       "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
-    imageUrl: "assets/project-img/twitter-outline.svg",
+    imageUrl: "/assets/project-img/twitter-outline.svg",
     color: "#ff2450",
     motion: "pulse",
   },
@@ -294,7 +294,7 @@ const App: React.FC = () => {
           <div className="fixed top-4 right-4 z-[104]">
             <button
               type="button"
-              className="brutal-icon"
+              className="brutal-icon theme-toggle"
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
               onClick={toggleTheme}
               {...brutalHoverProps({

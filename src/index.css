@@ -96,7 +96,6 @@
   }
   html {
     background-color: hsl(var(--background));
-    transition: background-color 294ms ease;
   }
 
   body {
@@ -278,6 +277,12 @@
   color: var(--brutal-link);
   cursor: pointer;
   text-decoration: none;
+}
+
+.theme-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0;
 }
 
 .brutal-icon svg {
