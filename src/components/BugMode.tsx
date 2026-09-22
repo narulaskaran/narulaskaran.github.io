@@ -67,7 +67,7 @@ const columns: ColumnSpec[] = [
 ];
 
 const columnClassName =
-  "group relative block min-w-0 flex-1 origin-bottom overflow-hidden rounded-t-[999px] transition duration-300 ease-out hover:-translate-y-2 hover:brightness-110 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black dark:focus-visible:outline-white";
+  "bug-column group relative block min-w-0 flex-1 origin-bottom overflow-hidden rounded-t-[999px] transition duration-300 ease-out hover:-translate-y-2 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black dark:focus-visible:outline-white";
 
 function ProjectMark({ src }: { src: string }) {
   return (
@@ -110,7 +110,7 @@ function PosterColumn({
   };
 
   const shine = (
-    <span className="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-20 motion-reduce:transition-none" />
+    <span className="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
   );
 
   if (!project) {
@@ -129,7 +129,7 @@ function PosterColumn({
       {shine}
       <span className="pointer-events-none absolute inset-x-0 top-[11%] flex flex-col items-center px-1">
         <ProjectMark src={project.imageUrl} />
-        <span className="mt-2 max-w-[8.5rem] text-center font-plex-mono text-[clamp(0.5rem,1vw,0.68rem)] font-medium uppercase leading-tight tracking-[0.12em] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
+        <span className="mt-2 max-w-[8.5rem] text-center font-plex-mono text-[clamp(0.5rem,1vw,0.68rem)] font-medium uppercase leading-tight tracking-[0.12em] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
           {project.name}
         </span>
       </span>

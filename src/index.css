@@ -98,3 +98,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .bug-column {
+    transition: none;
+  }
+
+  .bug-column:hover {
+    translate: none;
+    filter: none;
+  }
+}
