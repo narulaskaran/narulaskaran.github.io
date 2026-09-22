@@ -77,8 +77,8 @@ const projects = [
     url: "https://party.narula.xyz/",
     github: "https://github.com/narulaskaran/bachelor-party",
     imageUrl: "assets/project-img/party.svg",
-    bgClass: "bg-violet-50 dark:bg-zinc-800",
     color: "#9524ff",
+    motion: "pulse",
   },
   {
     name: "Receipt Splitter",
@@ -87,8 +87,8 @@ const projects = [
     url: "https://split.narula.xyz/",
     github: "https://github.com/narulaskaran/receipt-splitter",
     imageUrl: "assets/project-img/receipt-splitter.svg",
-    bgClass: "bg-blue-50 dark:bg-zinc-800",
     color: "#2478ff",
+    motion: "rise",
   },
   {
     name: "AQI Monitor",
@@ -96,8 +96,8 @@ const projects = [
       "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
     imageUrl: "assets/project-img/aqi.svg",
-    bgClass: "bg-emerald-50 dark:bg-zinc-800",
-    color: "#00d1b2",
+    color: "#24ff70",
+    motion: "ripple",
   },
   {
     name: "Seam Carving",
@@ -105,8 +105,8 @@ const projects = [
       "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
     imageUrl: "assets/project-img/seam-carving.svg",
-    bgClass: "bg-amber-50 dark:bg-zinc-800",
     color: "#ff5724",
+    motion: "spin",
   },
   {
     name: "Twitter News Digest",
@@ -114,8 +114,8 @@ const projects = [
       "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
     imageUrl: "assets/project-img/twitter-outline.svg",
-    bgClass: "bg-rose-50 dark:bg-zinc-800",
     color: "#ff2450",
+    motion: "pulse",
   },
 ];
 
@@ -129,7 +129,7 @@ const socials = [
   {
     href: "https://github.com/narulaskaran/",
     label: "GitHub",
-    color: "#181717",
+    color: "#333333",
     icon: <GitHubIcon />,
   },
   {
@@ -196,7 +196,7 @@ const App: React.FC = () => {
               </span>
             </h1>
             <p className="text-lg text-muted-foreground">{profileData.title}</p>
-            <div className="mt-6 flex justify-center gap-3">
+            <div className="elsewhere">
               {socials.map((social) => (
                 <a
                   key={social.label}
@@ -205,7 +205,9 @@ const App: React.FC = () => {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={social.label}
-                  {...iconTone(social.color)}
+                  {...iconTone(
+                    social.label === "GitHub" && isDark ? "#f2f2f2" : social.color
+                  )}
                 >
                   {social.icon}
                 </a>
@@ -213,25 +215,28 @@ const App: React.FC = () => {
             </div>
           </header>
 
-          <section aria-label="Projects">
-            <div className="grid max-w-[13rem] mx-auto grid-cols-2 sm:max-w-[30rem] sm:grid-cols-6 justify-items-center gap-4">
-              {projects.map((project, index) => (
-                <a
-                  key={project.name}
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={project.name}
-                  {...iconTone(project.color)}
-                  className={`brutal-project aspect-square w-24 sm:w-36 sm:col-span-2 ${project.bgClass} ${
-                    index === 3 ? "sm:col-start-2" : ""
-                  } ${index === projects.length - 1 ? "col-span-2 justify-self-center" : ""}`}
-                >
-                  <img src={project.imageUrl} alt="" />
-                </a>
-              ))}
-            </div>
-          </section>
+          <nav className="project-nav" aria-label="Projects">
+            {projects.map((project) => (
+              <a
+                key={project.name}
+                href={project.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={project.name}
+                {...iconTone(project.color)}
+                className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
+              >
+                <span
+                  className={`project-glyph is-${project.motion}`}
+                  style={
+                    {
+                      "--icon-url": `url("${project.imageUrl}")`,
+                    } as React.CSSProperties
+                  }
+                />
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
     </>

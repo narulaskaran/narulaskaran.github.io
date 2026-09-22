@@ -64,7 +64,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **TypeScript**: `tsc` runs TypeScript 7 via the `@typescript/native` alias (`npm:typescript`). The `typescript` package is aliased to `@typescript/typescript6` so `typescript-eslint` can keep using the TypeScript 6 compiler API (TypeScript 7.0 does not ship one). `tsconfig` path aliases do not use `baseUrl` (removed in TypeScript 7).
 - **shadcn/ui**: Components are managed/configured via `components.json`.
 - **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
-- **Icon hover**: Social icons, the theme toggle, and project tiles pop a hard accent plate on hover. Colors come from `iconTone()` in `src/lib/brutal.ts`. The email address is not shown on the page.
+- **Icon hover**: Taken from the 2017 jgthms source. Social icons (`elsewhere`) jelly-pop a disc and invert the glyph. Project marks are faint strokes (`rgba(0,0,0,0.21)`, `#7a7a7a` in dark mode) that take an accent and a short motion on hover. Colors come from `iconTone()` in `src/lib/brutal.ts`. The email address is not shown on the page.
 
 ---
 
