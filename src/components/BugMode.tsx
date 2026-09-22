@@ -152,7 +152,7 @@ export function BugMode({
     <div className="min-h-screen bg-stone-200 p-3 text-black sm:p-4 dark:bg-neutral-900 dark:text-white">
       <div className="flex min-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden rounded-[28px] bg-white sm:min-h-[calc(100dvh-2rem)] dark:bg-black">
         <header className="shrink-0 px-5 pr-24 pt-8 sm:px-10 sm:pr-28 sm:pt-12">
-          <h1 className="font-fraunces text-[clamp(2.7rem,7vw,6.4rem)] leading-[0.86] font-medium tracking-[-0.045em] [font-optical-sizing:auto]">
+          <h1 className="font-fraunces text-[clamp(2.7rem,7vw,6.4rem)] leading-[0.86] font-bold tracking-[-0.045em] italic [font-optical-sizing:auto]">
             <span className="block sm:inline">KARAN </span>
             <span className="block sm:inline">
               NARULA
