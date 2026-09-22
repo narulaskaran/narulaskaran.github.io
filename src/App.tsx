@@ -153,20 +153,22 @@ const App: React.FC = () => {
           onClick={toggleBugMode}
           className={cn(
             "text-foreground",
-            bugMode && "bg-amber-500/15 text-amber-800 dark:text-amber-300"
+            bugMode && "bg-amber-500/15 text-amber-300"
           )}
         >
           <Bug className="h-5 w-5" />
         </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Toggle dark mode"
-          onClick={toggleTheme}
-          className="text-foreground"
-        >
-          {isDark ? <SunIcon /> : <MoonIcon />}
-        </Button>
+        {bugMode ? null : (
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Toggle dark mode"
+            onClick={toggleTheme}
+            className="text-foreground"
+          >
+            {isDark ? <SunIcon /> : <MoonIcon />}
+          </Button>
+        )}
       </div>
       {bugMode ? (
         <BugMode

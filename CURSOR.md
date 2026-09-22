@@ -79,7 +79,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - `vite.config.ts`: Vite config, including alias setup.
 - `components.json`: shadcn/ui config and aliases.
 - Dark mode toggle: A button in the top right corner lets users switch between dark and light mode. The theme is persisted and respects system settings by default.
-- Bug mode toggle: A bug icon beside the theme toggle swaps the homepage for a poster layout in `src/components/BugMode.tsx`. Display type is Fraunces and labels are IBM Plex Mono (the same pairing as plotmaniac.com). Light mode uses a white field with black type; dark mode inverts that. The choice is stored in `localStorage` under `bugMode`.
+- Bug mode toggle: A bug icon beside the theme toggle swaps the homepage for a poster layout in `src/components/BugMode.tsx`. Display type is Fraunces and labels are IBM Plex Mono (the same pairing as plotmaniac.com). Bug mode is always the dark poster, and the light/dark toggle is hidden while it is on. The choice is stored in `localStorage` under `bugMode`.
 
 ---
 
