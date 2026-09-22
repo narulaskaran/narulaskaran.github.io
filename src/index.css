@@ -32,6 +32,9 @@
   --color-chart-3: hsl(var(--chart-3));
   --color-chart-4: hsl(var(--chart-4));
   --color-chart-5: hsl(var(--chart-5));
+
+  --font-fraunces: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
@@ -93,5 +96,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bug-column {
+    transition: none;
+  }
+
+  .bug-column:hover {
+    translate: none;
+    filter: none;
   }
 }
