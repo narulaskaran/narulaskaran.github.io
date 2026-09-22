@@ -146,6 +146,37 @@ const socials = [
   },
 ];
 
+function SocialLinks({
+  isDark,
+  className,
+}: {
+  isDark: boolean;
+  className: string;
+}) {
+  return (
+    <div className={className}>
+      {socials.map((social) => (
+        <a
+          key={social.label}
+          className="brutal-icon"
+          href={social.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={social.label}
+          {...brutalHoverProps({
+            title: social.label,
+            color:
+              social.label === "GitHub" && isDark ? "#f2f2f2" : social.color,
+            invert: social.label === "GitHub" && isDark ? true : undefined,
+          })}
+        >
+          {social.icon}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 const App: React.FC = () => {
   const [isDark, setIsDark] = React.useState(() =>
     typeof window !== "undefined"
@@ -189,75 +220,55 @@ const App: React.FC = () => {
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
-      <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <header className="text-center mb-12">
-            <Avatar className="w-32 h-32 mx-auto rounded-lg">
-              <AvatarImage
-                src={profileData.profilePhotoUrl}
-                alt={`${profileData.firstName} ${profileData.lastName}`}
-              />
-              <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
-            </Avatar>
-            <h1 className="text-4xl font-bold text-primary mt-4 mb-2">
-              {profileData.firstName}{" "}
-              <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
-                {profileData.lastName}
-              </span>
-            </h1>
-            <p className="text-lg text-muted-foreground">{profileData.title}</p>
-            <div className="elsewhere">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  className="brutal-icon"
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={social.label}
-                  {...brutalHoverProps({
-                    title: social.label,
-                    color:
-                      social.label === "GitHub" && isDark
-                        ? "#f2f2f2"
-                        : social.color,
-                    invert:
-                      social.label === "GitHub" && isDark ? true : undefined,
-                  })}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </header>
+      <div className="site-shell">
+        <header className="site-header">
+          <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
+            <AvatarImage
+              src={profileData.profilePhotoUrl}
+              alt={`${profileData.firstName} ${profileData.lastName}`}
+            />
+            <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
+          </Avatar>
+          <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
+            {profileData.firstName}{" "}
+            <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
+              {profileData.lastName}
+            </span>
+          </h1>
+          <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
+            {profileData.title}
+          </p>
+          <SocialLinks isDark={isDark} className="elsewhere elsewhere--inline mt-6" />
+        </header>
 
-          <nav className="project-nav" aria-label="Projects">
-            {projects.map((project) => (
-              <a
-                key={project.name}
-                href={project.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label={project.name}
-                {...brutalHoverProps({
-                  title: project.washTitle,
-                  color: project.color,
-                  invert: project.motion === "ripple",
-                })}
-                className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
-              >
-                <span
-                  className={`project-glyph is-${project.motion}`}
-                  style={
-                    {
-                      "--icon-url": `url("${project.imageUrl}")`,
-                    } as React.CSSProperties
-                  }
-                />
-              </a>
-            ))}
-          </nav>
-        </div>
+        <nav className="project-nav" aria-label="Projects">
+          {projects.map((project) => (
+            <a
+              key={project.name}
+              href={project.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={project.name}
+              {...brutalHoverProps({
+                title: project.washTitle,
+                color: project.color,
+                invert: project.motion === "ripple",
+              })}
+              className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
+            >
+              <span
+                className={`project-glyph is-${project.motion}`}
+                style={
+                  {
+                    "--icon-url": `url("${project.imageUrl}")`,
+                  } as React.CSSProperties
+                }
+              />
+            </a>
+          ))}
+        </nav>
+
+        <SocialLinks isDark={isDark} className="elsewhere elsewhere--dock" />
       </div>
     </BrutalHover>
   );

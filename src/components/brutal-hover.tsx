@@ -25,12 +25,6 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
   }, []);
 
   React.useEffect(() => {
-    const root = document.documentElement;
-
-    const syncRootClass = (active: boolean) => {
-      root.classList.toggle("is-hovering", active);
-    };
-
     const onOver = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
       pointerRef.current = brutalTarget(event.target);
@@ -78,12 +72,17 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
       document.removeEventListener("pointerup", onPointerUp);
       document.removeEventListener("focusin", onFocusIn);
       document.removeEventListener("focusout", onFocusOut);
-      syncRootClass(false);
     };
   }, [publish]);
 
   React.useEffect(() => {
-    document.documentElement.classList.toggle("is-hovering", hover !== null);
+    const root = document.documentElement;
+    root.classList.toggle("is-hovering", hover !== null);
+    if (hover) {
+      root.style.setProperty("--page-wash", hover.color);
+    } else {
+      root.style.removeProperty("--page-wash");
+    }
   }, [hover]);
 
   return (
