@@ -1,7 +1,10 @@
 import React from "react";
+import { Bug } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { BugMode, type BugProject } from "@/components/BugMode";
+import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
   <svg
@@ -55,6 +58,7 @@ const App: React.FC = () => {
       github: "https://github.com/narulaskaran/bachelor-party",
       imageUrl: "assets/project-img/party.svg",
       bgClass: "bg-violet-50 dark:bg-zinc-800",
+      mark: "party",
     },
     {
       name: "Receipt Splitter",
@@ -64,6 +68,7 @@ const App: React.FC = () => {
       github: "https://github.com/narulaskaran/receipt-splitter",
       imageUrl: "assets/project-img/receipt-splitter.svg",
       bgClass: "bg-blue-50 dark:bg-zinc-800",
+      mark: "receipt",
     },
     {
       name: "AQI Monitor",
@@ -72,6 +77,7 @@ const App: React.FC = () => {
       url: "https://aqi.narula.xyz/",
       imageUrl: "assets/project-img/aqi.svg",
       bgClass: "bg-emerald-50 dark:bg-zinc-800",
+      mark: "aqi",
     },
     {
       name: "Seam Carving",
@@ -80,6 +86,7 @@ const App: React.FC = () => {
       url: "https://github.com/narulaskaran/seam-carving",
       imageUrl: "assets/project-img/seam-carving.svg",
       bgClass: "bg-amber-50 dark:bg-zinc-800",
+      mark: "seam",
     },
     {
       name: "Twitter News Digest",
@@ -88,13 +95,24 @@ const App: React.FC = () => {
       url: "https://github.com/narulaskaran/news-digest",
       imageUrl: "assets/project-img/twitter-outline.svg",
       bgClass: "bg-rose-50 dark:bg-zinc-800",
+      mark: "twitter",
     },
+  ] satisfies Array<BugProject & { description: string; bgClass: string; github?: string }>;
+
+  const socials = [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/narulaskaran/" },
+    { label: "GitHub", href: "https://github.com/narulaskaran/" },
+    { label: "Ko-fi", href: "https://ko-fi.com/Y8Y21CC8IA" },
   ];
 
   const [isDark, setIsDark] = React.useState(() =>
     typeof window !== "undefined"
       ? document.documentElement.classList.contains("dark")
       : false
+  );
+
+  const [bugMode, setBugMode] = React.useState(
+    () => typeof window !== "undefined" && localStorage.getItem("bugMode") === "on"
   );
 
   React.useEffect(() => {
@@ -116,9 +134,30 @@ const App: React.FC = () => {
     localStorage.setItem("theme", newDark ? "dark" : "light");
   };
 
+  const toggleBugMode = () => {
+    setBugMode((current) => {
+      const next = !current;
+      localStorage.setItem("bugMode", next ? "on" : "off");
+      return next;
+    });
+  };
+
   return (
     <>
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-pressed={bugMode}
+          aria-label={bugMode ? "Turn off bug mode" : "Turn on bug mode"}
+          onClick={toggleBugMode}
+          className={cn(
+            "text-foreground",
+            bugMode && "bg-amber-500/15 text-amber-800 dark:text-amber-300"
+          )}
+        >
+          <Bug className="h-5 w-5" />
+        </Button>
         <Button
           variant="ghost"
           size="icon"
@@ -129,6 +168,13 @@ const App: React.FC = () => {
           {isDark ? <SunIcon /> : <MoonIcon />}
         </Button>
       </div>
+      {bugMode ? (
+        <BugMode
+          role="Software Engineer / New York"
+          socials={socials}
+          projects={projects}
+        />
+      ) : (
       <div className="min-h-screen bg-gradient-to-b from-background to-muted transition-colors py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <header className="text-center mb-12">
@@ -216,6 +262,7 @@ const App: React.FC = () => {
           </section>
         </div>
       </div>
+      )}
     </>
   );
 };
