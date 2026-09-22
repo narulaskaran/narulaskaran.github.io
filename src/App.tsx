@@ -326,37 +326,37 @@ const App: React.FC = () => {
                   {profileData.title}
                 </p>
               </div>
-              <SocialLinks isDark={isDark} className="elsewhere elsewhere--inline mt-6" />
+
+              <nav className="project-nav project-nav--hero" aria-label="Projects">
+                {projects.map((project) => (
+                  <a
+                    key={project.name}
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={project.name}
+                    {...brutalHoverProps({
+                      title: project.washTitle,
+                      color: project.color,
+                      invert: project.motion === "ripple",
+                    })}
+                    className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
+                  >
+                    <span
+                      className={`project-glyph is-${project.motion}`}
+                      style={
+                        {
+                          "--icon-url": `url("${project.imageUrl}")`,
+                          "--project-color": project.color,
+                        } as React.CSSProperties
+                      }
+                    />
+                  </a>
+                ))}
+              </nav>
             </header>
 
-            <nav className="project-nav" aria-label="Projects">
-              {projects.map((project) => (
-                <a
-                  key={project.name}
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={project.name}
-                  {...brutalHoverProps({
-                    title: project.washTitle,
-                    color: project.color,
-                    invert: project.motion === "ripple",
-                  })}
-                  className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
-                >
-                  <span
-                    className={`project-glyph is-${project.motion}`}
-                    style={
-                      {
-                        "--icon-url": `url("${project.imageUrl}")`,
-                      } as React.CSSProperties
-                    }
-                  />
-                </a>
-              ))}
-            </nav>
-
-            <SocialLinks isDark={isDark} className="elsewhere elsewhere--dock" />
+            <SocialLinks isDark={isDark} className="elsewhere elsewhere--bottom" />
           </div>
         </BrutalHover>
       )}
