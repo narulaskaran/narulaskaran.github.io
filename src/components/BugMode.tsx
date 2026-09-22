@@ -67,7 +67,7 @@ const columns: ColumnSpec[] = [
 ];
 
 const columnClassName =
-  "bug-column group relative block min-w-0 flex-1 origin-bottom overflow-hidden rounded-t-[999px] transition duration-300 ease-out hover:-translate-y-2 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black dark:focus-visible:outline-white";
+  "bug-column group relative block min-w-0 flex-1 origin-bottom overflow-hidden rounded-t-[999px] transition duration-300 ease-out hover:-translate-y-2 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
 
 function ProjectMark({ src }: { src: string }) {
   return (
@@ -149,25 +149,25 @@ export function BugMode({
   const byMark = new Map(projects.map((project) => [project.mark, project]));
 
   return (
-    <div className="min-h-screen bg-stone-200 p-3 text-black sm:p-4 dark:bg-neutral-900 dark:text-white">
-      <div className="flex min-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden rounded-[28px] bg-white sm:min-h-[calc(100dvh-2rem)] dark:bg-black">
+    <div className="flex h-dvh flex-col bg-neutral-900 px-3 pt-3 text-white sm:px-4 sm:pt-4">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[28px] bg-black">
         <header className="shrink-0 px-5 pr-24 pt-8 sm:px-10 sm:pr-28 sm:pt-12">
-          <h1 className="font-fraunces text-[clamp(2.7rem,7vw,6.4rem)] leading-[0.86] font-medium tracking-[-0.045em] [font-optical-sizing:auto]">
+          <h1 className="font-fraunces text-[clamp(2.7rem,7vw,6.4rem)] leading-[0.86] font-bold tracking-[-0.045em] italic [font-optical-sizing:auto]">
             <span className="block sm:inline">KARAN </span>
             <span className="block sm:inline">
               NARULA
               <span
-                className="ml-[0.08em] inline-block size-[0.13em] translate-y-[-0.08em] rounded-full bg-[#9a3412] align-middle dark:bg-[#f5c451]"
+                className="ml-[0.08em] inline-block size-[0.13em] translate-y-[-0.08em] rounded-full bg-[#f5c451] align-middle"
                 aria-hidden="true"
               />
             </span>
           </h1>
-          <p className="mt-5 font-plex-mono text-[0.68rem] font-medium tracking-[0.16em] text-[#9a3412] uppercase sm:text-sm dark:text-[#f5c451]">
+          <p className="mt-5 font-plex-mono text-[0.68rem] font-medium tracking-[0.16em] text-[#f5c451] uppercase sm:text-sm">
             {role}
           </p>
           <nav
             aria-label="Profiles"
-            className="mt-2 flex flex-wrap items-center font-plex-mono text-[0.68rem] font-medium tracking-[0.16em] text-[#9a3412] uppercase sm:text-sm dark:text-[#f5c451]"
+            className="mt-2 flex flex-wrap items-center font-plex-mono text-[0.68rem] font-medium tracking-[0.16em] text-[#f5c451] uppercase sm:text-sm"
           >
             {socials.map((social, index) => (
               <span key={social.href} className="inline-flex items-center">
@@ -187,15 +187,17 @@ export function BugMode({
           </nav>
         </header>
 
-        <div className="mt-auto flex h-[clamp(220px,52vh,600px)] items-end gap-2 px-0 sm:gap-3">
-          {columns.map((spec, index) => (
-            <PosterColumn
-              key={spec.id}
-              spec={spec}
-              project={spec.mark ? byMark.get(spec.mark) : undefined}
-              edge={index === 0 ? "left" : index === columns.length - 1 ? "right" : "none"}
-            />
-          ))}
+        <div className="relative mt-auto min-h-[220px] w-full flex-1">
+          <div className="absolute inset-0 flex items-end gap-2 sm:gap-3">
+            {columns.map((spec, index) => (
+              <PosterColumn
+                key={spec.id}
+                spec={spec}
+                project={spec.mark ? byMark.get(spec.mark) : undefined}
+                edge={index === 0 ? "left" : index === columns.length - 1 ? "right" : "none"}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
