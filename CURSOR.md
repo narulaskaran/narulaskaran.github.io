@@ -16,9 +16,10 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 │   ├── index.css         # Tailwind and global styles
 │   ├── vite-env.d.ts     # Vite/TypeScript env types
 │   ├── components/       # UI and typography components
+│   │   ├── brutal-hover.tsx  # Full-viewport color wash on icon hover
 │   │   ├── ui/           # Reusable UI components (Card, Avatar, Button, Tooltip)
 │   │   └── typography/   # Typography components (H1, H2, P, etc.)
-│   └── lib/              # Utility functions (e.g., cn for classnames)
+│   └── lib/              # Utility functions (cn, icon hover colors)
 ├── public/               # Static assets (served as root)
 │   ├── assets/           # Images and SVGs for profile and projects
 │   │   ├── profile.jpg
@@ -64,12 +65,15 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **TypeScript**: `tsc` runs TypeScript 7 via the `@typescript/native` alias (`npm:typescript`). The `typescript` package is aliased to `@typescript/typescript6` so `typescript-eslint` can keep using the TypeScript 6 compiler API (TypeScript 7.0 does not ship one). `tsconfig` path aliases do not use `baseUrl` (removed in TypeScript 7).
 - **shadcn/ui**: Components are managed/configured via `components.json`.
 - **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
+- **Brutal hover**: Inspired by the May 2017 reference, hovering a project or social icon floods the page with that accent and a giant uppercase label over an opaque wash that hides the hero. Icons also jelly-pop or animate locally. Metadata comes from `brutalHoverProps()` in `src/lib/brutal.ts`. The email address is not shown on the page.
 
 ---
 
 ## Notable Files
 
-- `src/App.tsx`: Main React component, renders profile and project cards.
+- `src/App.tsx`: Main React component, renders profile, social icons, and project icons.
+- `src/components/brutal-hover.tsx`: Viewport-sized hover wash and giant label.
+- `src/lib/brutal.ts`: `brutalHoverProps()` for wash metadata and icon accent colors.
 - `src/components/BugMode.tsx`: Poster layout shown when bug mode is on.
 - `src/components/ui/card.tsx`: Card component (with header, footer, etc.).
 - `src/components/ui/avatar.tsx`: Avatar component (profile image).
