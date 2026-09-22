@@ -9,20 +9,12 @@ const NAILS: Array<{
   mark: HammerProject["mark"];
   left: string;
   color: string;
-  sub: string;
-  popTitle?: string;
 }> = [
-  { mark: "party", left: "26.17%", color: "#714b9e", sub: "Invites & weekends" },
-  { mark: "receipt", left: "37.89%", color: "#3b63b8", sub: "Split the tab" },
-  { mark: "aqi", left: "49.69%", color: "#3d845c", sub: "Air quality alerts" },
-  { mark: "seam", left: "61.56%", color: "#ce8c38", sub: "Content-aware resize" },
-  {
-    mark: "twitter",
-    left: "73.44%",
-    color: "#c7343a",
-    sub: "Trending summaries",
-    popTitle: "News Digest",
-  },
+  { mark: "party", left: "26.17%", color: "#714b9e" },
+  { mark: "receipt", left: "37.89%", color: "#3b63b8" },
+  { mark: "aqi", left: "49.69%", color: "#3d845c" },
+  { mark: "seam", left: "61.56%", color: "#ce8c38" },
+  { mark: "twitter", left: "73.44%", color: "#c7343a" },
 ];
 
 const IMPACT_AT_MS = 410;
@@ -73,10 +65,6 @@ export function HammerMode({
       clearTimers();
     };
   }, [clearTimers, later]);
-
-  const activeMark = hoverMark ?? swingMark;
-  const activeProject = activeMark ? byMark.get(activeMark) : undefined;
-  const activeMeta = activeMark ? NAILS.find((nail) => nail.mark === activeMark) : undefined;
 
   const showProject = (mark: HammerProject["mark"]) => {
     if (busyRef.current) return;
@@ -130,12 +118,10 @@ export function HammerMode({
         <div
           className={cn(
             "hammer",
-            activeProject && "show-project",
             swingMark && "swinging",
             swingMark && `swing-${swingMark}`,
             impact && "impact"
           )}
-          aria-live="polite"
         >
           <img
             className="hammer-body"
@@ -158,17 +144,6 @@ export function HammerMode({
                   title={social.label}
                 />
               ))}
-            </div>
-            <div className="badge-project">
-              {activeProject ? (
-                <>
-                  <div className="proj-icon" style={{ color: activeMeta?.color }}>
-                    <img src={activeProject.imageUrl} alt="" />
-                  </div>
-                  <div className="proj-title">{activeProject.name}</div>
-                  {activeMeta ? <div className="proj-sub">{activeMeta.sub}</div> : null}
-                </>
-              ) : null}
             </div>
           </div>
         </div>
@@ -195,10 +170,10 @@ export function HammerMode({
                 onClick={() => hitNail(nail.mark)}
               >
                 <div className="nail-pop">
-                  <div className="nail-pop-icon" style={{ color: nail.color }}>
+                  <div className="nail-pop-icon">
                     <img src={project.imageUrl} alt="" />
                   </div>
-                  <div className="nail-pop-text">{nail.popTitle ?? project.name}</div>
+                  <div className="nail-pop-text">{project.name}</div>
                 </div>
                 <NailShape />
               </button>
