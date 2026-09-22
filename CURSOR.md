@@ -11,18 +11,21 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 ```
 .
 ├── src/                  # Main source code
-│   ├── App.tsx           # Main app component (profile, projects grid)
+│   ├── App.tsx           # Main app component (profile, projects grid, mode toggles)
 │   ├── main.tsx          # React entry point
 │   ├── index.css         # Tailwind and global styles
 │   ├── vite-env.d.ts     # Vite/TypeScript env types
 │   ├── components/       # UI and typography components
 │   │   ├── brutal-hover.tsx  # Full-viewport color wash on icon hover
 │   │   ├── ui/           # Reusable UI components (Card, Avatar, Button, Tooltip)
+│   │   ├── BugMode.tsx   # Alternate poster homepage (bug toggle)
+│   │   ├── HammerMode.tsx# Alternate hammer-and-nails homepage (nail toggle)
 │   │   └── typography/   # Typography components (H1, H2, P, etc.)
 │   └── lib/              # Utility functions (cn, icon hover colors)
 ├── public/               # Static assets (served as root)
 │   ├── assets/           # Images and SVGs for profile and projects
 │   │   ├── profile.jpg
+│   │   ├── hammer-body.png
 │   │   └── project-img/  # Project images (gif, png, jpg)
 │   └── react.svg         # Example SVG
 ├── dist/                 # Build output (after `vite build`)
@@ -75,6 +78,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - `src/components/brutal-hover.tsx`: Viewport-sized hover wash and giant label.
 - `src/lib/brutal.ts`: `brutalHoverProps()` for wash metadata and icon accent colors.
 - `src/components/BugMode.tsx`: Poster layout shown when bug mode is on.
+- `src/components/HammerMode.tsx`: Hammer-and-nails layout shown when nail mode is on.
 - `src/components/ui/card.tsx`: Card component (with header, footer, etc.).
 - `src/components/ui/avatar.tsx`: Avatar component (profile image).
 - `src/components/typography/typography.tsx`: Typography components (H1, H2, P, etc.).
@@ -83,7 +87,8 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - `vite.config.ts`: Vite config, including alias setup.
 - `components.json`: shadcn/ui config and aliases.
 - Dark mode toggle: A button in the top right corner lets users switch between dark and light mode. The theme is persisted and respects system settings by default.
-- Bug mode toggle: A bug icon beside the theme toggle swaps the homepage for a poster layout in `src/components/BugMode.tsx`. Display type is Fraunces and labels are IBM Plex Mono (the same pairing as plotmaniac.com). Bug mode is always the dark poster, and the light/dark toggle is hidden while it is on. A white bug perches on the project columns and tumbles between them when hovered or clicked. The choice is stored in `localStorage` under `bugMode`.
+- Bug mode toggle: A bug icon in the top-right controls swaps the homepage for a poster layout in `src/components/BugMode.tsx`. Display type is Fraunces and labels are IBM Plex Mono (the same pairing as plotmaniac.com). Bug mode is always the dark poster, and the light/dark toggle is hidden while it is on. A white bug perches on the project columns and tumbles between them when hovered or clicked. The choice is stored in `localStorage` under `bugMode`.
+- Nail mode toggle: A nail icon beside the bug control swaps the homepage for the hammer-and-nails layout in `src/components/HammerMode.tsx`. The default homepage (brutal hover icons) stays the default view; nail mode is opt-in. The hammer lockup (name, title, social icons) stays fixed. Hovering a nail shows a popup label above that nail only; clicking swings the hammer into that nail, then navigates to the project URL. The poster is a fixed light-gray Readymag-style composition, so the light/dark toggle is hidden while it is on. Bug mode and nail mode are mutually exclusive. The choice is stored in `localStorage` under `nailMode`.
 
 ---
 
