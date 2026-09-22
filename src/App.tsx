@@ -1,7 +1,6 @@
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { BrutalHover } from "@/components/brutal-hover";
-import { brutalProps } from "@/lib/brutal";
+import { iconTone } from "@/lib/brutal";
 
 const SunIcon = () => (
   <svg
@@ -67,14 +66,12 @@ const profileData = {
   firstName: "Karan",
   lastName: "Narula",
   title: "Software Engineer · Based in New York",
-  email: "ksnarula@cs.washington.edu",
   profilePhotoUrl: "assets/profile.jpg",
 };
 
 const projects = [
   {
     name: "Party Planner",
-    brutalTitle: "Party",
     description:
       "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
     url: "https://party.narula.xyz/",
@@ -85,7 +82,6 @@ const projects = [
   },
   {
     name: "Receipt Splitter",
-    brutalTitle: "Split",
     description:
       "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
     url: "https://split.narula.xyz/",
@@ -96,7 +92,6 @@ const projects = [
   },
   {
     name: "AQI Monitor",
-    brutalTitle: "Air",
     description:
       "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
@@ -106,7 +101,6 @@ const projects = [
   },
   {
     name: "Seam Carving",
-    brutalTitle: "Seam",
     description:
       "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
@@ -116,7 +110,6 @@ const projects = [
   },
   {
     name: "Twitter News Digest",
-    brutalTitle: "News",
     description:
       "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
@@ -130,21 +123,18 @@ const socials = [
   {
     href: "https://www.linkedin.com/in/narulaskaran/",
     label: "LinkedIn",
-    title: "LinkedIn",
     color: "#0a66c2",
     icon: <LinkedInIcon />,
   },
   {
     href: "https://github.com/narulaskaran/",
     label: "GitHub",
-    title: "GitHub",
     color: "#181717",
     icon: <GitHubIcon />,
   },
   {
     href: "https://ko-fi.com/Y8Y21CC8IA",
     label: "Ko-fi",
-    title: "Ko-fi",
     color: "#ff5e5b",
     icon: <KofiIcon />,
   },
@@ -177,18 +167,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <BrutalHover>
+    <>
       <div className="fixed top-4 right-4 z-50">
         <button
           type="button"
           className="brutal-icon"
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           onClick={toggleTheme}
-          {...brutalProps({
-            title: isDark ? "Light" : "Dark",
-            color: isDark ? "#ffe14a" : "#111111",
-            invert: isDark,
-          })}
+          {...iconTone(isDark ? "#ffe14a" : "#111111", isDark)}
         >
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
@@ -196,18 +182,13 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <header className="text-center mb-12">
-            <div
-              className="brutal-mark mx-auto"
-              {...brutalProps({ title: "Karan", color: "#ff2450" })}
-            >
-              <Avatar className="w-32 h-32 rounded-none">
-                <AvatarImage
-                  src={profileData.profilePhotoUrl}
-                  alt={`${profileData.firstName} ${profileData.lastName}`}
-                />
-                <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
-              </Avatar>
-            </div>
+            <Avatar className="w-32 h-32 mx-auto rounded-lg">
+              <AvatarImage
+                src={profileData.profilePhotoUrl}
+                alt={`${profileData.firstName} ${profileData.lastName}`}
+              />
+              <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
+            </Avatar>
             <h1 className="text-4xl font-bold text-primary mt-4 mb-2">
               {profileData.firstName}{" "}
               <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
@@ -215,44 +196,6 @@ const App: React.FC = () => {
               </span>
             </h1>
             <p className="text-lg text-muted-foreground">{profileData.title}</p>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-8 text-foreground">
-              Selected work includes{" "}
-              {projects.map((project, index) => {
-                const separator =
-                  index < projects.length - 2
-                    ? ", "
-                    : index === projects.length - 2
-                      ? ", and "
-                      : "";
-                return (
-                  <span key={project.name}>
-                    <a
-                      className="brutal-link"
-                      href={project.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      {...brutalProps({
-                        title: project.brutalTitle,
-                        color: project.color,
-                      })}
-                    >
-                      {project.name}
-                    </a>
-                    {separator}
-                  </span>
-                );
-              })}
-              .
-            </p>
-            <p className="mt-4">
-              <a
-                className="brutal-link"
-                href={`mailto:${profileData.email}`}
-                {...brutalProps({ title: "Mail", color: "#ff470f" })}
-              >
-                {profileData.email}
-              </a>
-            </p>
             <div className="mt-6 flex justify-center gap-3">
               {socials.map((social) => (
                 <a
@@ -262,7 +205,7 @@ const App: React.FC = () => {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={social.label}
-                  {...brutalProps({ title: social.title, color: social.color })}
+                  {...iconTone(social.color)}
                 >
                   {social.icon}
                 </a>
@@ -279,28 +222,19 @@ const App: React.FC = () => {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={project.name}
-                  {...brutalProps({
-                    title: project.brutalTitle,
-                    color: project.color,
-                  })}
-                  className={`brutal-card w-24 sm:w-36 sm:col-span-2 ${
+                  {...iconTone(project.color)}
+                  className={`brutal-project aspect-square w-24 sm:w-36 sm:col-span-2 ${project.bgClass} ${
                     index === 3 ? "sm:col-start-2" : ""
                   } ${index === projects.length - 1 ? "col-span-2 justify-self-center" : ""}`}
                 >
-                  <div className={`relative aspect-square ${project.bgClass}`}>
-                    <img
-                      src={project.imageUrl}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <img src={project.imageUrl} alt="" />
                 </a>
               ))}
             </div>
           </section>
         </div>
       </div>
-    </BrutalHover>
+    </>
   );
 };
 

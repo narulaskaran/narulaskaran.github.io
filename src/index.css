@@ -99,75 +99,7 @@
   }
 }
 
-/* Hover language adapted from past.jgthms.com/2017-02:
-   a hard color block on links, a jelly disc behind icons, and a
-   full-viewport word that multiplies over the page. */
-
-.brutal-title {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 8vw;
-  overflow: hidden;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.045;
-  color: #111;
-  font-size: 10vmin;
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  line-height: 0.85;
-  text-align: justify;
-  text-transform: uppercase;
-  word-break: break-all;
-}
-
-.brutal-title > div {
-  width: 100%;
-}
-
-.dark .brutal-title {
-  color: #fff;
-  opacity: 0.06;
-}
-
-.brutal-title.is-active {
-  z-index: 40;
-  opacity: 1;
-  background: var(--brutal-color);
-  color: var(--brutal-ink, #fff);
-  mix-blend-mode: multiply;
-}
-
-.dark .brutal-title.is-active {
-  mix-blend-mode: screen;
-  color: #fff;
-}
-
-.brutal-link,
-.brutal-link:visited {
-  position: relative;
-  z-index: 50;
-  color: var(--brutal-link);
-  text-decoration: none;
-  background-image: linear-gradient(var(--brutal-link), var(--brutal-link));
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 2px;
-  padding: 0 0.12em 1px;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-.brutal-link:hover,
-.brutal-link:focus-visible {
-  background-image: none;
-  background-color: var(--brutal-link);
-  color: var(--brutal-link-ink, #fff);
-}
+/* Icon hover: a hard color plate pops behind social icons and project tiles. */
 
 .brutal-icon {
   position: relative;
@@ -214,33 +146,41 @@
   animation: jelly-pop 700ms linear both;
 }
 
-.brutal-card {
+.brutal-project {
+  position: relative;
   display: block;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  border: 2px solid color-mix(in srgb, currentColor 28%, transparent);
-  background: transparent;
 }
 
-.brutal-card:hover,
-.brutal-card:focus-visible {
-  border-color: var(--brutal-link);
+.brutal-project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brutal-link);
+  opacity: 0;
+  transform: scale(0.2);
+  transform-origin: center;
+  z-index: 0;
 }
 
-.brutal-mark {
-  width: fit-content;
+.brutal-project img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.brutal-mark:hover,
-.brutal-mark:focus-visible {
-  outline: 3px solid var(--brutal-link);
-  outline-offset: 4px;
+.brutal-project:hover::before,
+.brutal-project:focus-visible::before {
+  animation: jelly-pop 700ms linear both;
 }
 
-.brutal-link:focus-visible,
 .brutal-icon:focus-visible,
-.brutal-card:focus-visible {
+.brutal-project:focus-visible {
   outline: 2px solid var(--brutal-link);
   outline-offset: 3px;
 }
@@ -268,7 +208,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .brutal-icon:hover::before,
-  .brutal-icon:focus-visible::before {
+  .brutal-icon:focus-visible::before,
+  .brutal-project:hover::before,
+  .brutal-project:focus-visible::before {
     animation: none;
     opacity: 1;
     transform: none;
