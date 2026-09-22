@@ -101,9 +101,51 @@
   }
 }
 
-/* Icon language from past.jgthms.com/2017-02:
-   social marks jelly-pop a disc; project marks sit as faint strokes
-   and take their accent plus a short motion on hover. */
+/* past.jgthms.com/2017-02: full-page color wash + giant word on hover,
+   plus icon discs / strokes and short motions on the marks themselves. */
+
+.brutal-title {
+  position: fixed;
+  inset: 0;
+  z-index: 86;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10vw;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.04;
+  color: #000;
+  font-size: 10vmin;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  line-height: 0.85;
+  text-align: justify;
+  text-transform: uppercase;
+  word-break: break-all;
+}
+
+.brutal-title > div {
+  width: 100%;
+}
+
+.dark .brutal-title {
+  color: #fff;
+  opacity: 0.06;
+}
+
+.brutal-title.is-active {
+  opacity: 1;
+  background: var(--brutal-color);
+  color: var(--brutal-ink, #fff);
+  mix-blend-mode: multiply;
+}
+
+.dark .brutal-title.is-active {
+  mix-blend-mode: screen;
+  color: #fff;
+}
 
 .elsewhere {
   display: flex;
@@ -114,7 +156,7 @@
 
 .brutal-icon {
   position: relative;
-  z-index: 50;
+  z-index: 104;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -167,6 +209,7 @@
 .project-link {
   --icon-rest: rgba(0, 0, 0, 0.4);
   position: relative;
+  z-index: 104;
   display: flex;
   align-items: center;
   justify-content: center;

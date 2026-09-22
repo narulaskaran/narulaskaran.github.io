@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { iconTone } from "@/lib/brutal";
+import { BrutalHover } from "@/components/brutal-hover";
+import { brutalHoverProps } from "@/lib/brutal";
 
 const SunIcon = () => (
   <svg
@@ -72,6 +73,7 @@ const profileData = {
 const projects = [
   {
     name: "Party Planner",
+    washTitle: "Party",
     description:
       "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
     url: "https://party.narula.xyz/",
@@ -82,6 +84,7 @@ const projects = [
   },
   {
     name: "Receipt Splitter",
+    washTitle: "Split",
     description:
       "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
     url: "https://split.narula.xyz/",
@@ -92,6 +95,7 @@ const projects = [
   },
   {
     name: "AQI Monitor",
+    washTitle: "Air",
     description:
       "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
@@ -101,6 +105,7 @@ const projects = [
   },
   {
     name: "Seam Carving",
+    washTitle: "Seam",
     description:
       "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
@@ -110,6 +115,7 @@ const projects = [
   },
   {
     name: "Twitter News Digest",
+    washTitle: "News",
     description:
       "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
@@ -167,14 +173,18 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
-      <div className="fixed top-4 right-4 z-50">
+    <BrutalHover>
+      <div className="fixed top-4 right-4 z-[104]">
         <button
           type="button"
           className="brutal-icon"
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           onClick={toggleTheme}
-          {...iconTone(isDark ? "#ffe14a" : "#111111", isDark)}
+          {...brutalHoverProps({
+            title: isDark ? "Light" : "Dark",
+            color: isDark ? "#ffe14a" : "#111111",
+            invert: isDark,
+          })}
         >
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
@@ -205,9 +215,15 @@ const App: React.FC = () => {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={social.label}
-                  {...iconTone(
-                    social.label === "GitHub" && isDark ? "#f2f2f2" : social.color
-                  )}
+                  {...brutalHoverProps({
+                    title: social.label,
+                    color:
+                      social.label === "GitHub" && isDark
+                        ? "#f2f2f2"
+                        : social.color,
+                    invert:
+                      social.label === "GitHub" && isDark ? true : undefined,
+                  })}
                 >
                   {social.icon}
                 </a>
@@ -223,7 +239,11 @@ const App: React.FC = () => {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={project.name}
-                {...iconTone(project.color)}
+                {...brutalHoverProps({
+                  title: project.washTitle,
+                  color: project.color,
+                  invert: project.motion === "ripple",
+                })}
                 className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
               >
                 <span
@@ -239,7 +259,7 @@ const App: React.FC = () => {
           </nav>
         </div>
       </div>
-    </>
+    </BrutalHover>
   );
 };
 
