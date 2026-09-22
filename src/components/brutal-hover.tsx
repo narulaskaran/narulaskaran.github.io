@@ -9,7 +9,7 @@ import {
 const RESTING_TITLE = "Narula";
 
 /**
- * Full-viewport color wash and giant label (past.jgthms.com/2017-02).
+ * Full-viewport color wash and giant label (past.jgthms.com/2017-05).
  * Driven by `[data-brutal-*]` on icons and project links.
  */
 export function BrutalHover({ children }: { children: React.ReactNode }) {
@@ -39,6 +39,8 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
 
     const onPointerDown = () => {
       fromPointerRef.current = true;
+      focusRef.current = null;
+      publish();
     };
 
     const onPointerUp = () => {
@@ -49,15 +51,24 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
 
     const onFocusIn = (event: FocusEvent) => {
       if (fromPointerRef.current) return;
-      focusRef.current = brutalTarget(event.target);
+      const target = brutalTarget(event.target);
+      focusRef.current = target?.matches(":focus-visible") ? target : null;
       publish();
     };
 
-    const onFocusOut = (event: FocusEvent) => {
-      focusRef.current = brutalTarget(event.relatedTarget);
+    const onFocusOut = () => {
+      focusRef.current = null;
       publish();
     };
 
+    const onWindowBlur = () => {
+      pointerRef.current = null;
+      focusRef.current = null;
+      fromPointerRef.current = false;
+      publish();
+    };
+
+    window.addEventListener("blur", onWindowBlur);
     document.addEventListener("pointerover", onOver);
     document.addEventListener("pointerout", onOut);
     document.addEventListener("pointerdown", onPointerDown);
@@ -66,6 +77,7 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
     document.addEventListener("focusout", onFocusOut);
 
     return () => {
+      window.removeEventListener("blur", onWindowBlur);
       document.removeEventListener("pointerover", onOver);
       document.removeEventListener("pointerout", onOut);
       document.removeEventListener("pointerdown", onPointerDown);
@@ -80,14 +92,21 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
     root.classList.toggle("is-hovering", hover !== null);
     if (hover) {
       root.style.setProperty("--page-wash", hover.color);
-    } else {
-      root.style.removeProperty("--page-wash");
+      root.style.setProperty("--page-ink", hover.ink);
     }
   }, [hover]);
+
+  React.useEffect(() => () => {
+    const root = document.documentElement;
+    root.classList.remove("is-hovering");
+    root.style.removeProperty("--page-wash");
+    root.style.removeProperty("--page-ink");
+  }, []);
 
   return (
     <>
       {children}
+      <div className="brutal-wash" aria-hidden="true" />
       <div
         className={hover ? "brutal-title is-active" : "brutal-title"}
         style={
@@ -100,7 +119,7 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
         }
         aria-hidden="true"
       >
-        <div>{hover?.title ?? RESTING_TITLE}</div>
+        <div key={hover?.title ?? RESTING_TITLE}>{hover?.title ?? RESTING_TITLE}</div>
       </div>
     </>
   );

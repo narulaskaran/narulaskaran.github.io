@@ -222,22 +222,24 @@ const App: React.FC = () => {
       </div>
       <div className="site-shell">
         <header className="site-header">
-          <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
-            <AvatarImage
-              src={profileData.profilePhotoUrl}
-              alt={`${profileData.firstName} ${profileData.lastName}`}
-            />
-            <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
-          </Avatar>
-          <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
-            {profileData.firstName}{" "}
-            <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
-              {profileData.lastName}
-            </span>
-          </h1>
-          <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
-            {profileData.title}
-          </p>
+          <div className="hero-intro">
+            <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
+              <AvatarImage
+                src={profileData.profilePhotoUrl}
+                alt={`${profileData.firstName} ${profileData.lastName}`}
+              />
+              <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
+            </Avatar>
+            <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
+              {profileData.firstName}{" "}
+              <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
+                {profileData.lastName}
+              </span>
+            </h1>
+            <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
+              {profileData.title}
+            </p>
+          </div>
           <SocialLinks isDark={isDark} className="elsewhere elsewhere--inline mt-6" />
         </header>
 
