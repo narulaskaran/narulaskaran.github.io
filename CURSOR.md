@@ -65,7 +65,7 @@ This is a personal portfolio site for Karan Narula, built with React, TypeScript
 - **TypeScript**: `tsc` runs TypeScript 7 via the `@typescript/native` alias (`npm:typescript`). The `typescript` package is aliased to `@typescript/typescript6` so `typescript-eslint` can keep using the TypeScript 6 compiler API (TypeScript 7.0 does not ship one). `tsconfig` path aliases do not use `baseUrl` (removed in TypeScript 7).
 - **shadcn/ui**: Components are managed/configured via `components.json`.
 - **Dark Mode Support**: The site supports dark mode, following the user's system preference by default. A toggle button in the top right allows manual switching, and the choice is remembered.
-- **Brutal hover**: Links, social icons, project tiles, the portrait, and the theme toggle carry `data-brutal-*` attributes via `brutalProps()` in `src/lib/brutal.ts`. `BrutalHover` paints a giant uppercase label and a hard color wash (multiply in light mode, screen in dark mode). Text links fill with their accent on hover; icons pop a colored disc. The wash is pointer-only on fine pointers so touch taps do not leave it stuck.
+- **Brutal hover**: Links, social icons, project tiles, the portrait, and the theme toggle carry `data-brutal-*` attributes via `brutalProps()` in `src/lib/brutal.ts`. `BrutalHover` paints a giant uppercase label and a hard color wash (multiply in light mode, screen in dark mode). Text links fill with their accent on hover; icons pop a colored disc. Touch pointers are ignored so a tap does not leave the wash stuck. Keyboard focus still shows it.
 
 ---
 

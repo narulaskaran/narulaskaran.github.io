@@ -10,13 +10,14 @@ const RESTING_TITLE = "Narula";
 
 /**
  * Full-viewport color wash and giant label, driven by `[data-brutal-*]`
- * on links and icons. Pointer hovers run only for fine pointers so a tap
- * does not leave the wash stuck on screen.
+ * on links and icons. Touch pointers are ignored so a tap does not leave
+ * the wash stuck on screen. Keyboard focus still shows it.
  */
 export function BrutalHover({ children }: { children: React.ReactNode }) {
   const [hover, setHover] = React.useState<BrutalHoverState | null>(null);
   const pointerRef = React.useRef<HTMLElement | null>(null);
   const focusRef = React.useRef<HTMLElement | null>(null);
+  const fromPointerRef = React.useRef(false);
 
   const publish = React.useCallback(() => {
     const el = pointerRef.current ?? focusRef.current;
@@ -25,30 +26,31 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
   }, []);
 
   React.useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-    const onOver = (event: MouseEvent) => {
-      if (!fine.matches) return;
+    const onOver = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
       pointerRef.current = brutalTarget(event.target);
       publish();
     };
 
-    const onOut = (event: MouseEvent) => {
-      if (!fine.matches) return;
+    const onOut = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
       pointerRef.current = brutalTarget(event.relatedTarget);
       publish();
     };
 
+    const onPointerDown = () => {
+      fromPointerRef.current = true;
+    };
+
+    const onPointerUp = () => {
+      window.setTimeout(() => {
+        fromPointerRef.current = false;
+      }, 0);
+    };
+
     const onFocusIn = (event: FocusEvent) => {
-      const target = event.target;
-      if (
-        fine.matches &&
-        target instanceof Element &&
-        target.closest("[data-brutal-title]")?.matches(":hover")
-      ) {
-        return;
-      }
-      focusRef.current = brutalTarget(target);
+      if (fromPointerRef.current) return;
+      focusRef.current = brutalTarget(event.target);
       publish();
     };
 
@@ -64,27 +66,22 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
       });
     };
 
-    const onPointerModeChange = () => {
-      if (!fine.matches) {
-        pointerRef.current = null;
-        publish();
-      }
-    };
-
-    document.addEventListener("mouseover", onOver);
-    document.addEventListener("mouseout", onOut);
+    document.addEventListener("pointerover", onOver);
+    document.addEventListener("pointerout", onOut);
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("pointerup", onPointerUp);
     document.addEventListener("focusin", onFocusIn);
     document.addEventListener("focusout", onFocusOut);
     document.addEventListener("click", onClick);
-    fine.addEventListener("change", onPointerModeChange);
 
     return () => {
-      document.removeEventListener("mouseover", onOver);
-      document.removeEventListener("mouseout", onOut);
+      document.removeEventListener("pointerover", onOver);
+      document.removeEventListener("pointerout", onOut);
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("pointerup", onPointerUp);
       document.removeEventListener("focusin", onFocusIn);
       document.removeEventListener("focusout", onFocusOut);
       document.removeEventListener("click", onClick);
-      fine.removeEventListener("change", onPointerModeChange);
     };
   }, [publish]);
 
