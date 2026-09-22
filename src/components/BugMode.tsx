@@ -325,7 +325,7 @@ export function BugMode({
               aria-hidden="true"
             >
               <CuteBug className="bug-flight-icon size-8 sm:size-9" />
-              <span className="bug-wheeee absolute left-8 top-0 whitespace-nowrap font-plex-mono text-xs font-medium tracking-wide text-white sm:text-sm">
+              <span className="bug-wheeee absolute left-16 top-0 whitespace-nowrap font-plex-mono text-xs font-medium tracking-wide text-white sm:text-sm">
                 Wheeee!
               </span>
             </div>
