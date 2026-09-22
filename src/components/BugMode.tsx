@@ -245,7 +245,7 @@ export function BugMode({
         "--bug-dx": `${flight.to.x - flight.from.x}px`,
         "--bug-dy": `${flight.to.y - flight.from.y}px`,
         "--bug-mid-x": `${(flight.to.x - flight.from.x) / 2}px`,
-        "--bug-mid-y": `${(flight.to.y - flight.from.y) / 2 - 110}px`,
+        "--bug-mid-y": `${(flight.to.y - flight.from.y) / 2 - 180}px`,
       } as React.CSSProperties)
     : undefined;
 
