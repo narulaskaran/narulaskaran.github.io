@@ -322,6 +322,12 @@
   padding: 0 1rem 3rem;
 }
 
+.site-header .project-nav--hero {
+  margin-top: 1.75rem;
+  padding: 0 1rem;
+  gap: clamp(0.45rem, 2vw, 1.25rem);
+}
+
 .project-link {
   --icon-rest: rgba(0, 0, 0, 0.35);
   position: relative;
@@ -358,7 +364,7 @@
 .project-glyph {
   width: 2.75rem;
   height: 2.75rem;
-  background-color: var(--icon-rest);
+  background-color: var(--project-color, var(--icon-rest));
   transition:
     background-color 294ms ease,
     transform 294ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -414,29 +420,38 @@
   outline-offset: 3px;
 }
 
-.elsewhere--inline {
-  display: flex;
+.elsewhere--bottom {
+  flex: 0 0 auto;
+  margin-top: 1.5rem;
+  padding: 0 1rem 2.5rem;
 }
 
-@media (min-width: 990px) {
-  .elsewhere--inline {
-    display: none;
+@media (max-width: 640px) {
+  .site-header .project-nav--hero {
+    gap: 0.25rem;
+    padding: 0;
   }
 
-  .elsewhere--dock {
-    position: fixed;
-    right: 2rem;
-    top: 50%;
-    z-index: 104;
-    transform: translateY(-50%);
-    flex-direction: column;
-    margin-top: 0;
+  .site-header .project-nav--hero .project-link {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+
+  .site-header .project-nav--hero .project-glyph {
+    width: 2.35rem;
+    height: 2.35rem;
   }
 }
 
-@media (max-width: 989px) {
-  .elsewhere--dock {
-    display: none;
+@media (max-width: 360px) {
+  .site-header .project-nav--hero .project-link {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .site-header .project-nav--hero .project-glyph {
+    width: 2rem;
+    height: 2rem;
   }
 }
 
