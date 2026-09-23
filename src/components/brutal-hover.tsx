@@ -6,8 +6,6 @@ import {
   type BrutalHoverState,
 } from "@/lib/brutal";
 
-const RESTING_TITLE = "Narula";
-
 /**
  * Full-viewport color wash and giant label (past.jgthms.com/2017-05).
  * Driven by `[data-brutal-*]` on icons and project links.
@@ -107,20 +105,20 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <div className="brutal-wash" aria-hidden="true" />
-      <div
-        className={hover ? "brutal-title is-active" : "brutal-title"}
-        style={
-          hover
-            ? ({
-                "--brutal-color": hover.color,
-                "--brutal-ink": hover.ink,
-              } as React.CSSProperties)
-            : undefined
-        }
-        aria-hidden="true"
-      >
-        <div key={hover?.title ?? RESTING_TITLE}>{hover?.title ?? RESTING_TITLE}</div>
-      </div>
+      {hover ? (
+        <div
+          className="brutal-title is-active"
+          style={
+            {
+              "--brutal-color": hover.color,
+              "--brutal-ink": hover.ink,
+            } as React.CSSProperties
+          }
+          aria-hidden="true"
+        >
+          <div>{hover.title}</div>
+        </div>
+      ) : null}
     </>
   );
 }
