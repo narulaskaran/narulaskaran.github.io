@@ -93,14 +93,6 @@ const heroVariantFromUrl = (): HeroVariant => {
   return value === "backdrop" || value === "slab" ? value : "split";
 };
 
-type ToggleVariant = "chip" | "pop" | "spin";
-
-const toggleVariantFromUrl = (): ToggleVariant => {
-  if (typeof window === "undefined") return "chip";
-  const value = new URLSearchParams(window.location.search).get("toggle");
-  return value === "pop" || value === "spin" ? value : "chip";
-};
-
 const projects = [
   {
     name: "Party Planner",
@@ -243,7 +235,6 @@ const App: React.FC = () => {
   const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8bd5ff");
   const heroVariant = heroVariantFromUrl();
   const backdropOnly = heroVariant !== "split";
-  const toggleVariant = toggleVariantFromUrl();
 
   React.useEffect(() => {
     const handler = (event: MediaQueryListEvent) => {
@@ -329,11 +320,7 @@ const App: React.FC = () => {
           <div className="fixed top-4 right-4 z-[104]">
             <button
               type="button"
-              className={cn(
-                "theme-toggle",
-                `theme-toggle--${toggleVariant}`,
-                toggleVariant === "pop" && "brutal-icon"
-              )}
+              className="brutal-icon theme-toggle"
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
               onClick={toggleTheme}
               style={
@@ -352,11 +339,9 @@ const App: React.FC = () => {
                 />
               ) : null}
               {isDark ? <SunIcon /> : <MoonIcon />}
-              {toggleVariant === "pop" ? (
-                <span className="theme-toggle-label" aria-hidden="true">
-                  {isDark ? "Light" : "Dark"}
-                </span>
-              ) : null}
+              <span className="theme-toggle-label" aria-hidden="true">
+                {isDark ? "Light" : "Dark"}
+              </span>
             </button>
           </div>
           <div className={`site-shell hero-variant-${heroVariant}`}>
