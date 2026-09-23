@@ -2,7 +2,6 @@ import React from "react";
 import { Bug } from "lucide-react";
 import { BugMode } from "@/components/BugMode";
 import { HammerMode } from "@/components/HammerMode";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BrutalHover } from "@/components/brutal-hover";
 import { brutalHoverProps } from "@/lib/brutal";
 import { cn } from "@/lib/utils";
@@ -19,7 +18,7 @@ const SunIcon = () => (
     <path
       stroke="currentColor"
       strokeWidth="2"
-      d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.414-1.414M6.464 6.464L5.05 5.05m12.02 0l-1.414 1.414M6.464 17.536l-1.414 1.414"
+      d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95-1.414-1.414M6.464 6.464 5.05 5.05m12.02 0-1.414 1.414M6.464 17.536 5.05 18.95"
     />
   </svg>
 );
@@ -35,7 +34,7 @@ const MoonIcon = () => (
     <path
       stroke="currentColor"
       strokeWidth="2"
-      d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
+      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
     />
   </svg>
 );
@@ -80,11 +79,18 @@ const KofiIcon = () => (
   </svg>
 );
 
+type HeroVariant = "split" | "backdrop" | "slab";
+
 const profileData = {
   firstName: "Karan",
   lastName: "Narula",
-  title: "Software Engineer · Based in New York",
-  profilePhotoUrl: "assets/profile.jpg",
+  role: "software engineer / new york",
+};
+
+const heroVariantFromUrl = (): HeroVariant => {
+  if (typeof window === "undefined") return "split";
+  const value = new URLSearchParams(window.location.search).get("hero");
+  return value === "backdrop" || value === "slab" ? value : "split";
 };
 
 const projects = [
@@ -92,10 +98,7 @@ const projects = [
     name: "Party Planner",
     washTitle: "Party",
     mark: "party" as const,
-    description:
-      "Turn messy event notes into a private guest page. Paste what you know, review a draft on the site, and send a unique invite link—never published on its own. Supports nights out with RSVP and weekend trips with schedule, lodging, activities, and packing lists.",
     url: "https://party.narula.xyz/",
-    github: "https://github.com/narulaskaran/bachelor-party",
     imageUrl: "/assets/project-img/party.svg",
     color: "#9524ff",
     motion: "pulse",
@@ -104,10 +107,7 @@ const projects = [
     name: "Receipt Splitter",
     washTitle: "Split",
     mark: "receipt" as const,
-    description:
-      "A web app for splitting receipts easily among friends and groups. Upload a receipt, add people, assign items, and the app automatically calculates what each person owes—including tax and tip. No app installation or account required. Features include receipt image parsing, detailed breakdowns, and easy sharing.",
     url: "https://split.narula.xyz/",
-    github: "https://github.com/narulaskaran/receipt-splitter",
     imageUrl: "/assets/project-img/receipt-splitter.svg",
     color: "#2478ff",
     motion: "rise",
@@ -116,8 +116,6 @@ const projects = [
     name: "AQI Monitor",
     washTitle: "Air",
     mark: "aqi" as const,
-    description:
-      "A real-time Air Quality Index (AQI) monitoring application. Users can check local air quality, receive email alerts for changes, and view color-coded AQI data with health recommendations. Features ZIP code-based monitoring, responsive design, and an admin dashboard.",
     url: "https://aqi.narula.xyz/",
     imageUrl: "/assets/project-img/aqi.svg",
     color: "#24ff70",
@@ -127,8 +125,6 @@ const projects = [
     name: "Seam Carving",
     washTitle: "Seam",
     mark: "seam" as const,
-    description:
-      "A content-aware image resizing tool that uses the seam carving algorithm to intelligently reduce or expand image dimensions without distorting important content. Supports object removal and energy-based seam identification.",
     url: "https://github.com/narulaskaran/seam-carving",
     imageUrl: "/assets/project-img/seam-carving.svg",
     color: "#ff5724",
@@ -138,8 +134,6 @@ const projects = [
     name: "Twitter News Digest",
     washTitle: "News",
     mark: "twitter" as const,
-    description:
-      "A tool that summarizes trending news stories from Twitter, providing concise digests of the latest topics.",
     url: "https://github.com/narulaskaran/news-digest",
     imageUrl: "/assets/project-img/twitter-outline.svg",
     color: "#ff2450",
@@ -168,19 +162,13 @@ const socials = [
   },
 ];
 
-function SocialLinks({
-  isDark,
-  className,
-}: {
-  isDark: boolean;
-  className: string;
-}) {
+function SocialLinks({ isDark }: { isDark: boolean }) {
   return (
-    <div className={className}>
+    <nav className="elsewhere elsewhere--bottom" aria-label="Elsewhere">
       {socials.map((social) => (
         <a
           key={social.label}
-          className="brutal-icon"
+          className="brutal-icon social-icon"
           href={social.href}
           target="_blank"
           rel="noreferrer noopener"
@@ -189,13 +177,45 @@ function SocialLinks({
             title: social.label,
             color:
               social.label === "GitHub" && isDark ? "#f2f2f2" : social.color,
-            invert: social.label === "GitHub" && isDark ? true : undefined,
+            invert: social.label === "GitHub" && isDark,
           })}
         >
           {social.icon}
         </a>
       ))}
-    </div>
+    </nav>
+  );
+}
+
+function ProjectNav() {
+  return (
+    <nav className="project-nav project-nav--hero" aria-label="Projects">
+      {projects.map((project) => (
+        <a
+          key={project.name}
+          className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
+          href={project.url}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={project.name}
+          {...brutalHoverProps({
+            title: project.washTitle,
+            color: project.color,
+            invert: project.motion === "ripple",
+          })}
+        >
+          <span
+            className={`project-glyph is-${project.motion}`}
+            style={
+              {
+                "--icon-url": `url("${project.imageUrl}")`,
+                "--project-color": project.color,
+              } as React.CSSProperties
+            }
+          />
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -205,25 +225,25 @@ const App: React.FC = () => {
       ? document.documentElement.classList.contains("dark")
       : false
   );
-
   const [bugMode, setBugMode] = React.useState(
     () => localStorage.getItem("bugMode") === "on"
   );
-
   const [nailMode, setNailMode] = React.useState(
     () => localStorage.getItem("nailMode") === "on"
   );
+  const heroVariant = heroVariantFromUrl();
+  const backdropOnly = heroVariant !== "split";
 
   React.useEffect(() => {
-    const handler = (e: MediaQueryListEvent) => {
+    const handler = (event: MediaQueryListEvent) => {
       if (!localStorage.getItem("theme")) {
-        document.documentElement.classList.toggle("dark", e.matches);
-        setIsDark(e.matches);
+        document.documentElement.classList.toggle("dark", event.matches);
+        setIsDark(event.matches);
       }
     };
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
   const toggleTheme = () => {
@@ -262,7 +282,8 @@ const App: React.FC = () => {
             "bug-toggle inline-flex h-10 w-10 items-center justify-center rounded-md text-current focus-visible:outline-2 focus-visible:outline-offset-2",
             !bugMode && !nailMode && "hover:bg-muted",
             nailMode && "hover:bg-black/10 hover:text-neutral-900",
-            bugMode && "bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 hover:text-amber-200"
+            bugMode &&
+              "bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 hover:text-amber-200"
           )}
           aria-pressed={bugMode}
           aria-label={bugMode ? "Turn off bug mode" : "Turn on bug mode"}
@@ -275,7 +296,8 @@ const App: React.FC = () => {
           className={cn(
             "inline-flex h-10 w-10 items-center justify-center rounded-md text-current focus-visible:outline-2 focus-visible:outline-offset-2",
             !bugMode && !nailMode && "hover:bg-muted",
-            nailMode && "bg-orange-500/20 text-orange-800 hover:bg-orange-500/25 hover:text-orange-900",
+            nailMode &&
+              "bg-orange-500/20 text-orange-800 hover:bg-orange-500/25 hover:text-orange-900",
             bugMode && "hover:bg-white/10 hover:text-white"
           )}
           aria-pressed={nailMode}
@@ -288,7 +310,7 @@ const App: React.FC = () => {
       {nailMode ? (
         <HammerMode socials={socials} projects={projects} />
       ) : bugMode ? (
-        <BugMode role={profileData.title} socials={socials} projects={projects} />
+        <BugMode role={profileData.role} socials={socials} projects={projects} />
       ) : (
         <BrutalHover>
           <div className="fixed top-4 right-4 z-[104]">
@@ -306,57 +328,42 @@ const App: React.FC = () => {
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
           </div>
-          <div className="site-shell">
-            <header className="site-header">
-              <div className="hero-intro">
-                <Avatar className="site-enter w-28 h-28 sm:w-32 sm:h-32 rounded-lg">
-                  <AvatarImage
-                    src={profileData.profilePhotoUrl}
-                    alt={`${profileData.firstName} ${profileData.lastName}`}
-                  />
-                  <AvatarFallback>{profileData.firstName[0]}</AvatarFallback>
-                </Avatar>
-                <h1 className="site-enter site-enter-delay-1 text-4xl sm:text-5xl font-bold text-primary mt-5 mb-2 tracking-tight">
-                  {profileData.firstName}{" "}
-                  <span className="text-[rgba(128,0,0,0.9)] dark:text-red-400">
-                    {profileData.lastName}
-                  </span>
-                </h1>
-                <p className="site-enter site-enter-delay-2 text-base sm:text-lg text-muted-foreground max-w-md">
-                  {profileData.title}
-                </p>
+          <div className={`site-shell hero-variant-${heroVariant}`}>
+            <header className="site-header name-only-hero">
+              <div
+                className={`hero-backdrop${backdropOnly ? " hero-backdrop--full" : ""}${heroVariant === "slab" ? " hero-backdrop--slab" : ""}`}
+                aria-hidden="true"
+              >
+                {backdropOnly && heroVariant === "slab" ? (
+                  <>
+                    <span>KARAN</span>
+                    <span>NARULA</span>
+                  </>
+                ) : (
+                  <span>{backdropOnly ? "KARAN NARULA" : "NARULA"}</span>
+                )}
               </div>
-
-              <nav className="project-nav project-nav--hero" aria-label="Projects">
-                {projects.map((project) => (
-                  <a
-                    key={project.name}
-                    href={project.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={project.name}
-                    {...brutalHoverProps({
-                      title: project.washTitle,
-                      color: project.color,
-                      invert: project.motion === "ripple",
-                    })}
-                    className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
-                  >
-                    <span
-                      className={`project-glyph is-${project.motion}`}
-                      style={
-                        {
-                          "--icon-url": `url("${project.imageUrl}")`,
-                          "--project-color": project.color,
-                        } as React.CSSProperties
-                      }
-                    />
-                  </a>
-                ))}
-              </nav>
+              <div className="hero-intro">
+                {backdropOnly ? (
+                  <>
+                    <h1 className="sr-only">
+                      {profileData.firstName} {profileData.lastName}
+                    </h1>
+                    <p className="hero-role site-enter">{profileData.role}</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="hero-role site-enter">{profileData.role}</p>
+                    <h1 className="hero-name site-enter site-enter-delay-1">
+                      <span className="hero-first-name">{profileData.firstName}</span>
+                      <span className="hero-last-name">{profileData.lastName}</span>
+                    </h1>
+                  </>
+                )}
+              </div>
+              <ProjectNav />
             </header>
-
-            <SocialLinks isDark={isDark} className="elsewhere elsewhere--bottom" />
+            <SocialLinks isDark={isDark} />
           </div>
         </BrutalHover>
       )}

@@ -974,3 +974,396 @@
     transform: translateX(-50%) translateY(4px);
   }
 }
+
+/* Name-only hero exploration: the surname is the sole visual motif. */
+.name-only-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100vh - 5rem);
+  overflow: hidden;
+  padding: clamp(5rem, 10vh, 7.5rem) clamp(1.25rem, 5vw, 5rem) 2rem;
+}
+
+.name-only-hero::after {
+  position: absolute;
+  right: clamp(1.25rem, 5vw, 5rem);
+  bottom: 1.25rem;
+  left: clamp(1.25rem, 5vw, 5rem);
+  height: 1px;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  content: "";
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-backdrop span {
+  display: block;
+  color: color-mix(in srgb, currentColor 12%, transparent);
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(7rem, 25vw, 26rem);
+  font-weight: 700;
+  letter-spacing: -0.1em;
+  line-height: 0.72;
+  white-space: nowrap;
+  transition: color 420ms ease, opacity 420ms ease, transform 620ms ease;
+}
+
+.hero-intro {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 42rem;
+  text-align: center;
+  transition: opacity 180ms ease, transform 320ms ease;
+}
+
+.hero-role {
+  margin: 0 0 1.35rem;
+  color: color-mix(in srgb, hsl(var(--foreground)) 82%, transparent);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: clamp(0.68rem, 1.15vw, 0.86rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.25;
+  text-transform: lowercase;
+}
+
+.hero-name {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.05em;
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(4.6rem, 11.5vw, 11.25rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.84;
+}
+
+.hero-first-name {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-last-name {
+  position: relative;
+  z-index: 2;
+  color: #8d2525;
+}
+
+.dark .hero-last-name {
+  color: #f17878;
+}
+
+.hero-variant-outline .hero-backdrop span {
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.12vw, 2px) color-mix(in srgb, hsl(var(--foreground)) 34%, transparent);
+  opacity: 0.72;
+  transform: translateY(-6vh);
+}
+
+.hero-variant-outline .hero-intro {
+  transform: translateY(3vh);
+}
+
+.hero-variant-split .hero-backdrop {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: clamp(6rem, 15vh, 12rem);
+}
+
+.hero-variant-split .hero-backdrop span {
+  color: color-mix(in srgb, currentColor 10%, transparent);
+  font-size: clamp(7rem, 24vw, 25rem);
+  opacity: 0.9;
+  transform: translateX(-0.08em);
+}
+
+.hero-variant-split .hero-intro {
+  align-items: flex-start;
+  max-width: 34rem;
+  margin-right: auto;
+  margin-left: clamp(0rem, 9vw, 9rem);
+  text-align: left;
+  transform: translateY(2vh);
+}
+
+.hero-variant-split .hero-role {
+  margin-bottom: 1.1rem;
+}
+
+.hero-variant-baseline .hero-backdrop {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-bottom: clamp(2rem, 7vh, 5.5rem);
+}
+
+.hero-variant-baseline .hero-backdrop span {
+  color: color-mix(in srgb, #8d2525 18%, transparent);
+  font-size: clamp(8rem, 24vw, 24rem);
+  opacity: 0.72;
+  transform: translate(-0.04em, 0.12em);
+}
+
+.dark .hero-variant-baseline .hero-backdrop span {
+  color: color-mix(in srgb, #f17878 24%, transparent);
+}
+
+.hero-variant-baseline .hero-intro {
+  align-items: flex-end;
+  margin-left: auto;
+  text-align: right;
+  transform: translateY(-4vh);
+}
+
+.hero-variant-baseline .hero-role {
+  margin-bottom: 1.1rem;
+}
+
+.social-link {
+  position: relative;
+  z-index: 104;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  margin: 0 0.45rem;
+  padding: 0.25rem 0.35rem;
+  color: color-mix(in srgb, currentColor 70%, transparent);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  color: var(--brutal-link-ink, currentColor);
+}
+
+.social-link:focus-visible {
+  outline: 2px solid var(--brutal-link);
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .name-only-hero {
+    min-height: calc(100vh - 4rem);
+    padding: 5.5rem 1.25rem 1.5rem;
+  }
+
+  .name-only-hero::after {
+    right: 1.25rem;
+    bottom: 1rem;
+    left: 1.25rem;
+  }
+
+  .hero-backdrop span {
+    font-size: clamp(5.1rem, 24vw, 9rem);
+  }
+
+  .hero-role {
+    max-width: 15rem;
+    margin-bottom: 1rem;
+    font-size: 0.62rem;
+    line-height: 1.4;
+  }
+
+  .hero-name {
+    font-size: clamp(4rem, 18vw, 7rem);
+    line-height: 0.82;
+  }
+
+  .hero-variant-outline .hero-backdrop span {
+    transform: translateY(-8vh);
+  }
+
+  .hero-variant-outline .hero-intro,
+  .hero-variant-split .hero-intro {
+    transform: translateY(2vh);
+  }
+
+  .hero-variant-split .hero-backdrop {
+    padding-top: 9rem;
+  }
+
+  .hero-variant-split .hero-backdrop span {
+    font-size: clamp(5.4rem, 25vw, 9.5rem);
+    transform: translateX(-0.12em);
+  }
+
+  .hero-variant-split .hero-intro {
+    margin-left: 0;
+  }
+
+  .hero-variant-baseline .hero-backdrop {
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-variant-baseline .hero-backdrop span {
+    font-size: clamp(5.8rem, 25vw, 9rem);
+    transform: translate(-0.08em, 0.18em);
+  }
+
+  .hero-variant-baseline .hero-intro {
+    transform: translateY(-1vh);
+  }
+
+  .social-link {
+    margin: 0 0.2rem;
+    font-size: 0.59rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop span,
+  .social-link {
+    transition: none;
+  }
+}
+
+/* Restored project marks plus full-name backdrop concepts. */
+.name-only-hero .project-nav--hero {
+  margin-top: clamp(2rem, 5vh, 4rem);
+  padding: 0;
+}
+
+.hero-variant-split .hero-backdrop {
+  display: none;
+}
+
+.hero-variant-split .project-nav--hero {
+  align-self: flex-start;
+  justify-content: flex-start;
+  margin-left: clamp(0rem, 9vw, 9rem);
+}
+
+.hero-backdrop--full {
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-backdrop--full span {
+  color: color-mix(in srgb, #8d2525 22%, transparent);
+  font-size: clamp(5.5rem, 17vw, 18rem);
+  letter-spacing: -0.13em;
+  opacity: 0.86;
+  transform: rotate(-6deg) translate(-0.02em, -0.04em);
+}
+
+.dark .hero-backdrop--full span {
+  color: color-mix(in srgb, #f17878 28%, transparent);
+}
+
+.hero-variant-backdrop .hero-intro {
+  transform: translateY(3vh);
+}
+
+.hero-variant-backdrop .hero-role {
+  padding: 0.35rem 0.65rem;
+  background: color-mix(in srgb, hsl(var(--background)) 74%, transparent);
+  color: hsl(var(--foreground));
+}
+
+.hero-variant-backdrop .project-nav--hero,
+.hero-variant-slab .project-nav--hero {
+  margin-top: clamp(3rem, 8vh, 5.5rem);
+}
+
+.hero-backdrop--slab {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  padding-left: clamp(0rem, 4vw, 4rem);
+}
+
+.hero-backdrop--slab span {
+  font-size: clamp(6rem, 19vw, 20rem);
+  line-height: 0.64;
+  transform: rotate(-4deg) translateX(-0.05em);
+}
+
+.hero-backdrop--slab span:first-child {
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.12vw, 2px) color-mix(in srgb, hsl(var(--foreground)) 26%, transparent);
+  opacity: 0.85;
+}
+
+.hero-backdrop--slab span:last-child {
+  color: color-mix(in srgb, #8d2525 22%, transparent);
+  opacity: 0.9;
+  transform: rotate(-4deg) translateX(0.04em);
+}
+
+.dark .hero-backdrop--slab span:first-child {
+  -webkit-text-stroke-color: color-mix(in srgb, hsl(var(--foreground)) 34%, transparent);
+}
+
+.dark .hero-backdrop--slab span:last-child {
+  color: color-mix(in srgb, #f17878 28%, transparent);
+}
+
+.hero-variant-slab .hero-intro {
+  align-items: flex-start;
+  margin-left: clamp(0rem, 9vw, 9rem);
+  text-align: left;
+  transform: translateY(4vh);
+}
+
+.hero-variant-slab .hero-role {
+  padding: 0.35rem 0.65rem;
+  background: color-mix(in srgb, hsl(var(--background)) 74%, transparent);
+  color: hsl(var(--foreground));
+}
+
+@media (max-width: 640px) {
+  .hero-variant-split .project-nav--hero {
+    align-self: center;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .hero-backdrop--full span {
+    font-size: clamp(4.4rem, 17vw, 8rem);
+    transform: rotate(-6deg) translate(-0.08em, -0.04em);
+  }
+
+  .hero-variant-backdrop .hero-intro,
+  .hero-variant-slab .hero-intro {
+    transform: translateY(2vh);
+  }
+
+  .hero-backdrop--slab {
+    align-items: flex-start;
+    padding-left: 0;
+  }
+
+  .hero-backdrop--slab span {
+    font-size: clamp(4.9rem, 19vw, 8.5rem);
+  }
+
+  .hero-variant-slab .hero-intro {
+    margin-left: 0;
+  }
+
+  .hero-variant-backdrop .project-nav--hero,
+  .hero-variant-slab .project-nav--hero {
+    margin-top: 2.5rem;
+  }
+}
