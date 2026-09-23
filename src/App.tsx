@@ -231,6 +231,8 @@ const App: React.FC = () => {
   const [nailMode, setNailMode] = React.useState(
     () => localStorage.getItem("nailMode") === "on"
   );
+  const [themeTransitionKey, setThemeTransitionKey] = React.useState(0);
+  const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8d2525");
   const heroVariant = heroVariantFromUrl();
   const backdropOnly = heroVariant !== "split";
 
@@ -251,6 +253,8 @@ const App: React.FC = () => {
     setIsDark(newDark);
     document.documentElement.classList.toggle("dark", newDark);
     localStorage.setItem("theme", newDark ? "dark" : "light");
+    setThemeTransitionColor(newDark ? "#f17878" : "#8d2525");
+    setThemeTransitionKey((key) => key + 1);
   };
 
   const setPosterMode = (mode: "off" | "bug" | "nail") => {
@@ -325,6 +329,14 @@ const App: React.FC = () => {
                 invert: isDark,
               })}
             >
+              {themeTransitionKey > 0 ? (
+                <span
+                  key={themeTransitionKey}
+                  className="theme-toggle-halo"
+                  style={{ "--theme-transition-color": themeTransitionColor } as React.CSSProperties}
+                  aria-hidden="true"
+                />
+              ) : null}
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
           </div>
