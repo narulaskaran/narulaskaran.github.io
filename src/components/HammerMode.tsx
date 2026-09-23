@@ -1,4 +1,5 @@
 import * as React from "react";
+import { flushSync } from "react-dom";
 import { cn } from "@/lib/utils";
 import type { BugProject, BugSocialLink } from "@/components/BugMode";
 
@@ -17,8 +18,83 @@ const NAILS: Array<{
   { mark: "twitter", left: "73.44%", color: "#c7343a" },
 ];
 
-const IMPACT_AT_MS = 410;
-const REDIRECT_AT_MS = 620;
+/** Broad bottom of the hammer face, as a fraction of the hammer graphic. */
+const STRIKE = { x: 0.142, y: 0.947 };
+const HOVER_LIFT_PX = 10;
+
+const WINDUP_MS = 190;
+const STRIKE_MS = 360;
+const RECOIL_MS = 130;
+const SWING_MS = WINDUP_MS + STRIKE_MS + RECOIL_MS;
+const IMPACT_AT_MS = WINDUP_MS + STRIKE_MS;
+const REDIRECT_AT_MS = SWING_MS + 240;
+
+const SOCIAL_HIT_CLASS: Record<string, string> = {
+  LinkedIn: "social-hit-linkedin",
+  GitHub: "social-hit-github",
+  "Ko-fi": "social-hit-kofi",
+};
+
+type Pose = { tx: number; ty: number; theta: number };
+
+function formatPose({ tx, ty, theta }: Pose) {
+  return `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) rotate(${theta.toFixed(2)}deg)`;
+}
+
+function nailContact(nail: HTMLElement) {
+  const rect = nail.getBoundingClientRect();
+  const currentTy = new DOMMatrix(getComputedStyle(nail).transform).m42 || 0;
+  const settledTop = rect.top - currentTy - HOVER_LIFT_PX;
+  return {
+    x: rect.left + rect.width / 2,
+    y: settledTop + rect.height * 0.05,
+  };
+}
+
+/** Pose that plants the hammer face on the nail, leaned toward that nail. */
+function impactPose(hammerRect: DOMRect, nail: HTMLElement): Pose {
+  const strike = {
+    x: hammerRect.left + STRIKE.x * hammerRect.width,
+    y: hammerRect.top + STRIKE.y * hammerRect.height,
+  };
+  const nailPoint = nailContact(nail);
+  const tx = nailPoint.x - strike.x;
+  const ty = nailPoint.y - strike.y;
+  const raw = (Math.atan2(tx, Math.max(ty, 24)) * 180) / Math.PI;
+  return { tx, ty, theta: Math.max(-26, Math.min(30, raw * 0.5)) };
+}
+
+/** Cock the head up and away from the nail before the downswing. */
+function windupPose(impact: Pose): Pose {
+  const lift = Math.min(84, Math.max(40, Math.abs(impact.ty) * 0.28));
+  const away = Math.min(56, Math.max(18, Math.abs(impact.tx) * 0.2));
+  return {
+    tx: -Math.sign(impact.tx || 1) * away,
+    ty: -lift,
+    theta: -impact.theta * 0.4 - Math.sign(impact.theta || 1) * 12,
+  };
+}
+
+/** Early downswing: still high, swung out, so the head travels an arc. */
+function arcPose(wind: Pose, impact: Pose): Pose {
+  const bulge = Math.min(64, Math.max(20, Math.hypot(impact.tx, impact.ty) * 0.1));
+  return {
+    tx: wind.tx + (impact.tx - wind.tx) * 0.2 - Math.sign(impact.tx || 1) * bulge,
+    ty: wind.ty + (impact.ty - wind.ty) * 0.16,
+    theta: wind.theta + (impact.theta - wind.theta) * 0.2,
+  };
+}
+
+/** A few pixels past contact, along the swing, so the face drives into the nail. */
+function buriedPose(impact: Pose): Pose {
+  const bury = 5;
+  const len = Math.hypot(impact.tx, impact.ty) || 1;
+  return {
+    tx: impact.tx + (impact.tx / len) * bury,
+    ty: impact.ty + (impact.ty / len) * bury,
+    theta: impact.theta,
+  };
+}
 
 function NailShape() {
   return (
@@ -47,6 +123,8 @@ export function HammerMode({
   const [hintVisible, setHintVisible] = React.useState(true);
   const busyRef = React.useRef(false);
   const timersRef = React.useRef<number[]>([]);
+  const hammerRef = React.useRef<HTMLDivElement>(null);
+  const nailRefs = React.useRef(new Map<HammerProject["mark"], HTMLButtonElement>());
 
   const clearTimers = React.useCallback(() => {
     timersRef.current.forEach((id) => window.clearTimeout(id));
@@ -58,6 +136,22 @@ export function HammerMode({
     timersRef.current.push(id);
   }, []);
 
+  const resetSwing = React.useCallback(() => {
+    busyRef.current = false;
+    clearTimers();
+    const hammer = hammerRef.current;
+    hammer?.getAnimations().forEach((animation) => animation.cancel());
+    if (document.activeElement instanceof HTMLElement && document.activeElement.classList.contains("nail")) {
+      document.activeElement.blur();
+    }
+    flushSync(() => {
+      setSwingMark(null);
+      setHitMark(null);
+      setImpact(false);
+      setHoverMark(null);
+    });
+  }, [clearTimers]);
+
   React.useEffect(() => {
     later(() => setHintVisible(false), 4200);
     return () => {
@@ -65,6 +159,21 @@ export function HammerMode({
       clearTimers();
     };
   }, [clearTimers, later]);
+
+  React.useEffect(() => {
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted || busyRef.current) resetSwing();
+    };
+    const onPageHide = () => {
+      if (busyRef.current) resetSwing();
+    };
+    window.addEventListener("pageshow", onPageShow);
+    window.addEventListener("pagehide", onPageHide);
+    return () => {
+      window.removeEventListener("pageshow", onPageShow);
+      window.removeEventListener("pagehide", onPageHide);
+    };
+  }, [resetSwing]);
 
   const showProject = (mark: HammerProject["mark"]) => {
     if (busyRef.current) return;
@@ -79,7 +188,9 @@ export function HammerMode({
 
   const hitNail = (mark: HammerProject["mark"]) => {
     const project = byMark.get(mark);
-    if (!project || busyRef.current) return;
+    const hammer = hammerRef.current;
+    const nail = nailRefs.current.get(mark);
+    if (!project || !hammer || !nail || busyRef.current) return;
 
     setHintVisible(false);
     setHoverMark(mark);
@@ -89,14 +200,42 @@ export function HammerMode({
       return;
     }
 
+    const impact = impactPose(hammer.getBoundingClientRect(), nail);
+    const wind = windupPose(impact);
+    const arc = arcPose(wind, impact);
+    const buried = buriedPose(impact);
+
     busyRef.current = true;
-    setSwingMark(null);
+    setSwingMark(mark);
     setHitMark(null);
     setImpact(false);
+    hammer.getAnimations().forEach((animation) => animation.cancel());
 
-    requestAnimationFrame(() => {
-      setSwingMark(mark);
-    });
+    hammer.animate(
+      [
+        {
+          transform: "translate(0px, 0px) rotate(0deg)",
+          easing: "cubic-bezier(0.22, 0.7, 0.25, 1)",
+        },
+        {
+          transform: formatPose(wind),
+          offset: WINDUP_MS / SWING_MS,
+          easing: "cubic-bezier(0.4, 0, 0.55, 0.35)",
+        },
+        {
+          transform: formatPose(arc),
+          offset: (WINDUP_MS + STRIKE_MS * 0.32) / SWING_MS,
+          easing: "cubic-bezier(0.42, 0.02, 0.92, 0.12)",
+        },
+        {
+          transform: formatPose(buried),
+          offset: IMPACT_AT_MS / SWING_MS,
+          easing: "cubic-bezier(0.16, 0.84, 0.32, 1)",
+        },
+        { transform: formatPose(impact), offset: 1 },
+      ],
+      { duration: SWING_MS, fill: "forwards" }
+    );
 
     later(() => {
       setImpact(true);
@@ -115,14 +254,7 @@ export function HammerMode({
         Hover a nail · click to swing ✦
       </p>
       <div className="stage" aria-busy={swingMark !== null}>
-        <div
-          className={cn(
-            "hammer",
-            swingMark && "swinging",
-            swingMark && `swing-${swingMark}`,
-            impact && "impact"
-          )}
-        >
+        <div ref={hammerRef} className={cn("hammer", swingMark && "swinging", impact && "impact")}>
           <img
             className="hammer-body"
             src="assets/hammer-body.png"
@@ -137,9 +269,10 @@ export function HammerMode({
               {socials.map((social) => (
                 <a
                   key={social.href}
+                  className={SOCIAL_HIT_CLASS[social.label]}
                   href={social.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   aria-label={social.label}
                   title={social.label}
                 />
@@ -156,6 +289,10 @@ export function HammerMode({
               <button
                 key={nail.mark}
                 type="button"
+                ref={(node) => {
+                  if (node) nailRefs.current.set(nail.mark, node);
+                  else nailRefs.current.delete(nail.mark);
+                }}
                 className={cn(
                   "nail",
                   hoverMark === nail.mark && "is-hover",
