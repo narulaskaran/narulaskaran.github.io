@@ -3,7 +3,7 @@ import { Bug } from "lucide-react";
 import { BugMode } from "@/components/BugMode";
 import { HammerMode } from "@/components/HammerMode";
 import { BrutalHover } from "@/components/brutal-hover";
-import { brutalHoverProps } from "@/lib/brutal";
+import { brutalHoverProps, brutalInk } from "@/lib/brutal";
 import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
@@ -323,11 +323,12 @@ const App: React.FC = () => {
               className="brutal-icon theme-toggle"
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
               onClick={toggleTheme}
-              {...brutalHoverProps({
-                title: isDark ? "Light" : "Dark",
-                color: isDark ? "#ffe14a" : "#111111",
-                invert: isDark,
-              })}
+              style={
+                {
+                  "--brutal-link": isDark ? "#ffe14a" : "#111111",
+                  "--brutal-link-ink": brutalInk(isDark),
+                } as React.CSSProperties
+              }
             >
               {themeTransitionKey > 0 ? (
                 <span
@@ -338,6 +339,9 @@ const App: React.FC = () => {
                 />
               ) : null}
               {isDark ? <SunIcon /> : <MoonIcon />}
+              <span className="theme-toggle-label" aria-hidden="true">
+                {isDark ? "Light" : "Dark"}
+              </span>
             </button>
           </div>
           <div className={`site-shell hero-variant-${heroVariant}`}>

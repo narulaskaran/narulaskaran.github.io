@@ -289,6 +289,30 @@
   margin: 0;
 }
 
+/* Local jelly disc plus a tiny label instead of the full-page wash. */
+.theme-toggle-label {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 50%;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle:hover .theme-toggle-label,
+.theme-toggle:focus-visible .theme-toggle-label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .theme-toggle-halo {
   position: absolute;
   z-index: 0;
