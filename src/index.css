@@ -1459,26 +1459,33 @@
   letter-spacing: 0.06em;
 }
 
-/* B — Poster: tall condensed caps, like a wheat-pasted gig poster. */
+/* B — Poster: condensed caps. The name and role use Antonio (Anton's
+   lighter sibling) so the hero reads softer than the Anton hover word. */
 [data-type="poster"] .hero-name {
-  font-family: "Anton", var(--font-brutal);
-  font-weight: 400;
-  font-size: clamp(5rem, 12vw, 12rem);
-  letter-spacing: 0.005em;
-  line-height: 0.88;
+  font-family: "Antonio", "Anton", var(--font-brutal);
+  font-weight: 700;
+  font-size: clamp(4.4rem, 9vw, 9rem);
+  letter-spacing: 0;
+  line-height: 0.9;
   text-transform: uppercase;
 }
 
 [data-type="poster"] .hero-role {
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.45rem;
-  border-bottom: 3px solid currentColor;
+  margin-bottom: 1rem;
   color: hsl(var(--foreground));
-  font-family: "Anton", var(--font-brutal);
+  font-family: "Antonio", var(--font-brutal);
   font-weight: 400;
-  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-  letter-spacing: 0.14em;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+[data-type="poster"] .theme-toggle-label {
+  font-family: "Antonio", var(--font-brutal);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
 }
 
 [data-type="poster"] .brutal-title {
@@ -1561,7 +1568,7 @@
 @media (max-width: 640px) {
   [data-type] .brutal-title { padding: 0 1.25rem; }
   [data-type="slab"] .hero-name { font-size: clamp(3.6rem, 17vw, 6.5rem); }
-  [data-type="poster"] .hero-name { font-size: clamp(5rem, 24vw, 9rem); }
+  [data-type="poster"] .hero-name { font-size: clamp(4rem, 17vw, 6.5rem); }
   [data-type="terminal"] .hero-name { font-size: clamp(3.2rem, 16vw, 6rem); }
   [data-type="wide"] .hero-name { font-size: clamp(2.6rem, 13vw, 5rem); }
   [data-type="slab"] .hero-role,
