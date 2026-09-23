@@ -15,6 +15,12 @@ function applyThemeFromPreference() {
 
 applyThemeFromPreference();
 
+// Typography exploration: ?type=slab | poster | terminal | wide
+const typeProposal = new URLSearchParams(window.location.search).get("type");
+if (typeProposal && /^(slab|poster|terminal|wide)$/.test(typeProposal)) {
+  document.documentElement.dataset.type = typeProposal;
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />

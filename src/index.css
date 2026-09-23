@@ -1418,3 +1418,154 @@
     margin-top: 2.5rem;
   }
 }
+
+/* ------------------------------------------------------------------
+   Typography proposals (?type=slab | poster | terminal | wide).
+   Each one sets the name, the role line, and the hover wash title
+   in the same face so the hero and the hover read as one system.
+   ------------------------------------------------------------------ */
+
+/* Shared: the hover word starts on the same left edge as the name. */
+[data-type] .brutal-title {
+  padding-left: calc(clamp(1.25rem, 5vw, 5rem) + clamp(0rem, 9vw, 9rem));
+  padding-right: clamp(1.25rem, 5vw, 5rem);
+}
+
+/* A — Slab: heavy grotesk, role set as a solid ink label. */
+[data-type="slab"] .hero-name {
+  font-family: "Archivo Black", var(--font-brutal);
+  font-weight: 400;
+  font-size: clamp(4.4rem, 10vw, 10rem);
+  letter-spacing: -0.045em;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+[data-type="slab"] .hero-role {
+  padding: 0.35em 0.6em 0.3em;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  font-family: "Archivo", var(--font-brutal);
+  font-weight: 800;
+  font-size: clamp(0.72rem, 1.1vw, 0.9rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-type="slab"] .brutal-title {
+  font-family: "Archivo Black", var(--font-brutal);
+  font-weight: 400;
+  font-size: 16vmin;
+  letter-spacing: 0.06em;
+}
+
+/* B — Poster: tall condensed caps, like a wheat-pasted gig poster. */
+[data-type="poster"] .hero-name {
+  font-family: "Anton", var(--font-brutal);
+  font-weight: 400;
+  font-size: clamp(5rem, 12vw, 12rem);
+  letter-spacing: 0.005em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+[data-type="poster"] .hero-role {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 3px solid currentColor;
+  color: hsl(var(--foreground));
+  font-family: "Anton", var(--font-brutal);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+[data-type="poster"] .brutal-title {
+  font-family: "Anton", var(--font-brutal);
+  font-weight: 400;
+  font-size: 34vmin;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+}
+
+/* C — Terminal: extra-bold monospace, bracketed role line. */
+[data-type="terminal"] .hero-name {
+  font-family: "JetBrains Mono", var(--font-plex-mono);
+  font-weight: 800;
+  font-size: clamp(3.8rem, 9vw, 9rem);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+  text-transform: lowercase;
+}
+
+[data-type="terminal"] .hero-role {
+  color: hsl(var(--foreground));
+  font-family: "JetBrains Mono", var(--font-plex-mono);
+  font-weight: 700;
+  font-size: clamp(0.72rem, 1.1vw, 0.88rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+[data-type="terminal"] .hero-role::before { content: "[ "; }
+[data-type="terminal"] .hero-role::after { content: " ]"; }
+
+[data-type="terminal"] .brutal-title {
+  font-family: "JetBrains Mono", var(--font-plex-mono);
+  font-weight: 800;
+  font-size: 15vmin;
+  letter-spacing: 0.12em;
+}
+
+/* D — Wide: extended geometric black, thick rule under the role. */
+[data-type="wide"] .hero-name {
+  font-family: "Unbounded", var(--font-brutal);
+  font-weight: 900;
+  font-size: clamp(3.4rem, 8.4vw, 8.6rem);
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+[data-type="wide"] .hero-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  color: hsl(var(--foreground));
+  font-family: "Unbounded", var(--font-brutal);
+  font-weight: 700;
+  font-size: clamp(0.62rem, 0.95vw, 0.78rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+[data-type="wide"] .hero-role::before {
+  content: "";
+  width: 0.85em;
+  height: 0.85em;
+  background: #8d2525;
+}
+
+.dark[data-type="wide"] .hero-role::before {
+  background: #8bd5ff;
+}
+
+[data-type="wide"] .brutal-title {
+  font-family: "Unbounded", var(--font-brutal);
+  font-weight: 900;
+  font-size: 13vmin;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 640px) {
+  [data-type] .brutal-title { padding: 0 1.25rem; }
+  [data-type="slab"] .hero-name { font-size: clamp(3.6rem, 17vw, 6.5rem); }
+  [data-type="poster"] .hero-name { font-size: clamp(5rem, 24vw, 9rem); }
+  [data-type="terminal"] .hero-name { font-size: clamp(3.2rem, 16vw, 6rem); }
+  [data-type="wide"] .hero-name { font-size: clamp(2.6rem, 13vw, 5rem); }
+  [data-type="slab"] .hero-role,
+  [data-type="terminal"] .hero-role,
+  [data-type="wide"] .hero-role { max-width: none; font-size: 0.62rem; }
+  [data-type="poster"] .hero-role { max-width: none; font-size: 0.9rem; }
+}
