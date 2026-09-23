@@ -3,7 +3,7 @@ import { Bug } from "lucide-react";
 import { BugMode } from "@/components/BugMode";
 import { HammerMode } from "@/components/HammerMode";
 import { BrutalHover } from "@/components/brutal-hover";
-import { brutalHoverProps } from "@/lib/brutal";
+import { brutalHoverProps, brutalInk } from "@/lib/brutal";
 import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
@@ -91,6 +91,14 @@ const heroVariantFromUrl = (): HeroVariant => {
   if (typeof window === "undefined") return "split";
   const value = new URLSearchParams(window.location.search).get("hero");
   return value === "backdrop" || value === "slab" ? value : "split";
+};
+
+type ToggleVariant = "chip" | "pop" | "spin";
+
+const toggleVariantFromUrl = (): ToggleVariant => {
+  if (typeof window === "undefined") return "chip";
+  const value = new URLSearchParams(window.location.search).get("toggle");
+  return value === "pop" || value === "spin" ? value : "chip";
 };
 
 const projects = [
@@ -235,6 +243,7 @@ const App: React.FC = () => {
   const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8bd5ff");
   const heroVariant = heroVariantFromUrl();
   const backdropOnly = heroVariant !== "split";
+  const toggleVariant = toggleVariantFromUrl();
 
   React.useEffect(() => {
     const handler = (event: MediaQueryListEvent) => {
@@ -320,14 +329,19 @@ const App: React.FC = () => {
           <div className="fixed top-4 right-4 z-[104]">
             <button
               type="button"
-              className="brutal-icon theme-toggle"
+              className={cn(
+                "theme-toggle",
+                `theme-toggle--${toggleVariant}`,
+                toggleVariant === "pop" && "brutal-icon"
+              )}
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
               onClick={toggleTheme}
-              {...brutalHoverProps({
-                title: isDark ? "Light" : "Dark",
-                color: isDark ? "#ffe14a" : "#111111",
-                invert: isDark,
-              })}
+              style={
+                {
+                  "--brutal-link": isDark ? "#ffe14a" : "#111111",
+                  "--brutal-link-ink": brutalInk(isDark),
+                } as React.CSSProperties
+              }
             >
               {themeTransitionKey > 0 ? (
                 <span
@@ -338,6 +352,11 @@ const App: React.FC = () => {
                 />
               ) : null}
               {isDark ? <SunIcon /> : <MoonIcon />}
+              {toggleVariant === "pop" ? (
+                <span className="theme-toggle-label" aria-hidden="true">
+                  {isDark ? "Light" : "Dark"}
+                </span>
+              ) : null}
             </button>
           </div>
           <div className={`site-shell hero-variant-${heroVariant}`}>
