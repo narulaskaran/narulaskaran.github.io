@@ -106,13 +106,13 @@
     font-family: var(--font-brutal);
     letter-spacing: 0.04em;
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
 .site-shell {
   display: flex;
-  min-height: 100vh;
+  min-height: 100dvh;
   flex-direction: column;
 }
 
@@ -981,19 +981,9 @@
 .name-only-hero {
   position: relative;
   isolation: isolate;
-  min-height: calc(100vh - 5rem);
+  min-height: 0;
   overflow: hidden;
   padding: clamp(5rem, 10vh, 7.5rem) clamp(1.25rem, 5vw, 5rem) 2rem;
-}
-
-.name-only-hero::after {
-  position: absolute;
-  right: clamp(1.25rem, 5vw, 5rem);
-  bottom: 1.25rem;
-  left: clamp(1.25rem, 5vw, 5rem);
-  height: 1px;
-  background: color-mix(in srgb, currentColor 16%, transparent);
-  content: "";
 }
 
 .hero-backdrop {
@@ -1165,14 +1155,8 @@
 
 @media (max-width: 640px) {
   .name-only-hero {
-    min-height: calc(100vh - 4rem);
+    min-height: 0;
     padding: 5.5rem 1.25rem 1.5rem;
-  }
-
-  .name-only-hero::after {
-    right: 1.25rem;
-    bottom: 1rem;
-    left: 1.25rem;
   }
 
   .hero-backdrop span {
