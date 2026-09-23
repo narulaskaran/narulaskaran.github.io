@@ -44,7 +44,7 @@ export function readBrutal(el: HTMLElement): BrutalHoverState | null {
   if (!washTitle) return null;
   return {
     title: washTitle,
-    color: el.dataset.brutalColor || "#ff2450",
+    color: el.dataset.brutalColor || "#8bd5ff",
     ink: brutalInk(el.dataset.brutalInvert === "true"),
   };
 }

@@ -69,8 +69,8 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 88%;
+    --background: 216 28% 7%;
+    --foreground: 210 28% 93%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
@@ -99,6 +99,7 @@
   }
   html {
     background-color: hsl(var(--background));
+    transition: background-color 260ms ease;
   }
 
   body {
@@ -107,6 +108,7 @@
     letter-spacing: 0.04em;
     line-height: 1.6;
     min-height: 100dvh;
+    transition: color 260ms ease;
   }
 }
 
@@ -287,6 +289,36 @@
   margin: 0;
 }
 
+.theme-toggle-halo {
+  position: absolute;
+  z-index: 0;
+  inset: -2.25rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 31%,
+    color-mix(in srgb, var(--theme-transition-color) 18%, transparent) 58%,
+    transparent 73%
+  );
+  opacity: 0;
+  pointer-events: none;
+  animation: theme-toggle-halo 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes theme-toggle-halo {
+  0% {
+    opacity: 0;
+    transform: scale(0.28);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
 .brutal-icon svg {
   position: relative;
   z-index: 1;
@@ -325,7 +357,7 @@
 }
 
 .site-header .project-nav--hero {
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   padding: 0 1rem;
   gap: clamp(0.45rem, 2vw, 1.25rem);
 }
@@ -554,11 +586,16 @@
   }
 
   html,
+  body,
   .brutal-title,
   .hero-intro,
   .brutal-wash,
   .project-glyph {
     transition: none;
+  }
+
+  .theme-toggle-halo {
+    animation: none;
   }
 
   .brutal-icon:hover::before,
@@ -1027,7 +1064,7 @@
   font-family: var(--font-brutal);
   font-size: clamp(0.68rem, 1.15vw, 0.86rem);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   line-height: 1.25;
   text-transform: lowercase;
 }
@@ -1035,14 +1072,14 @@
 .hero-name {
   display: flex;
   flex-direction: column;
-  row-gap: 0.05em;
+  row-gap: 0.04em;
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-brutal);
-  font-size: clamp(4.6rem, 11.5vw, 11.25rem);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.84;
+  font-size: clamp(4.6rem, 10.6vw, 10.6rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 0.86;
 }
 
 .hero-first-name {
@@ -1057,7 +1094,7 @@
 }
 
 .dark .hero-last-name {
-  color: #f17878;
+  color: #8bd5ff;
 }
 
 .hero-variant-outline .hero-backdrop span {
@@ -1111,7 +1148,7 @@
 }
 
 .dark .hero-variant-baseline .hero-backdrop span {
-  color: color-mix(in srgb, #f17878 24%, transparent);
+  color: color-mix(in srgb, #8bd5ff 24%, transparent);
 }
 
 .hero-variant-baseline .hero-intro {
@@ -1225,7 +1262,7 @@
 
 /* Restored project marks plus full-name backdrop concepts. */
 .name-only-hero .project-nav--hero {
-  margin-top: clamp(2rem, 5vh, 4rem);
+  margin-top: 2rem;
   padding: 0;
 }
 
@@ -1253,7 +1290,7 @@
 }
 
 .dark .hero-backdrop--full span {
-  color: color-mix(in srgb, #f17878 28%, transparent);
+  color: color-mix(in srgb, #8bd5ff 28%, transparent);
 }
 
 .hero-variant-backdrop .hero-intro {
@@ -1302,7 +1339,7 @@
 }
 
 .dark .hero-backdrop--slab span:last-child {
-  color: color-mix(in srgb, #f17878 28%, transparent);
+  color: color-mix(in srgb, #8bd5ff 28%, transparent);
 }
 
 .hero-variant-slab .hero-intro {
