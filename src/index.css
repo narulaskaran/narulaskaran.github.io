@@ -35,6 +35,8 @@
 
   --font-fraunces: "Fraunces", Georgia, "Times New Roman", serif;
   --font-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-poster: "Anton", Impact, "Arial Narrow", sans-serif;
+  --font-poster-soft: "Antonio", "Anton", "Arial Narrow", sans-serif;
   --font-brutal: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
@@ -188,17 +190,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10vw;
+  /* Left edge lines up with the hero name. */
+  padding: 0 clamp(1.25rem, 5vw, 5rem) 0
+    calc(clamp(1.25rem, 5vw, 5rem) + clamp(0rem, 9vw, 9rem));
   overflow: hidden;
   pointer-events: none;
   user-select: none;
   opacity: 0.04;
   color: #000;
-  font-family: var(--font-brutal);
-  font-size: 10vmin;
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  line-height: 0.85;
+  font-family: var(--font-poster);
+  font-size: 34vmin;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
   text-align: justify;
   text-transform: uppercase;
   word-break: break-all;
@@ -294,10 +298,11 @@
   position: absolute;
   top: calc(100% + 0.3rem);
   left: 50%;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
+  font-family: var(--font-poster-soft);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
   text-transform: uppercase;
   color: hsl(var(--muted-foreground));
   white-space: nowrap;
@@ -1087,14 +1092,14 @@
 }
 
 .hero-role {
-  margin: 0 0 1.35rem;
-  color: color-mix(in srgb, hsl(var(--foreground)) 82%, transparent);
-  font-family: var(--font-brutal);
-  font-size: clamp(0.68rem, 1.15vw, 0.86rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  margin: 0 0 1rem;
+  color: hsl(var(--foreground));
+  font-family: var(--font-poster-soft);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
   line-height: 1.25;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .hero-name {
@@ -1103,11 +1108,12 @@
   row-gap: 0.04em;
   margin: 0;
   color: var(--foreground);
-  font-family: var(--font-brutal);
-  font-size: clamp(4.6rem, 10.6vw, 10.6rem);
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 0.86;
+  font-family: var(--font-poster-soft);
+  font-size: clamp(4.4rem, 9vw, 9rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.9;
+  text-transform: uppercase;
 }
 
 .hero-first-name {
@@ -1159,7 +1165,7 @@
 }
 
 .hero-variant-split .hero-role {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .hero-variant-baseline .hero-backdrop {
@@ -1229,15 +1235,17 @@
   }
 
   .hero-role {
-    max-width: 15rem;
     margin-bottom: 1rem;
-    font-size: 0.62rem;
+    font-size: 0.9rem;
     line-height: 1.4;
   }
 
   .hero-name {
-    font-size: clamp(4rem, 18vw, 7rem);
-    line-height: 0.82;
+    font-size: clamp(4rem, 17vw, 6.5rem);
+  }
+
+  .brutal-title {
+    padding: 0 1.25rem;
   }
 
   .hero-variant-outline .hero-backdrop span {
