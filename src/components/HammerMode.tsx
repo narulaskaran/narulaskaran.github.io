@@ -22,10 +22,11 @@ const NAILS: Array<{
 const STRIKE = { x: 0.142, y: 0.947 };
 const HOVER_LIFT_PX = 10;
 
-const WINDUP_MS = 190;
-const STRIKE_MS = 360;
-const RECOIL_MS = 130;
-const SWING_MS = WINDUP_MS + STRIKE_MS + RECOIL_MS;
+const WINDUP_MS = 210;
+const STRIKE_MS = 250;
+const FOLLOW_THROUGH_MS = 45;
+const RECOVERY_MS = 155;
+const SWING_MS = WINDUP_MS + STRIKE_MS + FOLLOW_THROUGH_MS + RECOVERY_MS;
 const IMPACT_AT_MS = WINDUP_MS + STRIKE_MS;
 const REDIRECT_AT_MS = SWING_MS + 240;
 
@@ -85,14 +86,24 @@ function arcPose(wind: Pose, impact: Pose): Pose {
   };
 }
 
-/** A few pixels past contact, along the swing, so the face drives into the nail. */
-function buriedPose(impact: Pose): Pose {
-  const bury = 5;
+function followThroughPose(impact: Pose): Pose {
+  const distance = 4;
   const len = Math.hypot(impact.tx, impact.ty) || 1;
   return {
-    tx: impact.tx + (impact.tx / len) * bury,
-    ty: impact.ty + (impact.ty / len) * bury,
+    tx: impact.tx + (impact.tx / len) * distance,
+    ty: impact.ty + (impact.ty / len) * distance,
     theta: impact.theta,
+  };
+}
+
+/** A small rebound after contact, preserving the swing's arc. */
+function recoilPose(impact: Pose): Pose {
+  const distance = 2;
+  const len = Math.hypot(impact.tx, impact.ty) || 1;
+  return {
+    tx: impact.tx - (impact.tx / len) * distance,
+    ty: impact.ty - (impact.ty / len) * distance,
+    theta: impact.theta - Math.sign(impact.theta || 1) * 1.5,
   };
 }
 
@@ -203,7 +214,8 @@ export function HammerMode({
     const impact = impactPose(hammer.getBoundingClientRect(), nail);
     const wind = windupPose(impact);
     const arc = arcPose(wind, impact);
-    const buried = buriedPose(impact);
+    const followThrough = followThroughPose(impact);
+    const recoil = recoilPose(impact);
 
     busyRef.current = true;
     setSwingMark(mark);
@@ -215,24 +227,29 @@ export function HammerMode({
       [
         {
           transform: "translate(0px, 0px) rotate(0deg)",
-          easing: "cubic-bezier(0.22, 0.7, 0.25, 1)",
+          easing: "cubic-bezier(0.4, 0, 0.6, 1)",
         },
         {
           transform: formatPose(wind),
           offset: WINDUP_MS / SWING_MS,
-          easing: "cubic-bezier(0.4, 0, 0.55, 0.35)",
+          easing: "cubic-bezier(0.35, 0.1, 0.4, 1)",
         },
         {
           transform: formatPose(arc),
-          offset: (WINDUP_MS + STRIKE_MS * 0.32) / SWING_MS,
-          easing: "cubic-bezier(0.42, 0.02, 0.92, 0.12)",
+          offset: (WINDUP_MS + STRIKE_MS * 0.38) / SWING_MS,
+          easing: "cubic-bezier(0.12, 0.65, 0.25, 1)",
         },
         {
-          transform: formatPose(buried),
+          transform: formatPose(impact),
           offset: IMPACT_AT_MS / SWING_MS,
-          easing: "cubic-bezier(0.16, 0.84, 0.32, 1)",
+          easing: "cubic-bezier(0.12, 0.72, 0.32, 1)",
         },
-        { transform: formatPose(impact), offset: 1 },
+        {
+          transform: formatPose(followThrough),
+          offset: (IMPACT_AT_MS + FOLLOW_THROUGH_MS) / SWING_MS,
+          easing: "cubic-bezier(0.2, 0.7, 0.35, 1)",
+        },
+        { transform: formatPose(recoil), offset: 1 },
       ],
       { duration: SWING_MS, fill: "forwards" }
     );
