@@ -35,6 +35,11 @@
 
   --font-fraunces: "Fraunces", Georgia, "Times New Roman", serif;
   --font-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-poster: "Anton", Impact, "Arial Narrow", sans-serif;
+  --font-poster-soft: "Antonio", "Anton", "Arial Narrow", sans-serif;
+  --font-brutal: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 
 @layer base {
@@ -66,8 +71,8 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 88%;
+    --background: 216 28% 7%;
+    --foreground: 210 28% 93%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
@@ -96,22 +101,22 @@
   }
   html {
     background-color: hsl(var(--background));
+    transition: background-color 260ms ease;
   }
 
   body {
     @apply bg-transparent text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
-      Arial, sans-serif;
+    font-family: var(--font-brutal);
     letter-spacing: 0.04em;
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100dvh;
+    transition: color 260ms ease;
   }
 }
 
 .site-shell {
   display: flex;
-  min-height: 100vh;
+  min-height: 100dvh;
   flex-direction: column;
 }
 
@@ -185,16 +190,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10vw;
+  /* Left edge lines up with the hero name. */
+  padding: 0 clamp(1.25rem, 5vw, 5rem) 0
+    calc(clamp(1.25rem, 5vw, 5rem) + clamp(0rem, 9vw, 9rem));
   overflow: hidden;
   pointer-events: none;
   user-select: none;
   opacity: 0.04;
   color: #000;
-  font-size: 10vmin;
-  font-weight: 700;
-  letter-spacing: 0.5em;
-  line-height: 0.85;
+  font-family: var(--font-poster);
+  font-size: 34vmin;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
   text-align: justify;
   text-transform: uppercase;
   word-break: break-all;
@@ -285,6 +293,65 @@
   margin: 0;
 }
 
+/* Local jelly disc plus a tiny label instead of the full-page wash. */
+.theme-toggle-label {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 50%;
+  font-family: var(--font-poster-soft);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle:hover .theme-toggle-label,
+.theme-toggle:focus-visible .theme-toggle-label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.theme-toggle-halo {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 31%,
+    color-mix(in srgb, var(--theme-transition-color) 18%, transparent) 58%,
+    transparent 73%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top right;
+  animation: theme-toggle-halo 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes theme-toggle-halo {
+  0% {
+    opacity: 0;
+    transform: scale(0.28);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
 .brutal-icon svg {
   position: relative;
   z-index: 1;
@@ -323,7 +390,7 @@
 }
 
 .site-header .project-nav--hero {
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   padding: 0 1rem;
   gap: clamp(0.45rem, 2vw, 1.25rem);
 }
@@ -552,11 +619,16 @@
   }
 
   html,
+  body,
   .brutal-title,
   .hero-intro,
   .brutal-wash,
   .project-glyph {
     transition: none;
+  }
+
+  .theme-toggle-halo {
+    animation: none;
   }
 
   .brutal-icon:hover::before,
@@ -975,19 +1047,9 @@
 .name-only-hero {
   position: relative;
   isolation: isolate;
-  min-height: calc(100vh - 5rem);
+  min-height: 0;
   overflow: hidden;
   padding: clamp(5rem, 10vh, 7.5rem) clamp(1.25rem, 5vw, 5rem) 2rem;
-}
-
-.name-only-hero::after {
-  position: absolute;
-  right: clamp(1.25rem, 5vw, 5rem);
-  bottom: 1.25rem;
-  left: clamp(1.25rem, 5vw, 5rem);
-  height: 1px;
-  background: color-mix(in srgb, currentColor 16%, transparent);
-  content: "";
 }
 
 .hero-backdrop {
@@ -1026,27 +1088,28 @@
 }
 
 .hero-role {
-  margin: 0 0 1.35rem;
-  color: color-mix(in srgb, hsl(var(--foreground)) 82%, transparent);
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: clamp(0.68rem, 1.15vw, 0.86rem);
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  margin: 0 0 1rem;
+  color: hsl(var(--foreground));
+  font-family: var(--font-poster-soft);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
   line-height: 1.25;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .hero-name {
   display: flex;
   flex-direction: column;
-  row-gap: 0.05em;
+  row-gap: 0.04em;
   margin: 0;
   color: var(--foreground);
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-size: clamp(4.6rem, 11.5vw, 11.25rem);
+  font-family: var(--font-poster-soft);
+  font-size: clamp(4.4rem, 9vw, 9rem);
   font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.84;
+  letter-spacing: 0;
+  line-height: 0.9;
+  text-transform: uppercase;
 }
 
 .hero-first-name {
@@ -1061,7 +1124,7 @@
 }
 
 .dark .hero-last-name {
-  color: #f17878;
+  color: #8bd5ff;
 }
 
 .hero-variant-outline .hero-backdrop span {
@@ -1098,7 +1161,7 @@
 }
 
 .hero-variant-split .hero-role {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .hero-variant-baseline .hero-backdrop {
@@ -1115,7 +1178,7 @@
 }
 
 .dark .hero-variant-baseline .hero-backdrop span {
-  color: color-mix(in srgb, #f17878 24%, transparent);
+  color: color-mix(in srgb, #8bd5ff 24%, transparent);
 }
 
 .hero-variant-baseline .hero-intro {
@@ -1159,14 +1222,8 @@
 
 @media (max-width: 640px) {
   .name-only-hero {
-    min-height: calc(100vh - 4rem);
+    min-height: 0;
     padding: 5.5rem 1.25rem 1.5rem;
-  }
-
-  .name-only-hero::after {
-    right: 1.25rem;
-    bottom: 1rem;
-    left: 1.25rem;
   }
 
   .hero-backdrop span {
@@ -1174,15 +1231,17 @@
   }
 
   .hero-role {
-    max-width: 15rem;
     margin-bottom: 1rem;
-    font-size: 0.62rem;
+    font-size: 0.9rem;
     line-height: 1.4;
   }
 
   .hero-name {
-    font-size: clamp(4rem, 18vw, 7rem);
-    line-height: 0.82;
+    font-size: clamp(4rem, 17vw, 6.5rem);
+  }
+
+  .brutal-title {
+    padding: 0 1.25rem;
   }
 
   .hero-variant-outline .hero-backdrop span {
@@ -1235,7 +1294,7 @@
 
 /* Restored project marks plus full-name backdrop concepts. */
 .name-only-hero .project-nav--hero {
-  margin-top: clamp(2rem, 5vh, 4rem);
+  margin-top: 2rem;
   padding: 0;
 }
 
@@ -1263,7 +1322,7 @@
 }
 
 .dark .hero-backdrop--full span {
-  color: color-mix(in srgb, #f17878 28%, transparent);
+  color: color-mix(in srgb, #8bd5ff 28%, transparent);
 }
 
 .hero-variant-backdrop .hero-intro {
@@ -1312,7 +1371,7 @@
 }
 
 .dark .hero-backdrop--slab span:last-child {
-  color: color-mix(in srgb, #f17878 28%, transparent);
+  color: color-mix(in srgb, #8bd5ff 28%, transparent);
 }
 
 .hero-variant-slab .hero-intro {
