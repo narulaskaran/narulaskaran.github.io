@@ -725,7 +725,6 @@
   --hm-bg: #dadada;
   --hm-ink: #1a1a1a;
   --hm-muted: #5a5a5a;
-  --hm-swing: 480ms;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -771,14 +770,8 @@
   z-index: 6;
   width: min(808px, 63.1vw);
   aspect-ratio: 808 / 456;
-  transform-origin: 12% 55%;
-  transform: rotate(0deg);
-  transition: transform var(--hm-swing) cubic-bezier(0.34, 1.45, 0.64, 1);
+  transform-origin: 14.2% 94.7%;
   will-change: transform;
-}
-
-.hammer-mode .hammer.swinging {
-  transition: transform var(--hm-swing) cubic-bezier(0.55, 0.05, 0.4, 1.25);
 }
 
 .hammer-mode .hammer-body {
@@ -797,25 +790,38 @@
 
 .hammer-mode .social-hits {
   position: absolute;
-  left: 11.7%;
-  top: 50.15%;
+  inset: 0;
   z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 19.5%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  padding-bottom: 18%;
-  gap: 6%;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .hammer-mode .social-hits a {
-  flex: 0 0 22%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  opacity: 0;
+  position: absolute;
+  top: 52.45%;
+  width: 3.2%;
+  height: 8.7%;
+  border-radius: 999px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hammer-mode .social-hits a.social-hit-linkedin {
+  left: 6.9%;
+}
+
+.hammer-mode .social-hits a.social-hit-github {
+  left: 10.5%;
+}
+
+.hammer-mode .social-hits a.social-hit-kofi {
+  left: 14.1%;
+}
+
+.hammer-mode .social-hits a:hover,
+.hammer-mode .social-hits a:focus-visible {
+  background: rgba(255, 255, 255, 0.2);
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
 }
 
 .hammer-mode .nail-pop-icon img {
@@ -827,38 +833,23 @@
 
 .hammer-mode .impact-flash {
   position: absolute;
-  left: 2%;
-  top: 70%;
-  width: 16%;
-  height: 20%;
+  left: 14.2%;
+  top: 94.7%;
+  width: 22%;
+  height: 30%;
   border-radius: 50%;
   background: radial-gradient(circle, #fff 0%, #ffe566 40%, transparent 70%);
   opacity: 0;
+  transform: translate(-50%, -80%);
   pointer-events: none;
+}
+
+.hammer-mode .hammer.swinging {
+  z-index: 12;
 }
 
 .hammer-mode .hammer.impact .impact-flash {
   animation: hammer-pop-flash 280ms ease-out;
-}
-
-.hammer-mode .hammer.swing-party {
-  transform: rotate(-18deg) translate(-6%, 12%);
-}
-
-.hammer-mode .hammer.swing-receipt {
-  transform: rotate(-8deg) translate(-2%, 14%);
-}
-
-.hammer-mode .hammer.swing-aqi {
-  transform: rotate(2deg) translate(2%, 15%);
-}
-
-.hammer-mode .hammer.swing-seam {
-  transform: rotate(12deg) translate(7%, 14%);
-}
-
-.hammer-mode .hammer.swing-twitter {
-  transform: rotate(22deg) translate(12%, 12%);
 }
 
 .hammer-mode .nails {
@@ -867,12 +858,6 @@
   z-index: 8;
   height: 170px;
   pointer-events: none;
-}
-
-.hammer-mode .social-hits a:focus-visible {
-  opacity: 0.35;
-  outline: 2px solid #1a1a1a;
-  outline-offset: 2px;
 }
 
 .hammer-mode .nail {
@@ -903,7 +888,7 @@
 }
 
 .hammer-mode .nail.is-hit {
-  animation: hammer-nail-bonk 400ms cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+  animation: hammer-nail-bonk 320ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .hammer-mode .nail-svg {
@@ -993,6 +978,14 @@
     height: 100px;
   }
 
+  @media (max-width: 360px) {
+    .hammer-mode .nail,
+    .hammer-mode .nail-svg {
+      width: 34px;
+      height: 44px;
+    }
+  }
+
   .hammer-mode .nail-pop {
     padding: 6px 10px;
   }
@@ -1023,27 +1016,30 @@
 @keyframes hammer-pop-flash {
   0% {
     opacity: 0;
-    transform: scale(0.4);
+    transform: translate(-50%, -80%) scale(0.35);
   }
-  40% {
+  35% {
     opacity: 1;
-    transform: scale(1.35);
+    transform: translate(-50%, -80%) scale(1.2);
   }
   100% {
     opacity: 0;
-    transform: scale(1.7);
+    transform: translate(-50%, -80%) scale(1.65);
   }
 }
 
 @keyframes hammer-nail-bonk {
   0% {
-    transform: translateX(-50%) translateY(-6px);
+    transform: translateX(-50%) translateY(-8px) scale(1, 1);
   }
-  40% {
-    transform: translateX(-50%) translateY(8px) scaleY(0.92);
+  30% {
+    transform: translateX(-50%) translateY(16px) scale(1.08, 0.8);
+  }
+  62% {
+    transform: translateX(-50%) translateY(6px) scale(0.98, 1.05);
   }
   100% {
-    transform: translateX(-50%) translateY(4px);
+    transform: translateX(-50%) translateY(11px) scale(1, 0.94);
   }
 }
 
