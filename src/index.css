@@ -725,8 +725,8 @@
 
 .hammer-mode .social-hits a {
   position: absolute;
-  left: 4.5%;
-  width: 14.2%;
+  top: 52.45%;
+  width: 3.2%;
   height: 8.7%;
   border-radius: 999px;
   pointer-events: auto;
@@ -734,15 +734,15 @@
 }
 
 .hammer-mode .social-hits a.social-hit-linkedin {
-  top: 37.1%;
+  left: 6.9%;
 }
 
 .hammer-mode .social-hits a.social-hit-github {
-  top: 45.8%;
+  left: 10.5%;
 }
 
 .hammer-mode .social-hits a.social-hit-kofi {
-  top: 54.5%;
+  left: 14.1%;
 }
 
 .hammer-mode .social-hits a:hover,
@@ -904,6 +904,14 @@
   .hammer-mode .nail-svg {
     width: 78px;
     height: 100px;
+  }
+
+  @media (max-width: 360px) {
+    .hammer-mode .nail,
+    .hammer-mode .nail-svg {
+      width: 34px;
+      height: 44px;
+    }
   }
 
   .hammer-mode .nail-pop {
