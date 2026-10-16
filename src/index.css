@@ -1305,7 +1305,13 @@
 .hero-variant-split .project-nav--hero {
   align-self: flex-start;
   justify-content: flex-start;
-  margin-left: clamp(0rem, 9vw, 9rem);
+  /* Pull the first glyph's ink flush with the text edge: link padding (0.875rem) + art inset (~0.57rem). */
+  margin-left: calc(clamp(0rem, 9vw, 9rem) - 1.45rem);
+}
+
+/* Cancel the display font's left side bearing on the first letter. */
+.hero-variant-split .hero-name {
+  margin-left: -0.05em;
 }
 
 .hero-backdrop--full {
@@ -1388,10 +1394,11 @@
 }
 
 @media (max-width: 640px) {
+  /* Keep the icons on the text's left edge; offset = link padding + art inset. */
   .hero-variant-split .project-nav--hero {
-    align-self: center;
-    justify-content: center;
-    margin-left: 0;
+    align-self: flex-start;
+    justify-content: flex-start;
+    margin-left: -1.2rem;
   }
 
   .hero-backdrop--full span {
@@ -1420,5 +1427,11 @@
   .hero-variant-backdrop .project-nav--hero,
   .hero-variant-slab .project-nav--hero {
     margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-variant-split .project-nav--hero {
+    margin-left: -1rem;
   }
 }
