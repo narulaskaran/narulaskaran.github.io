@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import "./project-index.css";
 
 function applyThemeFromPreference() {
   const saved = localStorage.getItem("theme");
