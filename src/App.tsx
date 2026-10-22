@@ -81,18 +81,10 @@ const KofiIcon = () => (
   </svg>
 );
 
-type HeroVariant = "split" | "slab";
-
 const profileData = {
   firstName: "Karan",
   lastName: "Narula",
   role: "software engineer / new york",
-};
-
-const heroVariantFromUrl = (): HeroVariant => {
-  if (typeof window === "undefined") return "split";
-  const value = new URLSearchParams(window.location.search).get("hero");
-  return value === "slab" ? "slab" : "split";
 };
 
 const projects = [
@@ -202,38 +194,6 @@ function SplitWord({ text, offset }: { text: string; offset: number }) {
   );
 }
 
-function ProjectNav() {
-  return (
-    <nav className="project-nav project-nav--hero" aria-label="Projects">
-      {projects.map((project) => (
-        <a
-          key={project.name}
-          className={`project-link${project.motion === "ripple" ? " is-ripple" : ""}`}
-          href={project.url}
-          target="_blank"
-          rel="noreferrer noopener"
-          aria-label={project.name}
-          {...brutalHoverProps({
-            title: project.washTitle,
-            color: project.color,
-            invert: project.motion === "ripple",
-          })}
-        >
-          <span
-            className={`project-glyph is-${project.motion}`}
-            style={
-              {
-                "--icon-url": `url("${project.imageUrl}")`,
-                "--project-color": project.color,
-              } as React.CSSProperties
-            }
-          />
-        </a>
-      ))}
-    </nav>
-  );
-}
-
 const App: React.FC = () => {
   const [isDark, setIsDark] = React.useState(() =>
     typeof window !== "undefined"
@@ -248,8 +208,6 @@ const App: React.FC = () => {
   );
   const [themeTransitionKey, setThemeTransitionKey] = React.useState(0);
   const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8bd5ff");
-  const heroVariant = heroVariantFromUrl();
-  const backdropOnly = heroVariant !== "split";
   useMagnetic(".brutal-icon svg", !bugMode && !nailMode);
 
   React.useEffect(() => {
@@ -360,54 +318,27 @@ const App: React.FC = () => {
               </span>
             </button>
           </div>
-          <div
-            className={cn(`site-shell hero-variant-${heroVariant}`, !backdropOnly && "has-index")}
-          >
+          <div className="site-shell hero-variant-split has-index">
             <header className="site-header name-only-hero">
-              <div
-                className={`hero-backdrop${backdropOnly ? " hero-backdrop--full hero-backdrop--slab" : ""}`}
-                aria-hidden="true"
-              >
-                {backdropOnly ? (
-                  <>
-                    <span>KARAN</span>
-                    <span>NARULA</span>
-                  </>
-                ) : (
-                  <span>NARULA</span>
-                )}
-              </div>
               <div className="hero-intro">
-                {backdropOnly ? (
-                  <>
-                    <h1 className="sr-only">
-                      {profileData.firstName} {profileData.lastName}
-                    </h1>
-                    <p className="hero-role site-enter">{profileData.role}</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="hero-role site-enter">{profileData.role}</p>
-                    <h1
-                      className="hero-name hero-name--split"
-                      aria-label={`${profileData.firstName} ${profileData.lastName}`}
-                    >
-                      <span className="hero-first-name">
-                        <SplitWord text={profileData.firstName} offset={0} />
-                      </span>
-                      <span className="hero-last-name">
-                        <SplitWord
-                          text={profileData.lastName}
-                          offset={profileData.firstName.length}
-                        />
-                      </span>
-                    </h1>
-                  </>
-                )}
+                <p className="hero-role site-enter">{profileData.role}</p>
+                <h1
+                  className="hero-name hero-name--split"
+                  aria-label={`${profileData.firstName} ${profileData.lastName}`}
+                >
+                  <span className="hero-first-name">
+                    <SplitWord text={profileData.firstName} offset={0} />
+                  </span>
+                  <span className="hero-last-name">
+                    <SplitWord
+                      text={profileData.lastName}
+                      offset={profileData.firstName.length}
+                    />
+                  </span>
+                </h1>
               </div>
-              {backdropOnly ? <ProjectNav /> : null}
             </header>
-            {backdropOnly ? null : <ProjectIndex projects={projects} />}
+            <ProjectIndex projects={projects} />
             <SocialLinks isDark={isDark} />
           </div>
         </BrutalHover>
