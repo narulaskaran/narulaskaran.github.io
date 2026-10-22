@@ -81,7 +81,7 @@ const KofiIcon = () => (
   </svg>
 );
 
-type HeroVariant = "split" | "backdrop" | "slab";
+type HeroVariant = "split" | "slab";
 
 const profileData = {
   firstName: "Karan",
@@ -92,7 +92,7 @@ const profileData = {
 const heroVariantFromUrl = (): HeroVariant => {
   if (typeof window === "undefined") return "split";
   const value = new URLSearchParams(window.location.search).get("hero");
-  return value === "backdrop" || value === "slab" ? value : "split";
+  return value === "slab" ? "slab" : "split";
 };
 
 const projects = [
@@ -365,16 +365,16 @@ const App: React.FC = () => {
           >
             <header className="site-header name-only-hero">
               <div
-                className={`hero-backdrop${backdropOnly ? " hero-backdrop--full" : ""}${heroVariant === "slab" ? " hero-backdrop--slab" : ""}`}
+                className={`hero-backdrop${backdropOnly ? " hero-backdrop--full hero-backdrop--slab" : ""}`}
                 aria-hidden="true"
               >
-                {backdropOnly && heroVariant === "slab" ? (
+                {backdropOnly ? (
                   <>
                     <span>KARAN</span>
                     <span>NARULA</span>
                   </>
                 ) : (
-                  <span>{backdropOnly ? "KARAN NARULA" : "NARULA"}</span>
+                  <span>NARULA</span>
                 )}
               </div>
               <div className="hero-intro">

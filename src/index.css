@@ -1292,7 +1292,7 @@
   }
 }
 
-/* Restored project marks plus full-name backdrop concepts. */
+/* Restored project marks plus the full-name slab concept. */
 .name-only-hero .project-nav--hero {
   margin-top: 2rem;
   padding: 0;
@@ -1331,17 +1331,6 @@
   color: color-mix(in srgb, #8bd5ff 28%, transparent);
 }
 
-.hero-variant-backdrop .hero-intro {
-  transform: translateY(3vh);
-}
-
-.hero-variant-backdrop .hero-role {
-  padding: 0.35rem 0.65rem;
-  background: color-mix(in srgb, hsl(var(--background)) 74%, transparent);
-  color: hsl(var(--foreground));
-}
-
-.hero-variant-backdrop .project-nav--hero,
 .hero-variant-slab .project-nav--hero {
   margin-top: clamp(3rem, 8vh, 5.5rem);
 }
@@ -1406,7 +1395,6 @@
     transform: rotate(-6deg) translate(-0.08em, -0.04em);
   }
 
-  .hero-variant-backdrop .hero-intro,
   .hero-variant-slab .hero-intro {
     transform: translateY(2vh);
   }
@@ -1424,7 +1412,6 @@
     margin-left: 0;
   }
 
-  .hero-variant-backdrop .project-nav--hero,
   .hero-variant-slab .project-nav--hero {
     margin-top: 2.5rem;
   }
