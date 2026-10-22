@@ -4,6 +4,8 @@ import { BugMode } from "@/components/BugMode";
 import { HammerMode } from "@/components/HammerMode";
 import { BrutalHover } from "@/components/brutal-hover";
 import { brutalHoverProps, brutalInk } from "@/lib/brutal";
+import { ProjectIndex } from "@/components/ProjectIndex";
+import { useMagnetic } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
@@ -187,6 +189,19 @@ function SocialLinks({ isDark }: { isDark: boolean }) {
   );
 }
 
+/** Letters that rise out of a clipped line, staggered across the full name. */
+function SplitWord({ text, offset }: { text: string; offset: number }) {
+  return (
+    <span className="split-word" aria-hidden="true">
+      {[...text].map((char, i) => (
+        <span key={i} className="split-char" style={{ "--i": i + offset } as React.CSSProperties}>
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function ProjectNav() {
   return (
     <nav className="project-nav project-nav--hero" aria-label="Projects">
@@ -235,6 +250,7 @@ const App: React.FC = () => {
   const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8bd5ff");
   const heroVariant = heroVariantFromUrl();
   const backdropOnly = heroVariant !== "split";
+  useMagnetic(".brutal-icon svg", !bugMode && !nailMode);
 
   React.useEffect(() => {
     const handler = (event: MediaQueryListEvent) => {
@@ -344,7 +360,9 @@ const App: React.FC = () => {
               </span>
             </button>
           </div>
-          <div className={`site-shell hero-variant-${heroVariant}`}>
+          <div
+            className={cn(`site-shell hero-variant-${heroVariant}`, !backdropOnly && "has-index")}
+          >
             <header className="site-header name-only-hero">
               <div
                 className={`hero-backdrop${backdropOnly ? " hero-backdrop--full" : ""}${heroVariant === "slab" ? " hero-backdrop--slab" : ""}`}
@@ -370,15 +388,26 @@ const App: React.FC = () => {
                 ) : (
                   <>
                     <p className="hero-role site-enter">{profileData.role}</p>
-                    <h1 className="hero-name site-enter site-enter-delay-1">
-                      <span className="hero-first-name">{profileData.firstName}</span>
-                      <span className="hero-last-name">{profileData.lastName}</span>
+                    <h1
+                      className="hero-name hero-name--split"
+                      aria-label={`${profileData.firstName} ${profileData.lastName}`}
+                    >
+                      <span className="hero-first-name">
+                        <SplitWord text={profileData.firstName} offset={0} />
+                      </span>
+                      <span className="hero-last-name">
+                        <SplitWord
+                          text={profileData.lastName}
+                          offset={profileData.firstName.length}
+                        />
+                      </span>
                     </h1>
                   </>
                 )}
               </div>
-              <ProjectNav />
+              {backdropOnly ? <ProjectNav /> : null}
             </header>
+            {backdropOnly ? null : <ProjectIndex projects={projects} />}
             <SocialLinks isDark={isDark} />
           </div>
         </BrutalHover>
