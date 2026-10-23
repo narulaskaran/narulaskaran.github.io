@@ -5,7 +5,6 @@ import { HammerMode } from "@/components/HammerMode";
 import { BrutalHover } from "@/components/brutal-hover";
 import { brutalHoverProps, brutalInk } from "@/lib/brutal";
 import { ProjectIndex } from "@/components/ProjectIndex";
-import { useMagnetic } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const SunIcon = () => (
@@ -208,7 +207,6 @@ const App: React.FC = () => {
   );
   const [themeTransitionKey, setThemeTransitionKey] = React.useState(0);
   const [themeTransitionColor, setThemeTransitionColor] = React.useState("#8bd5ff");
-  useMagnetic(".brutal-icon svg", !bugMode && !nailMode);
 
   React.useEffect(() => {
     const handler = (event: MediaQueryListEvent) => {
