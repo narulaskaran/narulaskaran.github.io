@@ -199,13 +199,14 @@
   opacity: 0.04;
   color: #000;
   font-family: var(--font-poster);
-  font-size: 34vmin;
+  --brutal-cap: 34vmin;
+  font-size: var(--brutal-size, var(--brutal-cap));
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 0.9;
   text-align: justify;
   text-transform: uppercase;
-  word-break: break-all;
+  white-space: nowrap;
   transition:
     background-color 294ms ease,
     color 294ms ease,
@@ -214,8 +215,16 @@
 
 .brutal-title > div {
   width: 100%;
-  text-align: justify;
-  text-align-last: justify;
+}
+
+/* Hidden twin used to measure every hover word at the unscaled size. */
+.brutal-title.brutal-probe {
+  --brutal-size: initial;
+  visibility: hidden;
+}
+
+.brutal-probe > span {
+  position: absolute;
 }
 
 .dark .brutal-title {

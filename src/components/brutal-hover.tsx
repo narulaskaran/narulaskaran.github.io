@@ -101,10 +101,71 @@ export function BrutalHover({ children }: { children: React.ReactNode }) {
     root.style.removeProperty("--page-ink");
   }, []);
 
+  const probeRef = React.useRef<HTMLDivElement>(null);
+
+  // One font size for every hover word: the largest that fits the longest of them.
+  React.useLayoutEffect(() => {
+    const probe = probeRef.current;
+    if (!probe) return;
+    const root = document.documentElement;
+
+    const fit = () => {
+      const titles = new Set<string>();
+      document
+        .querySelectorAll<HTMLElement>("[data-brutal-title]")
+        .forEach((el) => {
+          if (el.dataset.brutalTitle) titles.add(el.dataset.brutalTitle);
+        });
+
+      probe.replaceChildren(
+        ...[...titles].map((title) => {
+          const word = document.createElement("span");
+          word.textContent = title;
+          return word;
+        }),
+      );
+
+      const style = getComputedStyle(probe);
+      const avail =
+        probe.clientWidth -
+        parseFloat(style.paddingLeft) -
+        parseFloat(style.paddingRight);
+      const widest = Math.max(
+        0,
+        ...[...probe.children].map((el) => el.getBoundingClientRect().width),
+      );
+
+      if (widest > avail && widest > 0) {
+        root.style.setProperty(
+          "--brutal-size",
+          `${(parseFloat(style.fontSize) * avail) / widest}px`,
+        );
+      } else {
+        root.style.removeProperty("--brutal-size");
+      }
+    };
+
+    let timer: number | undefined;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(fit, 100);
+    };
+
+    fit();
+    void document.fonts?.ready.then(fit);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("resize", onResize);
+      root.style.removeProperty("--brutal-size");
+    };
+  }, []);
+
   return (
     <>
       {children}
       <div className="brutal-wash" aria-hidden="true" />
+      <div ref={probeRef} className="brutal-title brutal-probe" aria-hidden="true" />
       {hover ? (
         <div
           className="brutal-title is-active"
